@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Panel, FlexboxGrid, List } from 'rsuite';
+import { Row, Col, Panel, FlexboxGrid, List, Button } from 'rsuite';
 
 import Divider from '../../../components/Divider';
 
@@ -7,7 +7,11 @@ const lineHeight = {
   lineHeight: '39px'
 };
 
-const lineHeight2 = {
+const lineHeightH5 = {
+  lineHeight: '42px',
+};
+
+const groupLineHeight = {
   lineHeight: '106px',
   fontSize: '24px',
   padding: '0 20px'
@@ -20,17 +24,17 @@ const GroupInfomation = () => {
       <List.Item style={{ height: 130 }}>
         <FlexboxGrid>
           <FlexboxGrid.Item colspan={8}>
-            <div style={lineHeight2}>
+            <div style={groupLineHeight}>
               <div>50000</div>
             </div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={8} >
-            <div style={lineHeight2}>
+            <div style={groupLineHeight}>
               <div>10000</div>
             </div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={8} >
-            <div style={lineHeight2}>
+            <div style={groupLineHeight}>
               <div>10000</div>
             </div>
           </FlexboxGrid.Item>
@@ -44,7 +48,10 @@ const GroupPanel = () => {
   return (
     <Row>
       <Col>
-        <h5>グループ情報</h5>
+        <FlexboxGrid justify='space-between' align='center'>
+          <h5 style={lineHeightH5}>グループ情報</h5>
+          <Button appearance="primary" size="lg">編集する</Button>
+        </FlexboxGrid>
       </Col>
       <Divider />
       <Divider height='10' />

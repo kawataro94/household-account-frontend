@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import 'rsuite/dist/styles/rsuite-default.css';     
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import 'rsuite/dist/styles/rsuite-default.css';
+
 import Dashboard from './pages/Dashboard/index';
+import Members from './pages/Members/index';
 import Config from './pages/Config';
-import Members from './pages/Members';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 

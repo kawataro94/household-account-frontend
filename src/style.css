@@ -22296,3 +22296,8 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 }
 
 /*# sourceMappingURL=index.css.map */
+
+.wrap {
+  width: 100%;
+  padding: 20px 50px;
+}

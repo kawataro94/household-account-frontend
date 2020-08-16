@@ -1,10 +1,9 @@
 import React from 'react';
 import { Row, Col, Table, Panel } from 'rsuite';
-const { Column, HeaderCell, Cell } = Table;
 
-const divider = {
-  height: '10px'
-};
+import Divider from '../../../components/Divider';
+
+const { Column, HeaderCell, Cell } = Table;
 
 const data = [
   {
@@ -50,7 +49,7 @@ const RecordTable = () => {
       <Col>
         <h5>最近の記録</h5>
       </Col>
-      <div style={divider} ></div>
+      <Divider height='10' />
       <Panel bordered>
         <Table height={280} data={data}>
           <Column flexGrow={1} resizable>
