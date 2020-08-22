@@ -15268,7 +15268,20 @@ textarea.rs-picker-search-input {
   bottom: 0;
   right: 0;
   left: 0;
+
+  /* add */
+  text-align: center;
 }
+
+/* add */
+.rs-modal-wrapper::before {
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+  content: '';
+}
+
 .rs-modal {
   display: none;
   overflow: visible;
@@ -15277,6 +15290,12 @@ textarea.rs-picker-search-input {
   position: relative;
   width: auto;
   z-index: 1050;
+
+  /* add */
+  display: inline-block !important;
+  margin: 0 auto;
+  text-align: left;
+  vertical-align: middle;
 }
 .rs-modal-lg {
   width: 968px;

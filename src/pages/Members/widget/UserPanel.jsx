@@ -1,7 +1,7 @@
-import React from 'react';
-import { Row, Col, Panel, List, FlexboxGrid, Icon, Button } from 'rsuite';
-
+import React, { useState } from 'react';
+import { Row, Col, Panel, List, FlexboxGrid, Icon, Button, Modal } from 'rsuite';
 import Divider from '../../../components/Divider';
+import CreateEditForm from './CreateEditForm';
 
 const lineHeight = {
   lineHeight: '39px',
@@ -30,6 +30,28 @@ const userInfo = [
     left: 10000
   }
 ];
+
+const AddModal = (props) => {
+  const { show, closeAddModal } = props;
+  return (
+    <Modal show={show} onHide={closeAddModal} size="xs">
+      <Modal.Header>
+        <Modal.Title>Modal Title</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <CreateEditForm />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={closeAddModal} appearance="primary">
+          Ok
+        </Button>
+        <Button onClick={closeAddModal} appearance="subtle">
+          Cancel
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
 const UserList = () => {
 
@@ -76,12 +98,33 @@ const UserList = () => {
 };
 
 const UserPanel = () => {
+  const [show, setShow] = useState(false);
+
+  const openAddModal = () => {
+    setShow(true);
+  };
+
+  const closeAddModal = () => {
+    setShow(false);
+  };
+
+  const addButtonProps = {
+    appearance: 'primary',
+    size: 'lg',
+    onClick: () => openAddModal()
+  };
+
+  const addModalProps = {
+    show,
+    closeAddModal
+  };
+
   return (
     <Row>
       <Col>
         <FlexboxGrid justify='space-between' align='center'>
           <h5 style={lineHeightH5}>メンバー情報</h5>
-          <Button appearance="primary" size="lg">追加する</Button>
+          <Button {...addButtonProps}>追加する</Button>
         </FlexboxGrid>
       </Col>
       <Divider height='10' />
@@ -119,6 +162,7 @@ const UserPanel = () => {
           <UserList />
         </Panel>
       </Col>
+      <AddModal {...addModalProps} />
     </Row >
   );
 };
