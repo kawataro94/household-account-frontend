@@ -63,13 +63,14 @@ module.exports = {
         ],
       },
       {
-        test: /\.(scss|sass|css)$/i,
+        test: /\.(scss|sass|less|css)$/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
           },
           'css-loader',
           'sass-loader',
+          'less-loader'
         ],
       },
       {
@@ -99,6 +100,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
