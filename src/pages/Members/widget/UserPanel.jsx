@@ -32,14 +32,19 @@ const userInfo = [
 ];
 
 const AddModal = (props) => {
-  const { show, closeAddModal } = props;
+  const { name, show, closeAddModal } = props;
+
+  const formValue = {
+    name
+  };
+
   return (
     <Modal show={show} onHide={closeAddModal} size="xs">
       <Modal.Header>
         <Modal.Title>Modal Title</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <CreateEditForm />
+        <CreateEditForm formValue={formValue} />
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={closeAddModal} appearance="primary">
@@ -53,55 +58,67 @@ const AddModal = (props) => {
   );
 };
 
-const UserList = () => {
+const UserList = (props) => {
+  const { setName, setShow } = props;
+
+  const edit = (name) => {
+    setShow(true);
+    setName(name);
+  };
 
   return (
     <List hover>
-      {userInfo.map((user, index) =>
-        <List.Item key={index}>
-          <FlexboxGrid>
-            <FlexboxGrid.Item
-              colspan={6}
-              style={{
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={lineHeight}>
-                <Icon icon="user-circle-o" size='lg' />
-                <span style={marginLeft}>{user.name}</span>
-              </div>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={5}>
-              <div style={{ padding: '0 10px', lineHeight: '39px' }}>
-                <div>{user.target}</div>
-              </div>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={5} >
-              <div style={{ padding: '0 10px', lineHeight: '39px' }}>
-                <div>{user.paid}</div>
-              </div>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={5} >
-              <div style={lineHeight}>
-                <div>{user.left}</div>
-              </div>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={3} >
-              <Icon icon='pencil' size='lg' style={lineHeight} />
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </List.Item>)}
+      {userInfo.map((user, index) => {
+        const { name, target, paid, left } = user;
+        return (
+          <List.Item key={index}>
+            <FlexboxGrid>
+              <FlexboxGrid.Item
+                colspan={6}
+                style={{
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  overflow: 'hidden'
+                }}
+              >
+                <div style={lineHeight}>
+                  <Icon icon="user-circle-o" size='lg' />
+                  <span style={marginLeft}>{name}</span>
+                </div>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={5}>
+                <div style={{ padding: '0 10px', lineHeight: '39px' }}>
+                  <div>{target}</div>
+                </div>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={5} >
+                <div style={{ padding: '0 10px', lineHeight: '39px' }}>
+                  <div>{paid}</div>
+                </div>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={5} >
+                <div style={lineHeight}>
+                  <div>{left}</div>
+                </div>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={3} >
+                <Icon icon='pencil' size='lg' style={lineHeight} onClick={() => edit(name)} />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+          </List.Item>
+        );
+      })}
     </List>
   );
 };
 
 const UserPanel = () => {
   const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
 
   const openAddModal = () => {
     setShow(true);
+    setName('');
   };
 
   const closeAddModal = () => {
@@ -114,15 +131,21 @@ const UserPanel = () => {
     onClick: () => openAddModal()
   };
 
+  const userListProps = {
+    setName,
+    setShow
+  };
+
   const addModalProps = {
+    name,
     show,
-    closeAddModal
+    closeAddModal,
   };
 
   return (
     <Row>
       <Col>
-        <FlexboxGrid justify='space-between' align='center'>
+        <FlexboxGrid justify='space-between' align='middle'>
           <h5 style={lineHeightH5}>メンバー情報</h5>
           <Button {...addButtonProps}>追加する</Button>
         </FlexboxGrid>
@@ -159,7 +182,7 @@ const UserPanel = () => {
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
-          <UserList />
+          <UserList {...userListProps} />
         </Panel>
       </Col>
       <AddModal {...addModalProps} />

@@ -48,7 +48,7 @@ const GroupPanel = () => {
   return (
     <Row>
       <Col>
-        <FlexboxGrid justify='space-between' align='center'>
+        <FlexboxGrid justify='space-between' align='middle'>
           <h5 style={lineHeightH5}>グループ情報</h5>
           <Button appearance="primary" size="lg">編集する</Button>
         </FlexboxGrid>

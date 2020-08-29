@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuite';
 
 const CustomField = (props) => {
   const { name, label, accepter } = props;
   return (
-    <FormGroup fluid>
+    <FormGroup>
       <ControlLabel>{label} </ControlLabel>
       <FormControl
         name={name}
@@ -15,9 +15,17 @@ const CustomField = (props) => {
   );
 };
 
-const CreateEditForm = () => {
+const CreateEditForm = (props) => {
+  const { formValue: fv = {} } = props;
+  const [formValue, setFormValue] = useState(fv);
   return (
-    <Form fluid>
+    <Form
+      formValue={formValue}
+      onChange={values => {
+        setFormValue(values);
+      }}
+      fluid={true}
+    >
       <CustomField
         name="name"
         label="Name"
