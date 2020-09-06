@@ -25,7 +25,10 @@ const Sidebar = () => {
           <Nav.Item eventKey='2' icon={<Icon icon='user' size='5x' />} onClick={() => toLink('/members')}>
             Members
           </Nav.Item>
-          <Nav.Item eventKey='3' icon={<Icon icon='gear-circle' size='5x' />} onClick={() => toLink('/config')}>
+          <Nav.Item eventKey='3' icon={<Icon icon='table' size='5x' />} onClick={() => toLink('/records')}>
+            Records
+          </Nav.Item>
+          <Nav.Item eventKey='4' icon={<Icon icon='gear-circle' size='5x' />} onClick={() => toLink('/config')}>
             Config
           </Nav.Item>
         </Nav>
