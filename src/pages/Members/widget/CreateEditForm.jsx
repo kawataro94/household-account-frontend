@@ -23,7 +23,6 @@ const CreateEditForm = (props) => {
       formValue={formValue}
       onChange={values => {
         setFormValue(values);
-        console.log({ ...selected, account: values.name }, 'aaaaaaaaaaaaaa');
         setSelected({ ...selected, account: values.name });
       }}
       fluid={true}
