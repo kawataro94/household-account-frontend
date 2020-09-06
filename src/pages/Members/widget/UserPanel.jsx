@@ -64,7 +64,6 @@ const userInfo = [
 const AddModal = (props) => {
   const { selected, setSelected, show, closeAddModal } = props;
   const { id, account } = selected;
-  console.log(id, account, 'selected');
   const formValue = {
     name: account
   };
@@ -77,13 +76,11 @@ const AddModal = (props) => {
   };
 
   const onOk = () => {
-    console.log('axios start');
-    console.log(id, 'id');
     if (!id) {
       axios
         .post(`http://127.0.0.1:8000/member/members`, params)
         .catch((e) => {
-          console.log(e);
+          console.log(e, 'post error');
         })
         .finally(closeAddModal);
     }
@@ -133,7 +130,7 @@ const UserList = (props) => {
       },
       )
       .catch((e) => {
-        console.log(e, 'error');
+        console.log(e, 'get error');
       });
   }, [show]);
 
