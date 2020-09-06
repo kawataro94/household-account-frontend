@@ -16,13 +16,14 @@ const CustomField = (props) => {
 };
 
 const CreateEditForm = (props) => {
-  const { formValue: fv = {} } = props;
+  const { formValue: fv = {}, selected, setSelected } = props;
   const [formValue, setFormValue] = useState(fv);
   return (
     <Form
       formValue={formValue}
       onChange={values => {
         setFormValue(values);
+        setSelected({ ...selected, account: values.name });
       }}
       fluid={true}
     >
