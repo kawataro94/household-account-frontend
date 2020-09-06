@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Panel, List, FlexboxGrid, Icon, Button, Modal } from 'rsuite';
 import Divider from '../../../components/Divider';
 import CreateEditForm from './CreateEditForm';
+
+import axios from 'axios';
 
 const lineHeight = {
   lineHeight: '39px',
@@ -18,13 +20,41 @@ const marginLeft = {
 
 const userInfo = [
   {
-    name: 'mari',
     target: 10000,
     paid: 20000,
     left: 10000
   },
   {
-    name: 'shintaro',
+    target: 10000,
+    paid: 20000,
+    left: 10000
+  },
+  {
+    target: 10000,
+    paid: 20000,
+    left: 10000
+  },
+  {
+    target: 10000,
+    paid: 20000,
+    left: 10000
+  },
+  {
+    target: 10000,
+    paid: 20000,
+    left: 10000
+  },
+  {
+    target: 10000,
+    paid: 20000,
+    left: 10000
+  },
+  {
+    target: 10000,
+    paid: 20000,
+    left: 10000
+  },
+  {
     target: 10000,
     paid: 20000,
     left: 10000
@@ -32,10 +62,38 @@ const userInfo = [
 ];
 
 const AddModal = (props) => {
-  const { name, show, closeAddModal } = props;
-
+  const { selected, setSelected, show, closeAddModal } = props;
+  const { id, account } = selected;
+  console.log(id, account, 'selected');
   const formValue = {
-    name
+    name: account
+  };
+
+  const params = {
+    password: "password",
+    group_id: "1",
+    account: account,
+    balance: "100"
+  };
+
+  const onOk = () => {
+    console.log('axios start');
+    console.log(id, 'id');
+    if (!id) {
+      axios
+        .post(`http://127.0.0.1:8000/member/members`, params)
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(closeAddModal);
+    }
+
+    axios
+      .patch(`http://127.0.0.1:8000/member/members/${id}`, params)
+      .catch((e) => {
+        console.log(e, 'patch error');
+      })
+      .finally(closeAddModal);
   };
 
   return (
@@ -44,10 +102,10 @@ const AddModal = (props) => {
         <Modal.Title>Modal Title</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <CreateEditForm formValue={formValue} />
+        <CreateEditForm formValue={formValue} selected={selected} setSelected={setSelected} />
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={closeAddModal} appearance="primary">
+        <Button onClick={onOk} appearance="primary">
           Ok
         </Button>
         <Button onClick={closeAddModal} appearance="subtle">
@@ -59,17 +117,31 @@ const AddModal = (props) => {
 };
 
 const UserList = (props) => {
-  const { setName, setShow } = props;
+  const { setSelected, show, setShow } = props;
+  const [members, setMembers] = useState([]);
 
-  const edit = (name) => {
+  const edit = (id, name) => {
     setShow(true);
-    setName(name);
+    setSelected({ id, account: name });
   };
+
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:8000/member/members', {})
+      .then(({ data }) => {
+        setMembers(data);
+      },
+      )
+      .catch((e) => {
+        console.log(e, 'error');
+      });
+  }, [show]);
 
   return (
     <List hover>
-      {userInfo.map((user, index) => {
-        const { name, target, paid, left } = user;
+      {members.map((member, index) => {
+        const { id, account } = member;
+        const { target, paid, left } = userInfo[index];
         return (
           <List.Item key={index}>
             <FlexboxGrid>
@@ -83,7 +155,7 @@ const UserList = (props) => {
               >
                 <div style={lineHeight}>
                   <Icon icon="user-circle-o" size='lg' />
-                  <span style={marginLeft}>{name}</span>
+                  <span style={marginLeft}>{account}</span>
                 </div>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={5}>
@@ -102,7 +174,7 @@ const UserList = (props) => {
                 </div>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={3} >
-                <Icon icon='pencil' size='lg' style={lineHeight} onClick={() => edit(name)} />
+                <Icon icon='pencil' size='lg' style={lineHeight} onClick={() => edit(id, account)} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </List.Item>
@@ -114,11 +186,11 @@ const UserList = (props) => {
 
 const UserPanel = () => {
   const [show, setShow] = useState(false);
-  const [name, setName] = useState('');
+  const [selected, setSelected] = useState({});
 
   const openAddModal = () => {
     setShow(true);
-    setName('');
+    setSelected({});
   };
 
   const closeAddModal = () => {
@@ -132,12 +204,15 @@ const UserPanel = () => {
   };
 
   const userListProps = {
-    setName,
+    selected,
+    setSelected,
+    show,
     setShow
   };
 
   const addModalProps = {
-    name,
+    selected,
+    setSelected,
     show,
     closeAddModal,
   };
