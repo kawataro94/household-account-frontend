@@ -55,7 +55,7 @@ const CreateEditForm = (props) => {
         accepter={Input}
       />
       <CustomField
-        name="paidBy"
+        name="member_id"
         label="Paid By"
         accepter={Input}
       />

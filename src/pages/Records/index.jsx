@@ -1,38 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import Divider from '../../components/Divider';
 import RecordTable from './widget/RecordTable';
 import { Provider } from './hoc/index';
 
 const Records = () => {
-  const [values, setValues] = useState({
-    data: [
-      {
-        id: 1,
-        title: 'ひき肉',
-        category: '食品',
-        date: '2020/08/31',
-        paidBy: 'shin',
-        cost: 450
+  const [records, setRecords] = useState({});
+
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:8000/member/records', {})
+      .then(({ data }) => {
+        setRecords(data);
       },
-      {
-        id: 2,
-        title: 'アイス',
-        category: '食品',
-        date: '2020/08/31',
-        paidBy: 'mari',
-        cost: 2000
-      }
-    ]
-  });
-  const { data } = values;
+      )
+      .catch((e) => {
+        console.log(e, 'get error');
+      });
+  }, [editRecord]);
 
   const createRecord = (record) => {
-    setValues({ data: [...data, record] });
+    setRecords([...records, record]);
   };
   const editRecord = (record, idx) => {
-    data.splice(idx, 1, record);
-    setValues({ data });
+    records.splice(idx, 1, record);
+    setRecords(records);
+  };
+
+  const providerData = {
+    records
   };
   const recordTableProps = {
     createRecord,
@@ -41,7 +38,7 @@ const Records = () => {
 
   return (
     <div className='wrap'>
-      <Provider value={values}>
+      <Provider value={providerData}>
         <h2 >Records</h2>
         <Divider height='20' />
         <RecordTable {...recordTableProps} />

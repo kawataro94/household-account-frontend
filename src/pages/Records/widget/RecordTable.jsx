@@ -8,7 +8,7 @@ import { withRecord } from '../hoc/index';
 
 const { Column, HeaderCell, Cell } = Table;
 const RecordTable = (props) => {
-  const { data } = props;
+  const { records } = props;
   const [modalState, setModalState] = useState({
     show: false,
     selected: undefined
@@ -43,7 +43,7 @@ const RecordTable = (props) => {
       </Col>
       <Divider height='10' />
       <Panel bordered>
-        <Table height={280} data={data} rowHeight={57}>
+        <Table height={500} data={records} rowHeight={57}>
           <Column flexGrow={1} resizable>
             <HeaderCell>日付</HeaderCell>
             <Cell dataKey="date" />
@@ -62,7 +62,7 @@ const RecordTable = (props) => {
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell>払人</HeaderCell>
-            <Cell dataKey="paidBy" />
+            <Cell dataKey="member_id" />
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell></HeaderCell>

@@ -5,19 +5,19 @@ import CreateEditForm from './CreateEditForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
-  const { data, modalState, closeCreateEditModal, createRecord, editRecord } = props;
+  const { records, modalState, closeCreateEditModal, createRecord, editRecord } = props;
   const { show, selected } = modalState;
   const [formValue, setFormValue] = useState();
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    const fv = data ? data[selected] : undefined;
+    const fv = records ? records[selected] : undefined;
     setFormValue(fv);
-  }, [data, selected]);
+  }, [records, selected]);
 
   useEffect(() => {
     const inputValue = Object.values(formValue || {});
-    setDisabled(inputValue.length < 5 || !Object.values(formValue || {}).every(v => v));
+    setDisabled(inputValue.length < 5 || !Object.values(formValue || {}).every(v => v !== undefined));
   }, [formValue]);
 
   const onOk = () => {
