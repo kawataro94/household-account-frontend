@@ -3,36 +3,43 @@ import { Row, Col, Table, Panel, Button } from 'rsuite';
 
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
-import AddModal from '../widget/AddModal';
+import CreateEditModal from '../widget/CreateEditModal';
 import { withRecord } from '../hoc/index';
 
 const { Column, HeaderCell, Cell } = Table;
 const RecordTable = (props) => {
   const { data } = props;
-  const [show, setShow] = useState(false);
-  const openAddModal = () => {
-    setShow(true);
-    console.log('open');
+  const [modalState, setModalState] = useState({
+    show: false,
+    selected: undefined
+  });
+  const openCreateEditModal = (index) => {
+    setModalState({
+      show: true,
+      selected: index
+    });
   };
-  const closeAddModal = () => {
-    setShow(false);
-    console.log('close');
+  const closeCreateEditModal = () => {
+    setModalState({
+      show: false,
+      selected: undefined
+    });
   };
 
-  const addButtonProps = {
+  const createButtonProps = {
     buttonText: '追加する',
-    onClick: () => openAddModal()
+    onClick: () => openCreateEditModal()
   };
-
-  const addModalProps = {
-    show,
-    closeAddModal
+  const createEditModalProps = {
+    modalState,
+    closeCreateEditModal,
+    ...props
   };
 
   return (
     <Row>
       <Col>
-        <SectionTitle title='最近の記録' {...addButtonProps} />
+        <SectionTitle title='最近の記録' {...createButtonProps} />
       </Col>
       <Divider height='10' />
       <Panel bordered>
@@ -54,18 +61,22 @@ const RecordTable = (props) => {
             <Cell dataKey="cost" />
           </Column>
           <Column flexGrow={1} resizable>
+            <HeaderCell>払人</HeaderCell>
+            <Cell dataKey="paidBy" />
+          </Column>
+          <Column flexGrow={1} resizable>
             <HeaderCell></HeaderCell>
-            <Cell style={{}}>
-              {() => {
+            <Cell>
+              {(_, index) => {
                 return (
-                  <div><Button appearance='primary' size="sm">詳細</Button></div>
+                  <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
                 );
               }}
             </Cell>
           </Column>
         </Table>
       </Panel>
-      <AddModal {...addModalProps} />
+      <CreateEditModal {...createEditModalProps} />
     </Row >
   );
 };

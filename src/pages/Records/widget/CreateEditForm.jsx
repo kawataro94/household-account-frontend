@@ -1,6 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Schema, Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuite';
 
-import { Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuite';
+const { StringType, NumberType } = Schema.Types;
+const model = Schema.Model({
+  title: StringType().isRequired('This field is required.'),
+  category: StringType()
+    .isRequired('This field is required.'),
+  date: StringType()
+    .isRequired('This field is required.'),
+  paidBy: StringType()
+    .isRequired('This field is required.'),
+  cost: NumberType()
+    .isRequired('This field is required.')
+});
 
 const CustomField = (props) => {
   const { name, label, accepter } = props;
@@ -16,15 +28,15 @@ const CustomField = (props) => {
 };
 
 const CreateEditForm = (props) => {
-  const { formValue: fv = {}, selected, setSelected } = props;
-  const [formValue, setFormValue] = useState(fv);
+  const { formValue = {}, setFormValue } = props;
   return (
     <Form
+      model={model}
       formValue={formValue}
       onChange={values => {
         setFormValue(values);
-        setSelected({ ...selected, account: values.name });
       }}
+      checkTrigger='blur'
       fluid={true}
     >
       <CustomField
@@ -43,7 +55,7 @@ const CreateEditForm = (props) => {
         accepter={Input}
       />
       <CustomField
-        name="member"
+        name="paidBy"
         label="Paid By"
         accepter={Input}
       />
