@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Sidenav, Nav, Icon } from 'rsuite';
 
+const { Body } = Sidenav;
+const { Item } = Nav;
 const Sidebar = () => {
 
   const history = useHistory();
@@ -17,19 +19,22 @@ const Sidebar = () => {
 
   return (
     <Sidenav activeKey={activeKey} onSelect={handleSelect} style={{ width: 250, height: 'calc(100vh - 56px)' }}>
-      <Sidenav.Body>
+      <Body>
         <Nav>
-          <Nav.Item eventKey='1' icon={<Icon icon='dashboard' size='3x' />} onClick={() => toLink('/')}>
+          <Item eventKey='1' icon={<Icon icon='dashboard' size='3x' />} onClick={() => toLink('/')}>
             Dashboard
-          </Nav.Item>
-          <Nav.Item eventKey='2' icon={<Icon icon='user' size='5x' />} onClick={() => toLink('/members')}>
+          </Item>
+          <Item eventKey='2' icon={<Icon icon='user' size='5x' />} onClick={() => toLink('/members')}>
             Members
-          </Nav.Item>
-          <Nav.Item eventKey='3' icon={<Icon icon='gear-circle' size='5x' />} onClick={() => toLink('/config')}>
+          </Item>
+          <Item eventKey='3' icon={<Icon icon='table' size='5x' />} onClick={() => toLink('/records')}>
+            Records
+          </Item>
+          <Item eventKey='4' icon={<Icon icon='gear-circle' size='5x' />} onClick={() => toLink('/config')}>
             Config
-          </Nav.Item>
+          </Item>
         </Nav>
-      </Sidenav.Body>
+      </Body>
     </Sidenav >
   );
 };
