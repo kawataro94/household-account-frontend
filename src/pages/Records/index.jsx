@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 import Divider from '../../components/Divider';
 import RecordTable from './widget/RecordTable';
@@ -27,6 +28,7 @@ const Records = () => {
   const createRecord = record => {
     const params = {
       ...record,
+      date: moment(record.date).format('YYYY-MM-DD'),
       member_id: 2,
       create_by: 2,
       description: "TEST DESCRIPTION",
@@ -43,7 +45,11 @@ const Records = () => {
       });
   };
   const editRecord = (record, idx) => {
-    const params = record;
+    const params = {
+      ...record,
+      date: moment(record.date).format('YYYY-MM-DD')
+    };
+
     axios
       .patch(`http://127.0.0.1:8000/member/records/${record.id}`, params)
       .then(({ data }) => {
@@ -57,8 +63,6 @@ const Records = () => {
   };
 
   const deleteRecord = index => {
-    console.log(index);
-    console.log(records);
     const { id } = records[index];
 
     axios

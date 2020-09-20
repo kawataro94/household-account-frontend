@@ -1,13 +1,12 @@
 import React from 'react';
-import { Schema, Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuite';
+import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, DatePicker } from 'rsuite';
 
-const { StringType, NumberType } = Schema.Types;
+const { StringType, NumberType, DateType } = Schema.Types;
 const model = Schema.Model({
   title: StringType().isRequired('This field is required.'),
   category: StringType()
     .isRequired('This field is required.'),
-  date: StringType()
-    .isRequired('This field is required.'),
+  date: DateType().isRequired('This field is required.'),
   paidBy: StringType()
     .isRequired('This field is required.'),
   cost: NumberType()
@@ -15,13 +14,14 @@ const model = Schema.Model({
 });
 
 const CustomField = (props) => {
-  const { name, label, accepter } = props;
+  const { name, label, accepter, ...rest } = props;
   return (
     <FormGroup>
       <ControlLabel>{label} </ControlLabel>
       <FormControl
         name={name}
         accepter={accepter}
+        {...rest}
       />
     </FormGroup>
   );
@@ -52,7 +52,8 @@ const CreateEditForm = (props) => {
       <CustomField
         name="date"
         label="Date"
-        accepter={Input}
+        accepter={DatePicker}
+        block={true}
       />
       <CustomField
         name="member_id"
