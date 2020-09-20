@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Panel, Button } from 'rsuite';
+import { Row, Col, Table, Panel, Button, Icon } from 'rsuite';
 
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
@@ -8,10 +8,10 @@ import { withRecord } from '../hoc/index';
 
 const { Column, HeaderCell, Cell } = Table;
 const RecordTable = (props) => {
-  const { records } = props;
+  const { records, deleteRecord } = props;
   const [modalState, setModalState] = useState({
     show: false,
-    selected: undefined
+    selected: null
   });
   const openCreateEditModal = (index) => {
     setModalState({
@@ -22,7 +22,7 @@ const RecordTable = (props) => {
   const closeCreateEditModal = () => {
     setModalState({
       show: false,
-      selected: undefined
+      selected: null
     });
   };
 
@@ -43,7 +43,7 @@ const RecordTable = (props) => {
       </Col>
       <Divider height='10' />
       <Panel bordered>
-        <Table height={500} data={records} rowHeight={57}>
+        <Table height={520} data={records} rowHeight={57} shouldUpdateScroll={false}>
           <Column flexGrow={1} resizable>
             <HeaderCell>日付</HeaderCell>
             <Cell dataKey="date" />
@@ -69,7 +69,10 @@ const RecordTable = (props) => {
             <Cell>
               {(_, index) => {
                 return (
-                  <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
+                  <>
+                    <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
+                    <span><Icon icon='trash-o' size="lg" onClick={() => deleteRecord(index)} style={{ marginLeft: 10 }} /></span>
+                  </>
                 );
               }}
             </Cell>
