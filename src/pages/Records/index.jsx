@@ -7,21 +7,33 @@ import RecordTable from './widget/RecordTable';
 import { Provider } from './hoc/index';
 
 const Records = () => {
-  const [records, setRecords] = useState({});
+  const [records, setRecords] = useState([]);
+  const [members, setMembers] = useState([]);
 
   useEffect(() => {
     getRecords();
+    getMembers();
   }, []);
 
   const getRecords = () => {
     axios
-      .get('http://127.0.0.1:8000/member/records', {})
+      .get('http://127.0.0.1:8000/member/records')
       .then(({ data }) => {
         setRecords(data);
-      },
-      )
+      })
       .catch((e) => {
         console.log(e, 'get error');
+      });
+  };
+
+  const getMembers = () => {
+    axios
+      .get('http://127.0.0.1:8000/member/members')
+      .then(({ data }) => {
+        setMembers(data);
+      })
+      .catch((e) => {
+        console.log(e, 'get members error');
       });
   };
 
@@ -29,7 +41,7 @@ const Records = () => {
     const params = {
       ...record,
       date: moment(record.date).format('YYYY-MM-DD'),
-      member_id: 2,
+      member_id: record.paidBy,
       create_by: 2,
       description: "TEST DESCRIPTION",
       fixed: false,
@@ -79,9 +91,8 @@ const Records = () => {
   };
 
   const providerData = {
-    records
-  };
-  const recordTableProps = {
+    records,
+    members,
     createRecord,
     editRecord,
     deleteRecord
@@ -92,7 +103,7 @@ const Records = () => {
       <Provider value={providerData}>
         <h2 >Records</h2>
         <Divider height='20' />
-        <RecordTable {...recordTableProps} />
+        <RecordTable />
         <Divider height='20' />
       </Provider>
     </div>

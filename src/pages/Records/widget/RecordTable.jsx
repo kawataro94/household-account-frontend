@@ -8,7 +8,7 @@ import { withRecord } from '../hoc/index';
 
 const { Column, HeaderCell, Cell } = Table;
 const RecordTable = (props) => {
-  const { records, deleteRecord } = props;
+  const { records, members, deleteRecord } = props;
   const [modalState, setModalState] = useState({
     show: false,
     selected: null
@@ -62,7 +62,13 @@ const RecordTable = (props) => {
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell>払人</HeaderCell>
-            <Cell dataKey="member_id" />
+            <Cell>
+              {({ member_id }) => {
+                const member = (members || []).find(({ id }) => id === member_id);
+                return <span>{member && member.account}</span>;
+              }
+              }
+            </Cell>
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell></HeaderCell>
