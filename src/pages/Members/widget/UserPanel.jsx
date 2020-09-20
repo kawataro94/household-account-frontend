@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Panel, List, FlexboxGrid, Icon, Button, Modal } from 'rsuite';
+import axios from 'axios';
+
 import Divider from '../../../components/Divider';
 import CreateEditForm from './CreateEditForm';
 
-import axios from 'axios';
 
 const lineHeight = {
   lineHeight: '39px',

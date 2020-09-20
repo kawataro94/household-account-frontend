@@ -1,34 +1,39 @@
 import React from 'react';
-import { Schema, Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuite';
+import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, DatePicker, SelectPicker } from 'rsuite';
+import { withRecord } from '../hoc/index';
 
-const { StringType, NumberType } = Schema.Types;
+const { StringType, NumberType, DateType } = Schema.Types;
 const model = Schema.Model({
   title: StringType().isRequired('This field is required.'),
   category: StringType()
     .isRequired('This field is required.'),
-  date: StringType()
-    .isRequired('This field is required.'),
-  paidBy: StringType()
+  date: DateType().isRequired('This field is required.'),
+  paidBy: NumberType()
     .isRequired('This field is required.'),
   cost: NumberType()
     .isRequired('This field is required.')
 });
 
 const CustomField = (props) => {
-  const { name, label, accepter } = props;
+  const { name, label, accepter, ...rest } = props;
   return (
     <FormGroup>
       <ControlLabel>{label} </ControlLabel>
       <FormControl
         name={name}
         accepter={accepter}
+        {...rest}
       />
     </FormGroup>
   );
 };
 
 const CreateEditForm = (props) => {
-  const { formValue = {}, setFormValue } = props;
+  const { formValue = {}, setFormValue, members } = props;
+  const option = members.map(({ id, account }) => {
+    return { label: account, value: id };
+  });
+
   return (
     <Form
       model={model}
@@ -36,7 +41,7 @@ const CreateEditForm = (props) => {
       onChange={values => {
         setFormValue(values);
       }}
-      checkTrigger='blur'
+      checkTrigger='change'
       fluid={true}
     >
       <CustomField
@@ -52,12 +57,15 @@ const CreateEditForm = (props) => {
       <CustomField
         name="date"
         label="Date"
-        accepter={Input}
+        accepter={DatePicker}
+        block={true}
       />
       <CustomField
         name="paidBy"
         label="Paid By"
-        accepter={Input}
+        accepter={SelectPicker}
+        data={option}
+        block={true}
       />
       <CustomField
         name="cost"
@@ -68,4 +76,4 @@ const CreateEditForm = (props) => {
   );
 };
 
-export default CreateEditForm;
+export default withRecord(CreateEditForm);
