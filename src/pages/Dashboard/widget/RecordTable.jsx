@@ -1,49 +1,14 @@
 import React from 'react';
 import { Row, Col, Table, Panel } from 'rsuite';
 
+import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
 
 const { Column, HeaderCell, Cell } = Table;
 
-const data = [
-  {
-    title: 'ひき肉',
-    category: '食品',
-    date: '2020/08/31',
-    member: 'shin',
-    cost: 450
-  },
-  {
-    title: 'アイス',
-    category: '食品',
-    date: '2020/08/31',
-    member: 'mari',
-    cost: 2000
-  },
-  {
-    title: '電気',
-    category: '電気代',
-    date: '2020/08/31',
-    member: 'shin',
-    cost: 7500
-  },
-  {
-    title: 'ガス',
-    category: 'ガス代',
-    date: '2020/08/31',
-    member: 'mari',
-    cost: 5500
-  },
-  {
-    title: 'トイレットペーパー',
-    category: '生活用品',
-    date: '2020/08/31',
-    member: 'mari',
-    cost: 500
-  }
-];
-
-const RecordTable = () => {
+const RecordTable = (props) => {
+  const { members, records } = props;
+  const limited = records.slice(0, 5);
   return (
     <Row>
       <Col>
@@ -51,7 +16,7 @@ const RecordTable = () => {
       </Col>
       <Divider height='10' />
       <Panel bordered>
-        <Table height={280} data={data}>
+        <Table height={280} data={limited} >
           <Column flexGrow={1} resizable>
             <HeaderCell>日付</HeaderCell>
             <Cell dataKey="date" />
@@ -70,7 +35,13 @@ const RecordTable = () => {
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell>支払人</HeaderCell>
-            <Cell dataKey="member" />
+            <Cell>
+              {({ member_id }) => {
+                const member = (members || []).find(({ id }) => id === member_id);
+                return <span>{member && member.account}</span>;
+              }
+              }
+            </Cell>
           </Column>
         </Table>
       </Panel>
@@ -78,4 +49,4 @@ const RecordTable = () => {
   );
 };
 
-export default RecordTable;
+export default withCache(RecordTable);
