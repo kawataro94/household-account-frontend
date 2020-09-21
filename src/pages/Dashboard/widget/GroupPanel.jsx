@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Panel, FlexboxGrid, List } from 'rsuite';
 
+import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
 
 const lineHeight = {
@@ -13,8 +14,10 @@ const lineHeight2 = {
   padding: '0 20px'
 };
 
-const GroupInfomation = () => {
+const GroupInfomation = (props) => {
+  const { dailyExpenses } = props;
 
+  const monthlyCost = dailyExpenses.reduce((pre, current) => pre + Number(current.total), 0);
   return (
     <List>
       <List.Item style={{ height: 130 }}>
@@ -26,12 +29,12 @@ const GroupInfomation = () => {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={8} >
             <div style={lineHeight2}>
-              <div>10000</div>
+              <div>{monthlyCost}</div>
             </div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={8} >
             <div style={lineHeight2}>
-              <div>10000</div>
+              <div>{50000 - monthlyCost}</div>
             </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
@@ -40,7 +43,8 @@ const GroupInfomation = () => {
   );
 };
 
-const GroupPanel = () => {
+const GroupPanel = (props) => {
+  const { dailyExpenses } = props;
   return (
     <Row>
       <Col>
@@ -67,11 +71,11 @@ const GroupPanel = () => {
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
-          <GroupInfomation />
+          <GroupInfomation dailyExpenses={dailyExpenses} />
         </Panel>
       </Col>
     </Row >
   );
 };
 
-export default GroupPanel;
+export default withCache(GroupPanel);

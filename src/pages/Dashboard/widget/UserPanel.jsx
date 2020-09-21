@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Panel, List, FlexboxGrid, Icon } from 'rsuite';
 
+import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
 
 const lineHeight = {
@@ -12,53 +13,50 @@ const marginLeft = {
   marginLeft: 10
 };
 
-const userInfo = [
-  {
-    name: 'mari',
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    name: 'shintaro',
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  }
-];
+const ListItem = (props) => {
+  const { account, paidBy } = props;
+  return (
+    <List.Item>
+      <FlexboxGrid>
+        <FlexboxGrid.Item
+          colspan={12}
+          style={{
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            overflow: 'hidden'
+          }}
+        >
+          <div style={lineHeight}>
+            <Icon icon="user-circle-o" size='lg' />
+            <span style={marginLeft}>{account}</span>
+          </div>
+        </FlexboxGrid.Item>
+        <FlexboxGrid.Item colspan={12} >
+          <div style={lineHeight}>
+            <div>{paidBy}</div>
+          </div>
+        </FlexboxGrid.Item>
+      </FlexboxGrid>
+    </List.Item>
+  );
+};
 
-const UserList = () => {
+const UserList = (props) => {
+  const { members, dailyExpenses } = props;
+  const limited = members.slice(0, 2);
 
   return (
     <List hover>
-      {userInfo.map((user, index) =>
-        <List.Item key={index}>
-          <FlexboxGrid>
-            <FlexboxGrid.Item
-              colspan={12}
-              style={{
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={lineHeight}>
-                <Icon icon="user-circle-o" size='lg' />
-                <span style={marginLeft}>{user.name}</span>
-              </div>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={12} >
-              <div style={lineHeight}>
-                <div>{user.left}</div>
-              </div>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </List.Item>)}
+      {limited.map((member, index) => {
+        const paidBy = dailyExpenses.filter(({ member_id }) => Number(member_id) === member.id).reduce((pre, current) => pre + Number(current.total), 0);
+        return <ListItem account={member.account} paidBy={paidBy} key={index} />;
+      })}
     </List>
   );
 };
 
-const UserPanel = () => {
+const UserPanel = (props) => {
+  const { members, dailyExpenses } = props;
   return (
     <Row>
       <Col>
@@ -86,11 +84,11 @@ const UserPanel = () => {
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
-          <UserList />
+          <UserList members={members} dailyExpenses={dailyExpenses} />
         </Panel>
       </Col>
     </Row >
   );
 };
 
-export default UserPanel;
+export default withCache(UserPanel);
