@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Provider } from './hoc/index';
 import Divider from '../../components/Divider';
-import RecordTable from './widget/RecordTable';
+import SummaryTable from './widget/SummaryTable';
 
 const Summary = () => {
   return (
@@ -10,7 +10,7 @@ const Summary = () => {
       <Provider>
         <h2 >Summary</h2>
         <Divider height='20' />
-        <RecordTable />
+        <SummaryTable />
       </Provider>
     </div>
   );

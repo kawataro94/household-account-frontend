@@ -6,32 +6,8 @@ import Divider from '../../../components/Divider';
 
 const { ColumnGroup, Column, HeaderCell, Cell } = Table;
 
-const data = [
-  {
-    syokuhi: 30000,
-    seikatsu: 20000,
-    shiharai: '2020/7',
-    yachinMonth: '7月分',
-    yachinCost: 10000,
-    denki: 10000,
-    suido: 10000,
-    gasu: 10000,
-    total: 1000000
-  },
-  {
-    syokuhi: 50000,
-    seikatsu: 25000,
-    shiharai: '2020/8',
-    yachinMonth: '8月分',
-    yachinCost: 10000,
-    denki: 10000,
-    suido: 10000,
-    gasu: 10000,
-    total: 2000000
-  }
-];
-
-const RecordTable = () => {
+const SummaryTable = (props) => {
+  const { summary } = props;
   return (
     <Row>
       <Col>
@@ -39,10 +15,10 @@ const RecordTable = () => {
       </Col>
       <Divider height='10' />
       <Panel bordered>
-        <Table height={280} data={data} bordered cellBordered headerHeight={80}>
+        <Table height={280} data={summary} bordered cellBordered headerHeight={80}>
           <Column width={100} align="center" fixed='left'>
             <HeaderCell></HeaderCell>
-            <Cell dataKey="shiharai" />
+            <Cell dataKey="month" />
           </Column>
           <Column width={100} align="center" fixed='left'>
             <HeaderCell>合計</HeaderCell>
@@ -50,63 +26,57 @@ const RecordTable = () => {
           </Column>
           <Column width={130} align="right">
             <HeaderCell>食費</HeaderCell>
-            <Cell dataKey="syokuhi" />
+            <Cell dataKey="foodExpenses" />
           </Column>
           <Column width={130} align="right">
             <HeaderCell>生活用品</HeaderCell>
-            <Cell dataKey="seikatsu" />
+            <Cell dataKey="livingExpenses" />
           </Column>
           <ColumnGroup header="家賃" align="right">
             <Column width={130} colSpan={2}>
               <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="yachinMonth" />
+              <Cell dataKey="rentMonth" />
             </Column>
 
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="yachinCost" />
+              <Cell dataKey="rent" />
             </Column>
           </ColumnGroup>
           <ColumnGroup header="電気" align="right">
             <Column width={130} colSpan={2}>
               <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="yachinMonth" />
+              <Cell dataKey="rentMonth" />
             </Column>
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="yachinCost" />
+              <Cell dataKey="electricBill" />
             </Column>
           </ColumnGroup>
           <ColumnGroup header="水道" align="right">
             <Column width={130} colSpan={2}>
               <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="yachinMonth" />
+              <Cell dataKey="rentMonth" />
             </Column>
-
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="yachinCost" />
+              <Cell dataKey="waterBill" />
             </Column>
           </ColumnGroup>
           <ColumnGroup header="ガス" align="right">
             <Column width={130} colSpan={2}>
               <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="yachinMonth" />
+              <Cell dataKey="rentMonth" />
             </Column>
-
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="yachinCost" />
+              <Cell dataKey="gasBill" />
             </Column>
           </ColumnGroup>
-          {/* <Column width={100} align="center" fixed='left'>
-            <HeaderCell>合計</HeaderCell>
-            <Cell dataKey="total" />
-          </Column> */}
         </Table>
       </Panel>
     </Row>
   );
 };
 
-export default withCache(RecordTable);
+export default withCache(SummaryTable);
