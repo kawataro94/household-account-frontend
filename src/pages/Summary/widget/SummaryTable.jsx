@@ -8,7 +8,6 @@ const { ColumnGroup, Column, HeaderCell, Cell } = Table;
 
 const SummaryTable = (props) => {
   const { summary } = props;
-  console.log(props);
   return (
     <Row>
       <Col>
