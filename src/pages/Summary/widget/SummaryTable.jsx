@@ -15,7 +15,7 @@ const SummaryTable = (props) => {
       </Col>
       <Divider height='10' />
       <Panel bordered>
-        <Table height={280} data={summary} bordered cellBordered headerHeight={80}>
+        <Table height={500} data={summary} bordered cellBordered headerHeight={80}>
           <Column width={100} align="center" fixed='left'>
             <HeaderCell></HeaderCell>
             <Cell dataKey="month" />
@@ -26,11 +26,11 @@ const SummaryTable = (props) => {
           </Column>
           <Column width={130} align="right">
             <HeaderCell>食費</HeaderCell>
-            <Cell dataKey="foodExpenses" />
+            <Cell dataKey="food_expenses" />
           </Column>
           <Column width={130} align="right">
             <HeaderCell>生活用品</HeaderCell>
-            <Cell dataKey="livingExpenses" />
+            <Cell dataKey="living_expenses" />
           </Column>
           <ColumnGroup header="家賃" align="right">
             <Column width={130} colSpan={2}>
@@ -50,7 +50,7 @@ const SummaryTable = (props) => {
             </Column>
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="electricBill" />
+              <Cell dataKey="electric_bill" />
             </Column>
           </ColumnGroup>
           <ColumnGroup header="水道" align="right">
@@ -60,7 +60,7 @@ const SummaryTable = (props) => {
             </Column>
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="waterBill" />
+              <Cell dataKey="water_bill" />
             </Column>
           </ColumnGroup>
           <ColumnGroup header="ガス" align="right">
@@ -70,7 +70,7 @@ const SummaryTable = (props) => {
             </Column>
             <Column width={130}>
               <HeaderCell>費用</HeaderCell>
-              <Cell dataKey="gasBill" />
+              <Cell dataKey="gas_bill" />
             </Column>
           </ColumnGroup>
         </Table>

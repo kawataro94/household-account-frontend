@@ -5,6 +5,7 @@ import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import CreateEditModal from '../widget/CreateEditModal';
 import { withRecord } from '../hoc/index';
+import { categoryOption } from '../../../looksup';
 
 const { Column, HeaderCell, Cell } = Table;
 const RecordTable = (props) => {
@@ -54,7 +55,13 @@ const RecordTable = (props) => {
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell>カテゴリ</HeaderCell>
-            <Cell dataKey="category" />
+            <Cell dataKey="category">
+              {({ category }) => {
+                const label = (categoryOption.find(({ value }) => category === value) || {}).label;
+                return <span>{label}</span>;
+              }
+              }
+            </Cell>
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell>コスト</HeaderCell>
@@ -64,8 +71,8 @@ const RecordTable = (props) => {
             <HeaderCell>払人</HeaderCell>
             <Cell>
               {({ member_id }) => {
-                const member = (members || []).find(({ id }) => id === member_id);
-                return <span>{member && member.account}</span>;
+                const account = ((members || []).find(({ id }) => id === member_id) || {}).account;
+                return <span>{account}</span>;
               }
               }
             </Cell>
