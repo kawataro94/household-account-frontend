@@ -3,83 +3,25 @@ import axios from 'axios';
 
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
-  const [members, setMembers] = useState([]);
-  const [records, setRecords] = useState([]);
-  const [dailyExpenses, setDailyExpenses] = useState([]);
+  const [monthlyExpenses, setMonthlyExpenses] = useState([]);
 
   useEffect(() => {
-    getMembers();
-    getRecords();
-    getDailyExpenses();
+    getMonthlyExpenses();
   }, []);
 
-  const getMembers = () => {
+  const getMonthlyExpenses = () => {
     axios
-      .get('http://127.0.0.1:8000/member/members')
+      .get('http://127.0.0.1:8000/member/expenses/monthly')
       .then(({ data }) => {
-        setMembers(data);
-      })
-      .catch((e) => {
-        console.log(e, 'get members error');
-      });
-  };
-
-  const getRecords = () => {
-    axios
-      .get('http://127.0.0.1:8000/member/records')
-      .then(({ data }) => {
-        setRecords(data);
-      })
-      .catch((e) => {
-        console.log(e, 'get error');
-      });
-  };
-
-  const getDailyExpenses = () => {
-    axios
-      .get('http://127.0.0.1:8000/member/expenses/daily')
-      .then(({ data }) => {
-        setDailyExpenses(data);
+        setMonthlyExpenses(data);
       })
       .catch((e) => {
         console.log(e, 'get dailyExpenses error');
       });
   };
 
-  const summary = [
-    {
-      foodExpenses: 30000,
-      livingExpenses: 20000,
-      month: '2020-07',
-      rentMonth: '7月分',
-      rent: 10000,
-      electricBill: 10000,
-      waterBill: 10000,
-      gasBill: 10000,
-    },
-    {
-      foodExpenses: 50000,
-      livingExpenses: 25000,
-      month: '2020-08',
-      rentMonth: '8月分',
-      rent: 10000,
-      electricBill: 10000,
-      waterBill: 10000,
-      gasBill: 10000,
-    }
-  ];
-
-  const summaryWithTotal = summary.map((response) => {
-    const monthlyRecord = records.filter(({ date }) => date.match(response.month));
-    const total = monthlyRecord.reduce((pre, { cost }) => pre + cost, 0);
-    return { ...response, total };
-  });
-
   const providerState = {
-    members,
-    records,
-    dailyExpenses,
-    summary: summaryWithTotal
+    summary: monthlyExpenses
   };
 
   return (

@@ -1,10 +1,10 @@
 export const categoryOption = [
-  { label: '食費', value: 'foodExpenses' },
-  { label: '生活用品', value: 'livingExpenses' },
+  { label: '食費', value: 'food_expenses' },
+  { label: '生活用品', value: 'living_expenses' },
   { label: '家賃', value: 'rent' },
-  { label: '電気', value: 'electricBill' },
-  { label: '水道', value: 'waterBill' },
-  { label: 'ガス', value: 'gasBill' },
+  { label: '電気', value: 'electric_bill' },
+  { label: '水道', value: 'water_bill' },
+  { label: 'ガス', value: 'gas_bill' },
   { label: 'その他', value: 'others' },
 ];
 
