@@ -30,7 +30,15 @@ const CustomField = (props) => {
 
 const CreateEditForm = (props) => {
   const { formValue = {}, setFormValue, members } = props;
-  const option = members.map(({ id, account }) => {
+  const categoryOption = [
+    { label: '食費', value: 'syokuhi' },
+    { label: '生活用品', value: 'seikatsu' },
+    { label: '家賃', value: 'yachin' },
+    { label: '電気', value: 'denki' },
+    { label: '水道', value: 'suido' },
+    { label: 'ガス', value: 'gasu' },
+  ];
+  const memberOption = members.map(({ id, account }) => {
     return { label: account, value: id };
   });
 
@@ -52,7 +60,9 @@ const CreateEditForm = (props) => {
       <CustomField
         name="category"
         label="Category"
-        accepter={Input}
+        accepter={SelectPicker}
+        data={categoryOption}
+        block={true}
       />
       <CustomField
         name="date"
@@ -64,7 +74,7 @@ const CreateEditForm = (props) => {
         name="paidBy"
         label="Paid By"
         accepter={SelectPicker}
-        data={option}
+        data={memberOption}
         value={formValue.member_id}
         block={true}
       />
