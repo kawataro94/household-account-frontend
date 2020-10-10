@@ -10,7 +10,7 @@ const { Item } = Nav;
 const Sidebar = () => {
   const history = useHistory();
   const { pathname } = useLocation();
-  const [activeKey, setActiveKey] = useState(pathname.slice(1));
+  const [activeKey, setActiveKey] = useState(pathname.slice(1) || 'dashboard');
 
   const handleSelect = (eventKey) => {
     setActiveKey(eventKey);
