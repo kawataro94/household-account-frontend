@@ -3,6 +3,7 @@ import { Row, Col, Panel, FlexboxGrid, List } from 'rsuite';
 
 import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
+import { YenUnit } from '../../../components/Units';
 
 const lineHeight = {
   lineHeight: '39px'
@@ -10,8 +11,9 @@ const lineHeight = {
 
 const lineHeight2 = {
   lineHeight: '106px',
-  fontSize: '24px',
-  padding: '0 20px'
+  fontSize: '30px',
+  padding: '0 20px',
+  textAlign: 'center'
 };
 
 const GroupInfomation = (props) => {
@@ -22,19 +24,14 @@ const GroupInfomation = (props) => {
     <List>
       <List.Item style={{ height: 130 }}>
         <FlexboxGrid>
-          <FlexboxGrid.Item colspan={8}>
+          <FlexboxGrid.Item colspan={12}>
             <div style={lineHeight2}>
-              <div>50000</div>
+              <div>50000<YenUnit style={{ fontSize: '20px' }} /></div>
             </div>
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={8} >
+          <FlexboxGrid.Item colspan={12} >
             <div style={lineHeight2}>
-              <div>{monthlyCost}</div>
-            </div>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={8} >
-            <div style={lineHeight2}>
-              <div>{50000 - monthlyCost}</div>
+              <div>{monthlyCost}<YenUnit style={{ fontSize: '20px' }} /></div>
             </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
@@ -55,19 +52,14 @@ const GroupPanel = (props) => {
       <Col>
         <Panel bordered>
           <FlexboxGrid>
-            <FlexboxGrid.Item colspan={8}>
+            <FlexboxGrid.Item colspan={12}>
               <div style={lineHeight}>
                 <div>今月の出費目標額</div>
               </div>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={8} >
+            <FlexboxGrid.Item colspan={12} >
               <div style={lineHeight}>
                 <div>現時点での出費額</div>
-              </div>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={8} >
-              <div style={lineHeight}>
-                <div>今月の使用可能額</div>
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>

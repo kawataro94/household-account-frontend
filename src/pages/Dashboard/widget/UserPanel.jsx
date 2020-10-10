@@ -3,11 +3,12 @@ import { Row, Col, Panel, List, FlexboxGrid, Icon } from 'rsuite';
 
 import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
+import { YenUnit } from '../../../components/Units';
 
-const lineHeight = {
+const lineHeight = (style) => ({
   lineHeight: '39px',
-  padding: '0 10px'
-};
+  ...style
+});
 
 const marginLeft = {
   marginLeft: 10
@@ -23,21 +24,21 @@ const ListItem = (props) => {
           style={{
             flexDirection: 'column',
             alignItems: 'flex-start',
-            overflow: 'hidden'
+            overflow: 'hidden',
           }}
         >
-          <div style={lineHeight}>
+          <div style={lineHeight({ padding: '0 20px' })} >
             <Icon icon="user-circle-o" size='lg' />
             <span style={marginLeft}>{account}</span>
           </div>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={12} >
-          <div style={lineHeight}>
-            <div>{paidBy}</div>
+          <div style={lineHeight({ padding: '0 20px', fontSize: '24px' })}>
+            <div style={{ padding: '0 20px' }}>{paidBy}<YenUnit style={{ fontSize: '18px' }} /></div>
           </div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
-    </List.Item>
+    </List.Item >
   );
 };
 
@@ -74,12 +75,12 @@ const UserPanel = (props) => {
                 overflow: 'hidden'
               }}
             >
-              <div style={lineHeight}>
+              <div style={lineHeight({ padding: '0 10px' })}>
                 ユーザー名
               </div>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12} >
-              <div style={lineHeight}>
+              <div style={lineHeight({ padding: '0 10px' })}>
                 <div>今月の使用可能額</div>
               </div>
             </FlexboxGrid.Item>
