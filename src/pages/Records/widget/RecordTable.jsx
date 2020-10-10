@@ -6,8 +6,22 @@ import SectionTitle from '../../../components/SectionTitle';
 import CreateEditModal from '../widget/CreateEditModal';
 import { withRecord } from '../hoc/index';
 import { categoryOption } from '../../../looksup';
+import { YenUnit } from '../../../components/Units';
 
 const { Column, HeaderCell, Cell } = Table;
+
+const Category = ({ category }) => {
+  const { label } = (categoryOption.find(({ value }) => category === value) || {});
+  return <span>{label}</span>;
+};
+
+const Cost = ({ cost }) => <span>{cost}<YenUnit /></span>;
+
+const MemberName = ({ members, member_id }) => {
+  const member = (members || []).find(({ id }) => id === member_id);
+  return <span>{member && member.account}</span>;
+};
+
 const RecordTable = (props) => {
   const { records, members, deleteRecord } = props;
   const [modalState, setModalState] = useState({
@@ -56,26 +70,18 @@ const RecordTable = (props) => {
           <Column flexGrow={1} resizable>
             <HeaderCell>カテゴリ</HeaderCell>
             <Cell dataKey="category">
-              {({ category }) => {
-                const label = (categoryOption.find(({ value }) => category === value) || {}).label;
-                return <span>{label}</span>;
-              }
-              }
+              {({ category }) => <Category category={category} />}
             </Cell>
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell>コスト</HeaderCell>
-            <Cell dataKey="cost" />
+            <Cell dataKey="cost">
+              {({ cost }) => <Cost cost={cost} />}
+            </Cell>
           </Column>
           <Column flexGrow={1} resizable>
-            <HeaderCell>払人</HeaderCell>
-            <Cell>
-              {({ member_id }) => {
-                const account = ((members || []).find(({ id }) => id === member_id) || {}).account;
-                return <span>{account}</span>;
-              }
-              }
-            </Cell>
+            <HeaderCell>支払人</HeaderCell>
+            <Cell>{({ member_id }) => <MemberName members={members} member_id={member_id} />}</Cell>
           </Column>
           <Column flexGrow={1} resizable>
             <HeaderCell></HeaderCell>
