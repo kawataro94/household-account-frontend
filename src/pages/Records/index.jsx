@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { Alert } from 'rsuite';
 
 import Divider from '../../components/Divider';
 import RecordTable from './widget/RecordTable';
@@ -9,13 +10,21 @@ import { Provider } from './hoc/index';
 const Records = () => {
   const [records, setRecords] = useState([]);
   const [members, setMembers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getRecords();
     getMembers();
   }, []);
 
+  const delayLoading = () => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  };
+
   const getRecords = () => {
+    setIsLoading(true);
     axios
       .get('http://127.0.0.1:8000/member/records')
       .then(({ data }) => {
@@ -23,6 +32,10 @@ const Records = () => {
       })
       .catch((e) => {
         console.log(e, 'get error');
+        delayLoading();
+      })
+      .finally(() => {
+        delayLoading();
       });
   };
 
@@ -54,6 +67,10 @@ const Records = () => {
       })
       .catch((e) => {
         console.log(e, 'post error');
+      })
+      .finally(() => {
+        Alert.config({ top: 80 });
+        Alert.success('新しいレコードを追加しました');
       });
   };
   const editRecord = (record, idx) => {
@@ -71,6 +88,10 @@ const Records = () => {
       })
       .catch((e) => {
         console.log(e, 'patch error');
+      })
+      .finally(() => {
+        Alert.config({ top: 80 });
+        Alert.success('レコードを編集しました');
       });
   };
 
@@ -86,6 +107,10 @@ const Records = () => {
       })
       .catch((e) => {
         console.log(e, 'delete error');
+      })
+      .finally(() => {
+        Alert.config({ top: 80 });
+        Alert.success('レコードを削除しました');
       });
 
   };
@@ -95,7 +120,8 @@ const Records = () => {
     members,
     createRecord,
     editRecord,
-    deleteRecord
+    deleteRecord,
+    isLoading,
   };
 
   return (

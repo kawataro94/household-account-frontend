@@ -11,7 +11,7 @@ const SummaryTable = (props) => {
   return (
     <Row>
       <Col>
-        <h5>最近の記録</h5>
+        <h5>月ごとの集計</h5>
       </Col>
       <Divider height='10' />
       <Panel bordered>

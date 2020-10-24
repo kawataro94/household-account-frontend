@@ -2,13 +2,13 @@ import React from 'react';
 import { Icon } from 'rsuite';
 
 export const categoryOption = [
-  { label: '食費', value: 'food_expenses' },
-  { label: '生活用品', value: 'living_expenses' },
-  { label: '家賃', value: 'rent' },
-  { label: '電気', value: 'electric_bill' },
-  { label: '水道', value: 'water_bill' },
-  { label: 'ガス', value: 'gas_bill' },
-  { label: 'その他', value: 'others' },
+  { label: '食費', value: 'food_expenses', color: '#fddede' },
+  { label: '生活用品', value: 'living_expenses', color: '#faddeb' },
+  { label: '家賃', value: 'rent', color: '#dfd6ef' },
+  { label: '電気', value: 'electric_bill', color: '#dce9f7' },
+  { label: '水道', value: 'water_bill', color: '#ddece7' },
+  { label: 'ガス', value: 'gas_bill', color: '#fbeed5' },
+  { label: 'その他', value: 'others', color: '#e6e6e5' },
 ];
 
 export const makeMemberOption = (members) => {

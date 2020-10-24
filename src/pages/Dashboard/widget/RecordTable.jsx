@@ -9,8 +9,8 @@ import { categoryOption } from '../../../looksup';
 const { Column, HeaderCell, Cell } = Table;
 
 const Category = ({ category }) => {
-  const { label } = (categoryOption.find(({ value }) => category === value) || {});
-  return <span>{label}</span>;
+  const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
+  return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
 };
 
 const Cost = ({ cost }) => <span>{cost}<YenUnit /></span>;
@@ -52,7 +52,7 @@ const RecordTable = (props) => {
             </Cell>
           </Column>
           <Column flexGrow={1}>
-            <HeaderCell>支払人</HeaderCell>
+            <HeaderCell>支払った人</HeaderCell>
             <Cell>{({ member_id }) => <MemberName members={members} member_id={member_id} />}</Cell>
           </Column>
         </Table>
