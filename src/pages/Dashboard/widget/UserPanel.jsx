@@ -81,7 +81,7 @@ const UserPanel = (props) => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12} >
               <div style={lineHeight({ padding: '0 10px' })}>
-                <div>今月の使用可能額</div>
+                <div>今月の使用額</div>
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
