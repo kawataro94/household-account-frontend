@@ -11,6 +11,11 @@ export const categoryOption = [
   { label: 'その他', value: 'others', color: '#e6e6e5' },
 ];
 
+export const summaryColumns = [
+  ...categoryOption,
+  { label: '合計', value: 'total', color: '#e9d5cf' },
+];
+
 export const makeMemberOption = (members) => {
   const option = members.map(({ id, account }) => {
     return { label: account, value: id };

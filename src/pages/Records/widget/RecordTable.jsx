@@ -23,7 +23,7 @@ const MemberName = ({ members, member_id }) => {
   return <span>{member && member.account}</span>;
 };
 
-const Actions = ({ index, openConfirm }) => (
+const Actions = ({ index, openConfirm, openCreateEditModal }) => (
   <>
     <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
     <Button color="red" size="sm" onClick={() => openConfirm(index)} style={{ marginLeft: 10 }} >削除</Button>
@@ -113,7 +113,7 @@ const RecordTable = (props) => {
           </Column>
           <Column flexGrow={1}>
             <HeaderCell></HeaderCell>
-            <Cell>{(_, index) => <Actions {...{ index, deleteRecord, openConfirm }} />}</Cell>
+            <Cell>{(_, index) => <Actions {...{ index, deleteRecord, openConfirm, openCreateEditModal }} />}</Cell>
           </Column>
         </Table>
       </Panel>
