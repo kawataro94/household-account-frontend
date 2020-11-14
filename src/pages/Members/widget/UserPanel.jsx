@@ -84,6 +84,7 @@ const AddModal = (props) => {
           console.log(e, 'post error');
         })
         .finally(closeAddModal);
+      return;
     }
 
     axios
