@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Panel, Button } from 'rsuite';
+import { Row, Col, Panel, Button } from 'rsuite';
 
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
+import Table from '../../../components/Table';
 import { YenUnit } from '../../../components/Units';
 import { categoryOption } from '../../../looksup';
 import { withRecord } from '../hoc/index';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
-
-const { Column, HeaderCell, Cell } = Table;
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
@@ -29,6 +28,29 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
     <Button color="red" size="sm" onClick={() => openConfirm(index)} style={{ marginLeft: 10 }} >削除</Button>
   </>
 );
+
+const makeColumns = ({ members }) => [
+  {
+    header: '日付',
+    key: 'date'
+  },
+  {
+    header: 'タイトル',
+    key: 'title'
+  },
+  {
+    header: 'カテゴリ',
+    cell: function getCategory({ category }) { return <Category {...{ category }} />; }
+  },
+  {
+    header: 'コスト',
+    cell: function getCost({ cost }) { return <Cost {...{ cost }} />; }
+  },
+  {
+    header: '支払った人',
+    cell: function getMemberName({ member_id }) { return <MemberName {...{ members, member_id }} />; }
+  }
+];
 
 const RecordTable = (props) => {
   const { records, members, deleteRecord, isLoading } = props;
@@ -79,6 +101,16 @@ const RecordTable = (props) => {
     onCancel: () => setIsConfirm(false)
   };
 
+  const tableProps = {
+    height: 520,
+    data: records,
+    rowHeight: 57,
+    shouldUpdateScroll: false,
+    loading: isLoading,
+    columns: makeColumns({ ...records, members }),
+    actions: function actionButton(index) { return <Actions {...{ index, openConfirm, openCreateEditModal }} />; }
+  };
+
   return (
     <Row>
       <Col>
@@ -86,36 +118,7 @@ const RecordTable = (props) => {
       </Col>
       <Divider height='10' />
       <Panel bordered>
-        <Table height={520} data={records} rowHeight={57} shouldUpdateScroll={false} loading={isLoading}>
-          <Column flexGrow={1}>
-            <HeaderCell>日付</HeaderCell>
-            <Cell dataKey="date" />
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>タイトル</HeaderCell>
-            <Cell dataKey="title" />
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>カテゴリ</HeaderCell>
-            <Cell dataKey="category">
-              {({ category }) => <Category {...{ category }} />}
-            </Cell>
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>コスト</HeaderCell>
-            <Cell dataKey="cost">
-              {({ cost }) => <Cost {...{ cost }} />}
-            </Cell>
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>支払った人</HeaderCell>
-            <Cell>{({ member_id }) => <MemberName {...{ members, member_id }} />}</Cell>
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell></HeaderCell>
-            <Cell>{(_, index) => <Actions {...{ index, deleteRecord, openConfirm, openCreateEditModal }} />}</Cell>
-          </Column>
-        </Table>
+        <Table {...tableProps} />
       </Panel>
       <CreateEditModal {...createEditModalProps} />
       <ConfirmModal {...confirmProps} />
