@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Panel, FlexboxGrid, List } from 'rsuite';
+import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
 
 import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
@@ -12,36 +12,13 @@ const lineHeight = {
 const lineHeight2 = {
   lineHeight: '106px',
   fontSize: '30px',
-  padding: '0 20px',
+  padding: '14px 20px',
   textAlign: 'center'
-};
-
-const GroupInfomation = (props) => {
-  const { dailyExpenses } = props;
-
-  const monthlyCost = dailyExpenses.reduce((pre, current) => pre + Number(current.total), 0);
-  return (
-    <List>
-      <List.Item style={{ height: 130 }}>
-        <FlexboxGrid>
-          <FlexboxGrid.Item colspan={12}>
-            <div style={lineHeight2}>
-              <div>50000<YenUnit style={{ fontSize: '20px' }} /></div>
-            </div>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={12} >
-            <div style={lineHeight2}>
-              <div>{monthlyCost}<YenUnit style={{ fontSize: '20px' }} /></div>
-            </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-      </List.Item>
-    </List>
-  );
 };
 
 const GroupPanel = (props) => {
   const { dailyExpenses } = props;
+  const monthlyCost = dailyExpenses.reduce((pre, current) => pre + Number(current.total), 0);
   return (
     <Row>
       <Col>
@@ -52,18 +29,23 @@ const GroupPanel = (props) => {
       <Col>
         <Panel bordered>
           <FlexboxGrid>
-            <FlexboxGrid.Item colspan={12}>
+            <FlexboxGrid.Item colspan={12} className='target-expense'>
               <div style={lineHeight}>
                 <div>今月の出費目標額</div>
               </div>
+              <div style={lineHeight2}>
+                <div>50000<YenUnit style={{ fontSize: '20px' }} /></div>
+              </div>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={12} >
+            <FlexboxGrid.Item colspan={12} className='monthly-expense'>
               <div style={lineHeight}>
                 <div>現時点での出費額</div>
               </div>
+              <div style={lineHeight2}>
+                <div>{monthlyCost}<YenUnit style={{ fontSize: '20px' }} /></div>
+              </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
-          <GroupInfomation dailyExpenses={dailyExpenses} />
         </Panel>
       </Col>
     </Row >
