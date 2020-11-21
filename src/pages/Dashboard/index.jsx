@@ -14,15 +14,17 @@ const Dashboard = () => {
         <h2 >Dashboard</h2>
         <Divider height='20' />
         <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item colspan={12}>
+          <FlexboxGrid.Item className='da-group-info'>
             <GroupPanel />
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={11}>
+          <FlexboxGrid.Item className='da-member-info'>
             <UserPanel />
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider height='20' />
-        <RecordTable />
+        <div className='da-record-table'>
+          <RecordTable />
+        </div>
       </Provider>
     </div>
   );

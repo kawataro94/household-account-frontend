@@ -7,7 +7,6 @@ const Table = (props) => {
 
   const { columns, actions, ...rest } = props;
   const tableColumns = Array.from(columns || []);
-  console.log(props, 'props');
   return (
     <RsuiteTable {...rest}>
       {tableColumns.map((column, idx) => {
