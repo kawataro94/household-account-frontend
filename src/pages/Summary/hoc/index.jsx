@@ -11,7 +11,7 @@ const Provider = ({ children }) => {
 
   const getMonthlyExpenses = () => {
     axios
-      .get('http://127.0.0.1:8000/member/expenses/monthly')
+      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/expenses/monthly')
       .then(({ data }) => {
         setMonthlyExpenses(data);
       })

@@ -15,7 +15,7 @@ const Provider = ({ children }) => {
 
   const getMembers = () => {
     axios
-      .get('http://127.0.0.1:8000/member/members')
+      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/members')
       .then(({ data }) => {
         setMembers(data);
       })
@@ -26,7 +26,7 @@ const Provider = ({ children }) => {
 
   const getRecords = () => {
     axios
-      .get('http://127.0.0.1:8000/member/records')
+      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/records')
       .then(({ data }) => {
         setRecords(data);
       })
@@ -37,7 +37,7 @@ const Provider = ({ children }) => {
 
   const getDailyExpenses = () => {
     axios
-      .get('http://127.0.0.1:8000/member/expenses/daily')
+      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/expenses/daily')
       .then(({ data }) => {
         setDailyExpenses(data);
       })
