@@ -79,7 +79,7 @@ const AddModal = (props) => {
   const onOk = () => {
     if (!id) {
       axios
-        .post(`http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/members`, params)
+        .post(`54.95.237.19/member/members`, params)
         .catch((e) => {
           console.log(e, 'post error');
         })
@@ -88,7 +88,7 @@ const AddModal = (props) => {
     }
 
     axios
-      .patch(`http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/members/${id}`, params)
+      .patch(`54.95.237.19/member/members/${id}`, params)
       .catch((e) => {
         console.log(e, 'patch error');
       })
@@ -126,7 +126,7 @@ const UserList = (props) => {
 
   useEffect(() => {
     axios
-      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/members', {})
+      .get('54.95.237.19/member/members', {})
       .then(({ data }) => {
         setMembers(data);
       },

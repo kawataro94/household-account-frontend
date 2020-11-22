@@ -26,7 +26,7 @@ const Records = () => {
   const getRecords = () => {
     setIsLoading(true);
     axios
-      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/records')
+      .get('54.95.237.19/member/records')
       .then(({ data }) => {
         setRecords(data);
       })
@@ -41,7 +41,7 @@ const Records = () => {
 
   const getMembers = () => {
     axios
-      .get('http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/members')
+      .get('54.95.237.19/member/members')
       .then(({ data }) => {
         setMembers(data);
       })
@@ -61,7 +61,7 @@ const Records = () => {
     };
 
     axios
-      .post(`http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/records`, params)
+      .post(`54.95.237.19/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);
       })
@@ -80,7 +80,7 @@ const Records = () => {
     };
 
     axios
-      .patch(`http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/records/${record.id}`, params)
+      .patch(`54.95.237.19/member/records/${record.id}`, params)
       .then(({ data }) => {
         const clone = Array.from(records);
         clone.splice(idx, 1, data);
@@ -99,7 +99,7 @@ const Records = () => {
     const { id } = records[index];
 
     axios
-      .delete(`http://ec2-3-112-7-255.ap-northeast-1.compute.amazonaws.com/member/records/${id}`)
+      .delete(`54.95.237.19/member/records/${id}`)
       .then(() => {
         const clone = Array.from(records);
         clone.splice(index, 1);
