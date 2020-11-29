@@ -12,7 +12,6 @@ const navStyle = {
 const Header = () => {
   const history = useHistory();
   const { pathname } = useLocation();
-  console.log(pathname, 'location');
   const toLink = (to) => {
     history.push(to);
   };

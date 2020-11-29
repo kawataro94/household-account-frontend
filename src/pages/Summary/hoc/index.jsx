@@ -11,7 +11,7 @@ const Provider = ({ children }) => {
 
   const getMonthlyExpenses = () => {
     axios
-      .get('http://54.95.237.19/member/expenses/monthly')
+      .get('http://localhost:8000/member/expenses/monthly')
       .then(({ data }) => {
         setMonthlyExpenses(data);
       })
