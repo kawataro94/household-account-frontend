@@ -25,6 +25,7 @@ const Config = () => {
     axios
       .get('http://localhost:8000/member/config/templates')
       .then(({ data }) => {
+        console.log(data, 'data');
         setTemplates(data);
       })
       .catch((e) => {
@@ -36,24 +37,22 @@ const Config = () => {
       });
   };
 
-  const createTemplates = template => {
+  const createTemplate = template => {
     axios
       .post(`http://localhost:8000/member/config/templates`, template)
       .then(({ data }) => {
-        setTemplates([...template, data]);
+        setTemplates([...templates, data]);
+        Alert.config({ top: 80 });
+        Alert.success('新しいテンプレートを追加しました');
       })
       .catch((e) => {
         console.log(e, 'post error');
-      })
-      .finally(() => {
-        Alert.config({ top: 80 });
-        Alert.success('新しいテンプレートを追加しました');
       });
   };
 
   const providerData = {
     templates,
-    createTemplates,
+    createTemplate,
     isLoading
   };
 
