@@ -7,16 +7,17 @@ import Table from '../../../components/Table';
 import { categoryOption } from '../../../looksup';
 import { withTemplate } from '../hoc/index';
 import CreateEditModal from './CreateEditModal';
+import ConfirmModal from './ConfirmModal';
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
   return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
 };
 
-const Actions = () => (
+const Actions = ({ index, openConfirm, openCreateEditModal }) => (
   <>
-    <Button appearance='primary' size="sm" onClick={() => { }}>編集</Button>
-    <Button color="red" size="sm" onClick={() => { }} style={{ marginLeft: 10 }} >削除</Button>
+    <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
+    <Button color="red" size="sm" onClick={() => openConfirm(index)} style={{ marginLeft: 10 }} >削除</Button>
   </>
 );
 
@@ -36,11 +37,13 @@ const columns = [
 ];
 
 const TemplateTable = (props) => {
-  const { templates } = props;
+  const { templates, deleteTemplate, isLoading } = props;
   const [modalState, setModalState] = useState({
     show: false,
     selected: null
   });
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   const openCreateEditModal = (index) => {
     setModalState({
@@ -56,6 +59,11 @@ const TemplateTable = (props) => {
     });
   };
 
+  const openConfirm = (index) => {
+    setIsConfirm(true);
+    setSelected(index);
+  };
+
   const createButtonProps = {
     buttonText: '追加する',
     onClick: () => openCreateEditModal()
@@ -67,14 +75,24 @@ const TemplateTable = (props) => {
     ...props
   };
 
+  const confirmProps = {
+    show: isConfirm,
+    selected,
+    onOk: (index) => {
+      deleteTemplate(index);
+      setIsConfirm(false);
+    },
+    onCancel: () => setIsConfirm(false)
+  };
+
   const tableProps = {
     height: 520,
     data: templates,
     rowHeight: 57,
     shouldUpdateScroll: false,
-    loading: false,
+    loading: isLoading,
     columns,
-    actions: function actionButton() { return <Actions />; }
+    actions: function actionButton(index) { return <Actions {...{ index, openConfirm, openCreateEditModal }} />; }
   };
 
   return (
@@ -87,6 +105,7 @@ const TemplateTable = (props) => {
         <Table {...tableProps} />
       </Panel>
       <CreateEditModal {...createEditModalProps} />
+      <ConfirmModal {...confirmProps} />
     </Row >
   );
 };

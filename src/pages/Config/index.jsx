@@ -7,6 +7,7 @@ import TemplateTable from './widget/TemplateTable';
 import { Provider } from './hoc/index';
 
 const Config = () => {
+  Alert.config({ top: 80 });
   const [templates, setTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,7 +43,6 @@ const Config = () => {
       .post(`http://localhost:8000/member/config/templates`, template)
       .then(({ data }) => {
         setTemplates([...templates, data]);
-        Alert.config({ top: 80 });
         Alert.success('新しいテンプレートを追加しました');
       })
       .catch((e) => {
@@ -50,12 +50,42 @@ const Config = () => {
       });
   };
 
+  const editTemplate = (template, idx) => {
+    axios
+      .patch(`http://localhost:8000/member/config/templates/${template.id}`, template)
+      .then(({ data }) => {
+        const clone = Array.from(templates);
+        clone.splice(idx, 1, data);
+        setTemplates(clone);
+        Alert.success('レコードを編集しました');
+      })
+      .catch((e) => {
+        console.log(e, 'patch error');
+      });
+  };
+
+  const deleteTemplate = index => {
+    const { id } = templates[index];
+    axios
+      .delete(`http://localhost:8000/member/config/templates/${id}`)
+      .then(() => {
+        const clone = Array.from(templates);
+        clone.splice(index, 1);
+        setTemplates(clone);
+        Alert.success('レコードを削除しました');
+      })
+      .catch((e) => {
+        console.log(e, 'delete error');
+      });
+  };
+
   const providerData = {
     templates,
     createTemplate,
-    isLoading
+    editTemplate,
+    deleteTemplate,
+    isLoading,
   };
-
 
   return (
     <div className='wrap'>

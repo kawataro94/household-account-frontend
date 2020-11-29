@@ -5,7 +5,7 @@ import CreateEditForm from './CreateEditForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
-  const { templates, modalState, closeCreateEditModal, createTemplate } = props;
+  const { templates, modalState, closeCreateEditModal, createTemplate, editTemplate } = props;
   const { show, selected } = modalState;
   const [formValue, setFormValue] = useState();
   const [disabled, setDisabled] = useState(true);
@@ -23,6 +23,7 @@ const CreateEditModal = (props) => {
   const onOk = () => {
     const createNew = typeof (selected) !== 'number' ? true : false;
     if (createNew) createTemplate(formValue);
+    if (!createNew) editTemplate(formValue, selected);
     closeCreateEditModal();
   };
   const onCancel = () => {
