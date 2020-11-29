@@ -15,7 +15,7 @@ const Provider = ({ children }) => {
 
   const getMembers = () => {
     axios
-      .get('http://54.95.237.19/member/members')
+      .get('http://localhost:8000/member/members')
       .then(({ data }) => {
         setMembers(data);
       })
@@ -26,7 +26,7 @@ const Provider = ({ children }) => {
 
   const getRecords = () => {
     axios
-      .get('http://54.95.237.19/member/records')
+      .get('http://localhost:8000/member/records')
       .then(({ data }) => {
         setRecords(data);
       })
@@ -37,7 +37,7 @@ const Provider = ({ children }) => {
 
   const getDailyExpenses = () => {
     axios
-      .get('http://54.95.237.19/member/expenses/daily')
+      .get('http://localhost:8000/member/expenses/daily')
       .then(({ data }) => {
         setDailyExpenses(data);
       })
