@@ -26,7 +26,6 @@ const Config = () => {
     axios
       .get('http://localhost:8000/member/config/templates')
       .then(({ data }) => {
-        console.log(data, 'data');
         setTemplates(data);
       })
       .catch((e) => {

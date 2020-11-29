@@ -4,7 +4,8 @@ import { FlexboxGrid } from 'rsuite';
 import Divider from '../../components/Divider';
 import { Provider } from './hoc/index';
 import GroupPanel from './widget/GroupPanel';
-import UserPanel from './widget/UserPanel';
+// import UserPanel from './widget/UserPanel';
+import QuickFormPane from './widget/QuickFormPanel';
 import RecordTable from './widget/RecordTable';
 
 const Dashboard = () => {
@@ -18,7 +19,8 @@ const Dashboard = () => {
             <GroupPanel />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item className='da-member-info'>
-            <UserPanel />
+            {/* <UserPanel /> */}
+            <QuickFormPane />
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <Divider height='20' />
