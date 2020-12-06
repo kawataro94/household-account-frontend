@@ -17,6 +17,8 @@ const CustomNav = ({ active, onSelect, ...props }) => {
   );
 };
 
+const Month = ({ month, year }) => <div>{year}-{month < 10 && 0}{month}</div>;
+
 const Title = ({ name }) => {
   const { label, color } = (summaryColumns.find(({ value }) => name === value) || {});
   return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
@@ -43,10 +45,9 @@ const SummaryTable = (props) => {
         <Table height={500} data={summary} bordered cellBordered headerHeight={80}>
           <Column width={100} align="center" fixed='left'>
             <HeaderCell></HeaderCell>
-            <Cell dataKey="month" />
+            <Cell>{({ month, year }) => <Month {...{ month, year }} />}</Cell>
           </Column>
           <Column width={100} align="center" fixed='left'>
-            {/* <HeaderCell></HeaderCell> */}
             <HeaderCell><Title name='total' /></HeaderCell>
             <Cell>{({ total }) => <strong><Cost value={total} /></strong>}</Cell>
           </Column>
