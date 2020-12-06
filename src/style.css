@@ -14825,8 +14825,10 @@ textarea.rs-picker-search-input {
   padding-bottom: 20px;
 }
 .rs-list-item-md {
-  padding-top: 13px;
-  padding-bottom: 13px;
+  /* padding-top: 13px;
+  padding-bottom: 13px; */
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 .rs-list-item-sm {
   padding-top: 8px;
@@ -22336,7 +22338,8 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   flex: 0 0 auto;
 }
 
-.da-group-info {
+.da-group-info, .da-template-form {
+  padding: 10px;
   position: relative;
   display: block;
   min-height: 1px;
@@ -22347,6 +22350,7 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
 }
 
 .da-member-info {
+  padding: 10px;
   position: relative;
   display: block;
   min-height: 1px;
@@ -22354,6 +22358,10 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
+}
+
+.da-record-table {
+  padding: 10px;
 }
 
 .header-link {
@@ -22370,7 +22378,7 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   h2 {
     display: none;
   }
-  .da-group-info {
+  .da-group-info, .da-template-form {
     width: 100%;
   }
   .da-member-info, .da-record-table {

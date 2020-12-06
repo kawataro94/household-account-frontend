@@ -19,48 +19,6 @@ const marginLeft = {
   marginLeft: 10
 };
 
-const userInfo = [
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  },
-  {
-    target: 10000,
-    paid: 20000,
-    left: 10000
-  }
-];
 
 const AddModal = (props) => {
   const { selected, setSelected, show, closeAddModal } = props;
@@ -137,10 +95,10 @@ const UserList = (props) => {
   }, [show]);
 
   return (
-    <List hover>
+    <List hover style={{ height: 210, overflow: 'scroll' }}>
       {members.map((member, index) => {
         const { id, account } = member;
-        const { target, paid, left } = userInfo[index];
+        const { target = 100, paid = 100, left = 100 } = members[index];
         return (
           <List.Item key={index}>
             <FlexboxGrid>
