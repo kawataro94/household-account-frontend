@@ -12,7 +12,7 @@ const lineHeight = {
 const lineHeight2 = {
   lineHeight: '106px',
   fontSize: '30px',
-  padding: '14px 20px',
+  padding: '5px 20px',
   textAlign: 'center'
 };
 

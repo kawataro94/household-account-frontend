@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Panel, Button } from 'rsuite';
+import { Row, Col, Panel, Button, FlexboxGrid } from 'rsuite';
 
 import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
@@ -25,21 +25,24 @@ const QuickFormPanel = (props) => {
     template,
     closeCreateModal
   };
-  console.log(template, 'templatetemplatetemplatetemplate');
 
   return (
     <Row>
       <Col>
-        <h5>Quick Form</h5>
+        <h5>クイック入力</h5>
       </Col>
       <Divider height='10' />
       <Col>
         <Panel bordered>
-          {templates.map(({ templateName, ...content }, index) => {
-            return (
-              <span key={index} style={{ padding: 10 }}><Button onClick={() => openCreateModal(content)} appearance="primary">{templateName}</Button></span>
-            );
-          })}
+          <FlexboxGrid>
+            {templates.map(({ templateName, ...content }, index) => {
+              return (
+                <FlexboxGrid.Item key={index} style={{ padding: '10px 5px' }}>
+                  <Button onClick={() => openCreateModal(content)} appearance="primary">{templateName}</Button>
+                </FlexboxGrid.Item>
+              );
+            })}
+          </FlexboxGrid>
         </Panel>
       </Col>
       <QuickFormModal {...createModalProps} />

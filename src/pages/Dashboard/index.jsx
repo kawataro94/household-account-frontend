@@ -5,7 +5,7 @@ import Divider from '../../components/Divider';
 import { Provider } from './hoc/index';
 import GroupPanel from './widget/GroupPanel';
 // import UserPanel from './widget/UserPanel';
-import QuickFormPane from './widget/QuickFormPanel';
+import QuickFormPanel from './widget/QuickFormPanel';
 import RecordTable from './widget/RecordTable';
 
 const Dashboard = () => {
@@ -18,12 +18,13 @@ const Dashboard = () => {
           <FlexboxGrid.Item className='da-group-info'>
             <GroupPanel />
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item className='da-member-info'>
-            {/* <UserPanel /> */}
-            <QuickFormPane />
+          {/* <FlexboxGrid.Item className='da-member-info'>
+            <UserPanel />
+          </FlexboxGrid.Item> */}
+          <FlexboxGrid.Item className='da-template-form'>
+            <QuickFormPanel />
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <Divider height='20' />
         <div className='da-record-table'>
           <RecordTable />
         </div>

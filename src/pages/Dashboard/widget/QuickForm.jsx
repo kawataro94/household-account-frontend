@@ -32,7 +32,6 @@ const CustomField = (props) => {
 
 const CreateEditForm = (props) => {
   const { formValue, setFormValue, members } = props;
-  console.log(formValue, setFormValue, 'formValue, setFormValue');
   const memberOption = makeMemberOption(members);
 
   return (
