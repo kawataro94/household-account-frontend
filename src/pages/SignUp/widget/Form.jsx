@@ -4,7 +4,7 @@ import { Schema, Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuit
 const { StringType } = Schema.Types;
 const model = Schema.Model({
   account: StringType().isRequired('This field is required.'),
-  email: StringType().isRequired('This field is required.'),
+  email: StringType().isEmail('Please enter the correct email'),
   password: StringType().isRequired('This field is required.'),
 });
 

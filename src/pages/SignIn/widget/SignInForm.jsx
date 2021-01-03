@@ -3,7 +3,7 @@ import { Schema, Form, FormGroup, Input, ControlLabel, FormControl } from 'rsuit
 
 const { StringType } = Schema.Types;
 const model = Schema.Model({
-  email: StringType().isRequired('This field is required.'),
+  email: StringType().isEmail('This field is required.'),
   password: StringType().isRequired('This field is required.'),
 });
 
@@ -21,7 +21,7 @@ const CustomField = (props) => {
   );
 };
 
-const LoginForm = (props) => {
+const SignInForm = (props) => {
   const { formValue, setFormValue } = props;
 
   return (
@@ -49,4 +49,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;

@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase';
-import axios from 'axios';
+import Axios from 'axios';
 import { Button } from 'rsuite';
 
 import Top from '../../components/Top';
 import SignUpForm from './widget/Form';
 
+const httpClient = Axios.create({
+  withCredentials: true
+});
+
 const SignUp = () => {
   const history = useHistory();
-  const [formValue, setFormValue] = useState({});
+  const [formValue, setFormValue] = useState({
+    account: '',
+    email: '',
+    password: ''
+  });
 
-  const createUser = (account, uid) => {
+  const signUp = (uid) => {
+    const { account } = formValue;
     const params = {
-      account: account,
+      account,
       uid,
       balance: "100",
       password: "password",
       group_id: "1",
     };
-    console.log(params, 'params');
-    axios
-      .post(`http://localhost:8000/member/members`, params)
-      .then(({ data }) => {
-        console.log(data);
+    httpClient
+      .post(`http://localhost:8000/member/signup`, params)
+      .then(() => {
         history.push('/');
       })
       .catch((e) => {
@@ -32,10 +39,10 @@ const SignUp = () => {
   };
 
   const createUID = () => {
-    const { account, email, password } = formValue;
+    const { email, password } = formValue;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        createUser(account, user.uid);
+        signUp(user.uid);
       })
       .catch(({ code, message }) => {
         console.log(code, message);
@@ -51,7 +58,9 @@ const SignUp = () => {
     <Top>
       <h2 style={{ marginBottom: 20 }}>Sign Up</h2>
       <SignUpForm {...formProps} />
-      <div style={{ marginTop: 30, textAlign: 'right' }}><Button appearance="primary" onClick={() => createUID()}>Primary</Button></div>
+      <div style={{ marginTop: 30, textAlign: 'right' }}>
+        <Button appearance="primary" onClick={() => createUID()}>Submit</Button>
+      </div>
     </Top >
   );
 };

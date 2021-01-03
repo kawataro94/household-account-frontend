@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase';
-import axios from 'axios';
+import Axios from 'axios';
 import { Button } from 'rsuite';
 
 import Top from '../../components/Top';
-import LoginForm from './widget/LoginForm';
+import SignInForm from './widget/SignInForm';
 
-const Login = () => {
+const httpClient = Axios.create({
+  withCredentials: true
+});
+
+const SignIn = () => {
   const history = useHistory();
+  const [formValue, setFormValue] = useState({
+    email: '',
+    password: ''
+  });
 
-  const createUser = (account, uid) => {
+  const signIn = (uid) => {
     const params = {
-      account: account,
       uid,
-      balance: "100",
-      password: "password",
-      group_id: "1",
     };
-    console.log(params, 'params');
-    axios
-      .post(`http://localhost:8000/member/members`, params)
-      .then(({ data }) => {
-        console.log(data);
+    httpClient
+      .post(`http://localhost:8000/member/signin`, params)
+      .then(() => {
         history.push('/');
       })
       .catch((e) => {
@@ -30,30 +32,18 @@ const Login = () => {
       });
   };
 
-  const createUID = (account, email, password) => {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+
+  const checkUser = () => {
+    const { email, password } = formValue;
+    firebase.auth().signInWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        createUser(account, user.uid);
+        signIn(user.uid);
       })
       .catch(({ code, message }) => {
         console.log(code, message);
       });
   };
 
-  const loginUser = (email, password) => {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        console.log(user);
-        console.log('login');
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode, errorMessage, 'errorCode, errorMessage');
-      });
-  };
-
-  const [formValue, setFormValue] = useState();
   const formProps = {
     formValue,
     setFormValue
@@ -62,12 +52,12 @@ const Login = () => {
   return (
     <Top>
       <h2 style={{ marginBottom: 20 }}>Sign In</h2>
-      <LoginForm {...formProps} />
-      <div style={{ marginTop: 30, textAlign: 'right' }}><Button appearance="primary">Primary</Button></div>
-      <div><button onClick={() => createUID('Trank', 'test12@gmail.com', 'testTestTest')}>test</button></div>
-      <div><button onClick={() => loginUser('email@gmail.com', 'b')}>login</button></div>
+      <SignInForm {...formProps} />
+      <div style={{ marginTop: 30, textAlign: 'right' }}>
+        <Button appearance="primary" onClick={() => checkUser()}>Submit</Button>
+      </div>
     </Top >
   );
 };
 
-export default Login;
+export default SignIn;
