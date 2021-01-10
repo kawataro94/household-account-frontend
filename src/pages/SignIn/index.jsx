@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import Axios from 'axios';
 import { Button } from 'rsuite';
 
+import { serverUrl } from '../../../.env/resources';
 import Top from '../../components/Top';
 import SignInForm from './widget/SignInForm';
 
@@ -23,7 +24,7 @@ const SignIn = () => {
       uid,
     };
     httpClient
-      .post(`http://localhost:8000/member/signin`, params)
+      .post(`http://${serverUrl}/member/signin`, params)
       .then(() => {
         history.push('/');
       })

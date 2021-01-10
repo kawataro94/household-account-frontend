@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Alert } from 'rsuite';
 
+import { serverUrl } from '../../../.env/resources';
 import Divider from '../../components/Divider';
 import TemplateTable from './widget/TemplateTable';
 import { Provider } from './hoc/index';
@@ -24,7 +25,7 @@ const Config = () => {
   const getTemplates = () => {
     setIsLoading(true);
     axios
-      .get('http://localhost:8000/member/config/templates')
+      .get(`http://${serverUrl}/member/config/templates`)
       .then(({ data }) => {
         setTemplates(data);
       })
@@ -39,7 +40,7 @@ const Config = () => {
 
   const createTemplate = template => {
     axios
-      .post(`http://localhost:8000/member/config/templates`, template)
+      .post(`http://${serverUrl}/member/config/templates`, template)
       .then(({ data }) => {
         setTemplates([...templates, data]);
         Alert.success('新しいテンプレートを追加しました');
@@ -51,7 +52,7 @@ const Config = () => {
 
   const editTemplate = (template, idx) => {
     axios
-      .patch(`http://localhost:8000/member/config/templates/${template.id}`, template)
+      .patch(`http://${serverUrl}/member/config/templates/${template.id}`, template)
       .then(({ data }) => {
         const clone = Array.from(templates);
         clone.splice(idx, 1, data);
@@ -66,7 +67,7 @@ const Config = () => {
   const deleteTemplate = index => {
     const { id } = templates[index];
     axios
-      .delete(`http://localhost:8000/member/config/templates/${id}`)
+      .delete(`http://${serverUrl}/member/config/templates/${id}`)
       .then(() => {
         const clone = Array.from(templates);
         clone.splice(index, 1);

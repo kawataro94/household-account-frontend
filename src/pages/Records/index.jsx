@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { Alert } from 'rsuite';
 
+import { serverUrl } from '../../../.env/resources';
 import Divider from '../../components/Divider';
 import RecordTable from './widget/RecordTable';
 import { Provider } from './hoc/index';
@@ -26,7 +27,7 @@ const Records = () => {
   const getRecords = () => {
     setIsLoading(true);
     axios
-      .get('http://localhost:8000/member/records')
+      .get(`http://${serverUrl}/member/records`)
       .then(({ data }) => {
         setRecords(data);
       })
@@ -41,7 +42,7 @@ const Records = () => {
 
   const getMembers = () => {
     axios
-      .get('http://localhost:8000/member/members')
+      .get(`http://${serverUrl}/member/members`)
       .then(({ data }) => {
         setMembers(data);
       })
@@ -61,7 +62,7 @@ const Records = () => {
     };
 
     axios
-      .post(`http://localhost:8000/member/records`, params)
+      .post(`http://${serverUrl}/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);
       })
@@ -80,7 +81,7 @@ const Records = () => {
     };
 
     axios
-      .patch(`http://localhost:8000/member/records/${record.id}`, params)
+      .patch(`http://${serverUrl}/member/records/${record.id}`, params)
       .then(({ data }) => {
         const clone = Array.from(records);
         clone.splice(idx, 1, data);
@@ -99,7 +100,7 @@ const Records = () => {
     const { id } = records[index];
 
     axios
-      .delete(`http://localhost:8000/member/records/${id}`)
+      .delete(`http://${serverUrl}/member/records/${id}`)
       .then(() => {
         const clone = Array.from(records);
         clone.splice(index, 1);

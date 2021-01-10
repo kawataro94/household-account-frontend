@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { serverUrl } from '../../../../.env/resources';
+
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
   const [monthlyExpenses, setMonthlyExpenses] = useState([]);
@@ -11,7 +13,7 @@ const Provider = ({ children }) => {
 
   const getMonthlyExpenses = () => {
     axios
-      .get('http://localhost:8000/member/expenses/monthly')
+      .get(`http://${serverUrl}/member/expenses/monthly`)
       .then(({ data }) => {
         setMonthlyExpenses(data);
       })
