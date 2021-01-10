@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import Axios from 'axios';
 import { Button } from 'rsuite';
 
+import { serverUrl } from '../../../.env/resources';
 import Top from '../../components/Top';
 import SignUpForm from './widget/Form';
 
@@ -29,7 +30,7 @@ const SignUp = () => {
       group_id: "1",
     };
     httpClient
-      .post(`http://localhost:8000/member/signup`, params)
+      .post(`http://${serverUrl}/member/signup`, params)
       .then(() => {
         history.push('/');
       })

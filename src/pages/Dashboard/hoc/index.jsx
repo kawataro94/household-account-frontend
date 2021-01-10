@@ -3,6 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { Alert } from 'rsuite';
 
+import { serverUrl } from '../../../../.env/resources';
+
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
   const [members, setMembers] = useState([]);
@@ -19,7 +21,7 @@ const Provider = ({ children }) => {
 
   const getMembers = () => {
     axios
-      .get('http://localhost:8000/member/members')
+      .get(`http://${serverUrl}/member/members`)
       .then(({ data }) => {
         setMembers(data);
       })
@@ -30,7 +32,7 @@ const Provider = ({ children }) => {
 
   const getRecords = () => {
     axios
-      .get('http://localhost:8000/member/records')
+      .get(`http://${serverUrl}/member/records`)
       .then(({ data }) => {
         setRecords(data);
       })
@@ -41,7 +43,7 @@ const Provider = ({ children }) => {
 
   const getDailyExpenses = () => {
     axios
-      .get('http://localhost:8000/member/expenses/daily')
+      .get(`http://${serverUrl}/member/expenses/daily`)
       .then(({ data }) => {
         setDailyExpenses(data);
       })
@@ -52,7 +54,7 @@ const Provider = ({ children }) => {
 
   const getTemplates = () => {
     axios
-      .get('http://localhost:8000/member/config/templates')
+      .get(`http://${serverUrl}/member/config/templates`)
       .then(({ data }) => {
         setTemplates(data);
       })
@@ -72,7 +74,7 @@ const Provider = ({ children }) => {
     };
 
     axios
-      .post(`http://localhost:8000/member/records`, params)
+      .post(`http://${serverUrl}/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);
         Alert.config({ top: 80 });

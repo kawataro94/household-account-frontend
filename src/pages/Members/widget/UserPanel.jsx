@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Panel, List, FlexboxGrid, Icon, Button, Modal } from 'rsuite';
 import axios from 'axios';
 
+import { serverUrl } from '../../../../.env/resources';
 import Divider from '../../../components/Divider';
 import CreateEditForm from './CreateEditForm';
 
@@ -31,13 +32,14 @@ const AddModal = (props) => {
     password: "password",
     group_id: "1",
     account: account,
-    balance: "100"
+    balance: "100",
+    uid: account
   };
 
   const onOk = () => {
     if (!id) {
       axios
-        .post(`http://localhost:8000/member/members`, params)
+        .post(`http://${serverUrl}/member/members`, params)
         .catch((e) => {
           console.log(e, 'post error');
         })
@@ -46,7 +48,7 @@ const AddModal = (props) => {
     }
 
     axios
-      .patch(`http://localhost:8000/member/members/${id}`, params)
+      .patch(`http://${serverUrl}/member/members/${id}`, params)
       .catch((e) => {
         console.log(e, 'patch error');
       })
@@ -84,7 +86,7 @@ const UserList = (props) => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8000/member/members', {})
+      .get(`http://${serverUrl}/member/members`, {})
       .then(({ data }) => {
         setMembers(data);
       },
