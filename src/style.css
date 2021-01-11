@@ -22396,4 +22396,15 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   .rs-nav-item > .rs-nav-item-content > .rs-icon {
     margin-right: 0
   }
+    .rs-panel-body {
+    padding: 10px;
+  }
+  .wrap {
+    width: 100%;
+    padding: 14px;
+  } 
+  .da-group-info, .da-template-form {
+    padding: 0px;
+    margin-bottom: 10px;
+  }
 }
