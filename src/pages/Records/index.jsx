@@ -8,6 +8,10 @@ import Divider from '../../components/Divider';
 import RecordTable from './widget/RecordTable';
 import { Provider } from './hoc/index';
 
+const httpClient = Axios.create({
+  withCredentials: true
+});
+
 const Records = () => {
   const [records, setRecords] = useState([]);
   const [members, setMembers] = useState([]);
@@ -26,7 +30,7 @@ const Records = () => {
 
   const getRecords = () => {
     setIsLoading(true);
-    Axios
+    httpClient
       .get(`http://${serverUrl}/member/records`)
       .then(({ data }) => {
         setRecords(data);
@@ -41,7 +45,7 @@ const Records = () => {
   };
 
   const getMembers = () => {
-    Axios
+    httpClient
       .get(`http://${serverUrl}/member/members`)
       .then(({ data }) => {
         setMembers(data);
@@ -61,7 +65,7 @@ const Records = () => {
       fixed: false,
     };
 
-    Axios
+    httpClient
       .post(`http://${serverUrl}/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);
@@ -80,7 +84,7 @@ const Records = () => {
       date: moment(record.date).format('YYYY-MM-DD')
     };
 
-    Axios
+    httpClient
       .patch(`http://${serverUrl}/member/records/${record.id}`, params)
       .then(({ data }) => {
         const clone = Array.from(records);
@@ -99,7 +103,7 @@ const Records = () => {
   const deleteRecord = index => {
     const { id } = records[index];
 
-    Axios
+    httpClient
       .delete(`http://${serverUrl}/member/records/${id}`)
       .then(() => {
         const clone = Array.from(records);

@@ -11,17 +11,30 @@ const httpClient = Axios.create({
 
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
+  const [me, setMe] = useState({});
   const [members, setMembers] = useState([]);
   const [records, setRecords] = useState([]);
   const [dailyExpenses, setDailyExpenses] = useState([]);
   const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
+    getMyProfile();
     getMembers();
     getRecords();
     getDailyExpenses();
     getTemplates();
   }, []);
+
+  const getMyProfile = () => {
+    httpClient
+      .get(`http://${serverUrl}/member/me`)
+      .then(({ data }) => {
+        setMe(data);
+      })
+      .catch((e) => {
+        console.log(e, 'get my profile error');
+      });
+  };
 
   const getMembers = () => {
     httpClient
@@ -90,6 +103,7 @@ const Provider = ({ children }) => {
   };
 
   const providerState = {
+    me,
     members,
     records,
     dailyExpenses,
