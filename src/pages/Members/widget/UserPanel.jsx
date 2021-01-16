@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Panel, List, FlexboxGrid, Icon, Button, Modal } from 'rsuite';
-import axios from 'axios';
+import Axios from 'axios';
 
 import { serverUrl } from '../../../../.env/resources';
 import Divider from '../../../components/Divider';
@@ -20,6 +20,9 @@ const marginLeft = {
   marginLeft: 10
 };
 
+const httpClient = Axios.create({
+  withCredentials: true
+});
 
 const AddModal = (props) => {
   const { selected, setSelected, show, closeAddModal } = props;
@@ -38,7 +41,7 @@ const AddModal = (props) => {
 
   const onOk = () => {
     if (!id) {
-      axios
+      httpClient
         .post(`http://${serverUrl}/member/members`, params)
         .catch((e) => {
           console.log(e, 'post error');
@@ -47,7 +50,7 @@ const AddModal = (props) => {
       return;
     }
 
-    axios
+    httpClient
       .patch(`http://${serverUrl}/member/members/${id}`, params)
       .catch((e) => {
         console.log(e, 'patch error');
@@ -85,7 +88,7 @@ const UserList = (props) => {
   };
 
   useEffect(() => {
-    axios
+    httpClient
       .get(`http://${serverUrl}/member/members`, {})
       .then(({ data }) => {
         setMembers(data);

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import { Alert } from 'rsuite';
 
 import { serverUrl } from '../../../.env/resources';
 import Divider from '../../components/Divider';
 import TemplateTable from './widget/TemplateTable';
 import { Provider } from './hoc/index';
+
+const httpClient = Axios.create({
+  withCredentials: true
+});
 
 const Config = () => {
   Alert.config({ top: 80 });
@@ -24,7 +28,7 @@ const Config = () => {
 
   const getTemplates = () => {
     setIsLoading(true);
-    axios
+    httpClient
       .get(`http://${serverUrl}/member/config/templates`)
       .then(({ data }) => {
         setTemplates(data);
@@ -39,7 +43,7 @@ const Config = () => {
   };
 
   const createTemplate = template => {
-    axios
+    httpClient
       .post(`http://${serverUrl}/member/config/templates`, template)
       .then(({ data }) => {
         setTemplates([...templates, data]);
@@ -51,7 +55,7 @@ const Config = () => {
   };
 
   const editTemplate = (template, idx) => {
-    axios
+    httpClient
       .patch(`http://${serverUrl}/member/config/templates/${template.id}`, template)
       .then(({ data }) => {
         const clone = Array.from(templates);
@@ -66,7 +70,7 @@ const Config = () => {
 
   const deleteTemplate = index => {
     const { id } = templates[index];
-    axios
+    httpClient
       .delete(`http://${serverUrl}/member/config/templates/${id}`)
       .then(() => {
         const clone = Array.from(templates);

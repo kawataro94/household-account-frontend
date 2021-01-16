@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import moment from 'moment';
 import { Alert } from 'rsuite';
 
@@ -26,7 +26,7 @@ const Records = () => {
 
   const getRecords = () => {
     setIsLoading(true);
-    axios
+    Axios
       .get(`http://${serverUrl}/member/records`)
       .then(({ data }) => {
         setRecords(data);
@@ -41,7 +41,7 @@ const Records = () => {
   };
 
   const getMembers = () => {
-    axios
+    Axios
       .get(`http://${serverUrl}/member/members`)
       .then(({ data }) => {
         setMembers(data);
@@ -61,7 +61,7 @@ const Records = () => {
       fixed: false,
     };
 
-    axios
+    Axios
       .post(`http://${serverUrl}/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);
@@ -80,7 +80,7 @@ const Records = () => {
       date: moment(record.date).format('YYYY-MM-DD')
     };
 
-    axios
+    Axios
       .patch(`http://${serverUrl}/member/records/${record.id}`, params)
       .then(({ data }) => {
         const clone = Array.from(records);
@@ -99,7 +99,7 @@ const Records = () => {
   const deleteRecord = index => {
     const { id } = records[index];
 
-    axios
+    Axios
       .delete(`http://${serverUrl}/member/records/${id}`)
       .then(() => {
         const clone = Array.from(records);

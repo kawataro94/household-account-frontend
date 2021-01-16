@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import moment from 'moment';
 import { Alert } from 'rsuite';
 
 import { serverUrl } from '../../../../.env/resources';
+
+const httpClient = Axios.create({
+  withCredentials: true
+});
 
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
@@ -20,7 +24,7 @@ const Provider = ({ children }) => {
   }, []);
 
   const getMembers = () => {
-    axios
+    httpClient
       .get(`http://${serverUrl}/member/members`)
       .then(({ data }) => {
         setMembers(data);
@@ -31,7 +35,7 @@ const Provider = ({ children }) => {
   };
 
   const getRecords = () => {
-    axios
+    httpClient
       .get(`http://${serverUrl}/member/records`)
       .then(({ data }) => {
         setRecords(data);
@@ -42,7 +46,7 @@ const Provider = ({ children }) => {
   };
 
   const getDailyExpenses = () => {
-    axios
+    httpClient
       .get(`http://${serverUrl}/member/expenses/daily`)
       .then(({ data }) => {
         setDailyExpenses(data);
@@ -53,7 +57,7 @@ const Provider = ({ children }) => {
   };
 
   const getTemplates = () => {
-    axios
+    httpClient
       .get(`http://${serverUrl}/member/config/templates`)
       .then(({ data }) => {
         setTemplates(data);
@@ -73,7 +77,7 @@ const Provider = ({ children }) => {
       fixed: false,
     };
 
-    axios
+    httpClient
       .post(`http://${serverUrl}/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);

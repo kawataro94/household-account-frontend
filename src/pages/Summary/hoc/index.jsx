@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 
 import { serverUrl } from '../../../../.env/resources';
 
@@ -12,7 +12,7 @@ const Provider = ({ children }) => {
   }, []);
 
   const getMonthlyExpenses = () => {
-    axios
+    Axios
       .get(`http://${serverUrl}/member/expenses/monthly`)
       .then(({ data }) => {
         setMonthlyExpenses(data);
