@@ -6,7 +6,7 @@ import QuickForm from './QuickForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const QuickFormModal = (props) => {
-  const { isOpen, template, closeCreateModal, createRecord } = props;
+  const { isOpen, template, closeCreateModal, createRecord, me: { id } } = props;
   const [formValue, setFormValue] = useState({});
   const [disabled, setDisabled] = useState(true);
 
@@ -16,6 +16,7 @@ const QuickFormModal = (props) => {
       title: title || '',
       category: category || '',
       date: new Date,
+      paidBy: id
     });
   }, [template]);
 

@@ -3,6 +3,10 @@ import Axios from 'axios';
 
 import { serverUrl } from '../../../../.env/resources';
 
+const httpClient = Axios.create({
+  withCredentials: true
+});
+
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
   const [monthlyExpenses, setMonthlyExpenses] = useState([]);
@@ -12,7 +16,7 @@ const Provider = ({ children }) => {
   }, []);
 
   const getMonthlyExpenses = () => {
-    Axios
+    httpClient
       .get(`http://${serverUrl}/member/expenses/monthly`)
       .then(({ data }) => {
         setMonthlyExpenses(data);
