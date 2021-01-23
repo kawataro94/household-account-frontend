@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { FlexboxGrid } from 'rsuite';
 
 import Divider from '../../components/Divider';
-import { Provider } from './hoc/index';
 import GroupPanel from './widget/GroupPanel';
 // import UserPanel from './widget/UserPanel';
 import QuickFormPanel from './widget/QuickFormPanel';
@@ -15,26 +14,28 @@ const Dashboard = () => {
   return (
     <div className='wrap'>
       <ErrorBoundary>
-        <Provider>
-          <h2 >Dashboard</h2>
-          <Divider height='20' />
-          <FlexboxGrid justify="space-between">
-            <FlexboxGrid.Item className='da-group-info'>
+        <h2 >Dashboard</h2>
+        <Divider height='20' />
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item className='da-group-info'>
+            <Suspense fallback={<p>Loading...</p>}>
               <GroupPanel />
-            </FlexboxGrid.Item>
-            {/* <FlexboxGrid.Item className='da-member-info'>
+            </Suspense>
+          </FlexboxGrid.Item>
+          {/* <FlexboxGrid.Item className='da-member-info'>
             <UserPanel />
           </FlexboxGrid.Item> */}
-            <FlexboxGrid.Item className='da-template-form'>
-              <Suspense fallback={<p>Loading...</p>}>
-                <QuickFormPanel />
-              </Suspense>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-          <div className='da-record-table'>
+          <FlexboxGrid.Item className='da-template-form'>
+            <Suspense fallback={<p>Loading...</p>}>
+              <QuickFormPanel />
+            </Suspense>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+        <div className='da-record-table'>
+          <Suspense fallback={<p>Loading...</p>}>
             <RecordTable />
-          </div>
-        </Provider>
+          </Suspense>
+        </div>
       </ErrorBoundary>
     </div >
   );

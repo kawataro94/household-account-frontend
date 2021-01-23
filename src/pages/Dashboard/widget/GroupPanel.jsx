@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
 
-import { withCache } from '../hoc/index';
+import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 
@@ -16,8 +16,8 @@ const lineHeight2 = {
   textAlign: 'center'
 };
 
-const GroupPanel = (props) => {
-  const { dailyExpenses } = props;
+const GroupPanel = () => {
+  const dailyExpenses = useMemo(() => resources.dailyExpenses.read(), [resources]);
   const monthlyCost = dailyExpenses.reduce((pre, current) => pre + Number(current.total), 0);
   return (
     <Row>
@@ -52,4 +52,4 @@ const GroupPanel = (props) => {
   );
 };
 
-export default withCache(GroupPanel);
+export default GroupPanel;

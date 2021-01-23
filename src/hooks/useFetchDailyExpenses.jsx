@@ -6,9 +6,9 @@ const httpClient = Axios.create({
   withCredentials: true
 });
 
-function useFetchRecords() {
+function useFetchDailyExpenses() {
   return httpClient
-    .get(`http://${serverUrl}/member/records`);
+    .get(`http://${serverUrl}/member/expenses/daily`);
 }
 
-export default useFetchRecords;
+export default useFetchDailyExpenses;

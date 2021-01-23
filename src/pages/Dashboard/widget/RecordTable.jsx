@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Row, Col, Table, Panel } from 'rsuite';
 
-import { withCache } from '../hoc/index';
+import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { categoryOption } from '../../../looksup';
@@ -20,8 +20,9 @@ const MemberName = ({ members, member_id }) => {
   return <span>{member && member.account}</span>;
 };
 
-const RecordTable = (props) => {
-  const { members, records } = props;
+const RecordTable = () => {
+  const members = useMemo(() => resources.members.read(), [resources]);
+  const records = useMemo(() => resources.records.read(), [resources]);
   const limited = records.slice(0, 5);
   return (
     <Row>
@@ -61,4 +62,4 @@ const RecordTable = (props) => {
   );
 };
 
-export default withCache(RecordTable);
+export default RecordTable;
