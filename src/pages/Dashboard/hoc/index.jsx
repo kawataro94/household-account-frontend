@@ -11,33 +11,19 @@ const httpClient = Axios.create({
 
 const Cache = React.createContext({});
 const Provider = ({ children }) => {
-  const [me, setMe] = useState({});
   const [members, setMembers] = useState([]);
   const [records, setRecords] = useState([]);
   const [dailyExpenses, setDailyExpenses] = useState([]);
-  const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
-    getMyProfile();
     getMembers();
     getRecords();
     getDailyExpenses();
-    getTemplates();
   }, []);
 
-  const getMyProfile = () => {
-    httpClient
-      .get(`http://${serverUrl}/member/me`)
-      .then(({ data }) => {
-        setMe(data);
-      })
-      .catch((e) => {
-        console.log(e, 'get my profile error');
-      });
-  };
 
   const getMembers = () => {
-    httpClient
+    return httpClient
       .get(`http://${serverUrl}/member/members`)
       .then(({ data }) => {
         setMembers(data);
@@ -48,7 +34,7 @@ const Provider = ({ children }) => {
   };
 
   const getRecords = () => {
-    httpClient
+    return httpClient
       .get(`http://${serverUrl}/member/records`)
       .then(({ data }) => {
         setRecords(data);
@@ -59,7 +45,7 @@ const Provider = ({ children }) => {
   };
 
   const getDailyExpenses = () => {
-    httpClient
+    return httpClient
       .get(`http://${serverUrl}/member/expenses/daily`)
       .then(({ data }) => {
         setDailyExpenses(data);
@@ -69,16 +55,6 @@ const Provider = ({ children }) => {
       });
   };
 
-  const getTemplates = () => {
-    httpClient
-      .get(`http://${serverUrl}/member/config/templates`)
-      .then(({ data }) => {
-        setTemplates(data);
-      })
-      .catch((e) => {
-        console.log(e, 'get error');
-      });
-  };
 
   const createRecord = record => {
     const params = {
@@ -90,7 +66,7 @@ const Provider = ({ children }) => {
       fixed: false,
     };
 
-    httpClient
+    return httpClient
       .post(`http://${serverUrl}/member/records`, params)
       .then(({ data }) => {
         setRecords([...records, data]);
@@ -103,11 +79,9 @@ const Provider = ({ children }) => {
   };
 
   const providerState = {
-    me,
     members,
     records,
     dailyExpenses,
-    templates,
     createRecord
   };
 

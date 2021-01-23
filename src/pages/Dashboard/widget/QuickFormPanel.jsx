@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Row, Col, Panel, Button, FlexboxGrid } from 'rsuite';
 
-import { withCache } from '../hoc/index';
+import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import QuickFormModal from './QuickFormModal';
 
-const QuickFormPanel = (props) => {
-  const { templates } = props;
+const QuickFormPanel = () => {
+  const templates = useMemo(() => resources.templates.read(), [resources]);
   const [isOpen, setIsOpen] = useState(false);
   const [template, setTemplate] = useState({});
 
@@ -50,4 +50,4 @@ const QuickFormPanel = (props) => {
   );
 };
 
-export default withCache(QuickFormPanel);
+export default QuickFormPanel;
