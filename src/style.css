@@ -15774,7 +15774,8 @@ textarea.rs-picker-search-input {
   float: right;
 }
 .rs-navbar-nav .rs-nav-item > .rs-nav-item-content {
-  padding: 18px 16px;
+  /* padding: 18px 16px; */
+  padding: 14px 16px;
   height: 56px;
 }
 .rs-navbar-nav .rs-nav-item:not(.rs-nav-item-disabled) > .rs-nav-item-content,
@@ -22364,13 +22365,13 @@ textarea.rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
   padding: 10px;
 }
 
-.header-link {
- display: none;   
+.mobile-menu {
+ display: none !important;   
 }
 
 @media screen and (max-width: 1024px) {
-  .header-link {
-    display: block;   
+  .mobile-menu {
+    display: inline-block !important
    }
   .rs-sidenav {
     display: none;
