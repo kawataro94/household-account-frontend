@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Modal } from 'rsuite';
 
-import { withCache } from '../hoc/index';
+import { resources } from '../../../resources';
 import QuickForm from './QuickForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const QuickFormModal = (props) => {
-  const { isOpen, template, closeCreateModal, createRecord, me: { id } } = props;
+  const { isOpen, template, closeCreateModal, createRecord } = props;
+  const { id } = useMemo(() => resources.myProfile.read(), [resources]);
   const [formValue, setFormValue] = useState({});
   const [disabled, setDisabled] = useState(true);
 
@@ -18,7 +19,7 @@ const QuickFormModal = (props) => {
       date: new Date,
       paidBy: id
     });
-  }, [template]);
+  }, [template, id]);
 
   useEffect(() => {
     const inputValue = Object.values(formValue || {});
@@ -63,4 +64,4 @@ const QuickFormModal = (props) => {
   );
 };
 
-export default withCache(QuickFormModal);
+export default QuickFormModal;
