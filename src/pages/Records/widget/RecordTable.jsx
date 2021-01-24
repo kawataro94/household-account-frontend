@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Row, Col, Panel, Button } from 'rsuite';
+import React, { useState, useMemo } from 'react';
+import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
+import { resources } from '../../../resources';
+import { useDeleteRecord } from '../../../hooks';
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
 import { YenUnit } from '../../../components/Units';
 import { categoryOption } from '../../../looksup';
-import { withRecord } from '../hoc/index';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
 
@@ -53,7 +54,10 @@ const makeColumns = ({ members }) => [
 ];
 
 const RecordTable = (props) => {
-  const { records, members, deleteRecord, isLoading } = props;
+  const records = useMemo(() => resources.records.read(), [resources]);
+  const members = useMemo(() => resources.members.read(), [resources]);
+  const { remove: deleteRecord } = useDeleteRecord();
+
   const [modalState, setModalState] = useState({
     show: false,
     selected: null
@@ -94,8 +98,18 @@ const RecordTable = (props) => {
   const confirmProps = {
     show: isConfirm,
     selected,
-    onOk: (index) => {
-      deleteRecord(index);
+    onOk: () => {
+      deleteRecord(records[selected].id)
+        .then(() => {
+          // const clone = Array.from(records);
+          // clone.splice(index, 1);
+          // setRecords(clone);
+          Alert.config({ top: 80 });
+          Alert.success('レコードを削除しました');
+        })
+        .catch((e) => {
+          console.log(e, 'delete error');
+        });
       setIsConfirm(false);
     },
     onCancel: () => setIsConfirm(false)
@@ -106,7 +120,6 @@ const RecordTable = (props) => {
     data: records,
     rowHeight: 57,
     shouldUpdateScroll: false,
-    loading: isLoading,
     columns: makeColumns({ ...records, members }),
     actions: function actionButton(index) { return <Actions {...{ index, openConfirm, openCreateEditModal }} />; }
   };
@@ -126,4 +139,4 @@ const RecordTable = (props) => {
   );
 };
 
-export default withRecord(RecordTable);
+export default RecordTable;

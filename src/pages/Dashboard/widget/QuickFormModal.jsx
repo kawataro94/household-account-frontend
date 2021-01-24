@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Modal } from 'rsuite';
+import { Button, Modal, Alert } from 'rsuite';
 
 import { resources } from '../../../resources';
+import { useCreateRecord } from '../../../hooks';
 import QuickForm from './QuickForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const QuickFormModal = (props) => {
-  const { isOpen, template, closeCreateModal, createRecord } = props;
+  const { isOpen, template, closeCreateModal } = props;
+  const { create: createRecord } = useCreateRecord();
   const { id } = useMemo(() => resources.myProfile.read(), [resources]);
   const [formValue, setFormValue] = useState({});
   const [disabled, setDisabled] = useState(true);
@@ -27,7 +29,14 @@ const QuickFormModal = (props) => {
   }, [formValue]);
 
   const onOk = () => {
-    createRecord(formValue);
+    createRecord(formValue)
+      .then(() => {
+        Alert.config({ top: 80 });
+        Alert.success('新しいレコードを追加しました');
+      })
+      .catch((e) => {
+        console.log(e, 'post error');
+      });
     closeCreateModal();
   };
   const onCancel = () => {
