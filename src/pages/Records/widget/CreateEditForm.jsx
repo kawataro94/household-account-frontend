@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, DatePicker, SelectPicker } from 'rsuite';
 
-import { withRecord } from '../hoc/index';
+import { resources } from '../../../resources';
 import { categoryOption, makeMemberOption } from '../../../looksup';
 
 const { StringType, NumberType, DateType } = Schema.Types;
@@ -31,7 +31,8 @@ const CustomField = (props) => {
 };
 
 const CreateEditForm = (props) => {
-  const { formValue, setFormValue, members } = props;
+  const { formValue, setFormValue } = props;
+  const members = useMemo(() => resources.members.read(), [resources]);
   const memberOption = makeMemberOption(members);
 
   return (
@@ -79,4 +80,4 @@ const CreateEditForm = (props) => {
   );
 };
 
-export default withRecord(CreateEditForm);
+export default CreateEditForm;
