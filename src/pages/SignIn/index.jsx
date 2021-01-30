@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { Button } from 'rsuite';
 
 import { serverUrl } from '../../../.env/resources';
-import Top from '../../components/Top';
+import Center from '../../components/Center';
 import SignInForm from './widget/SignInForm';
 
 const httpClient = Axios.create({
@@ -51,13 +51,13 @@ const SignIn = () => {
   };
 
   return (
-    <Top>
+    <Center>
       <h2 style={{ marginBottom: 20 }}>Sign In</h2>
       <SignInForm {...formProps} />
       <div style={{ marginTop: 30, textAlign: 'right' }}>
         <Button appearance="primary" onClick={() => checkUser()}>Submit</Button>
       </div>
-    </Top >
+    </Center>
   );
 };
 
