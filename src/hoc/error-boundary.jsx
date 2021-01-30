@@ -1,4 +1,8 @@
 import React from 'react';
+import { Loader } from 'rsuite';
+import { withRouter } from "react-router-dom";
+
+import Center from '../components/Center';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -13,11 +17,28 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return <p>エラ-</p>;
+      const { history } = this.props;
+      const redirectMsg = (
+        <div>
+          <div>ログイン情報がありません。</div>
+          <div>数秒後にサインインページに移動します。</div>
+        </div>
+      );
+
+      setTimeout(() => {
+        history.push('/signin');
+      }, 10000);
+      return (
+        <Center>
+          <div style={{ textAlign: 'center' }}>
+            <Loader size='md' speed='slow' content={redirectMsg} vertical />
+          </div>
+        </Center>
+      );
     }
 
     return this.props.children;
   }
 }
 
-export default ErrorBoundary;
+export default withRouter(ErrorBoundary);
