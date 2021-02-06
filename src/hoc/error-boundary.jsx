@@ -3,6 +3,7 @@ import { Loader } from 'rsuite';
 import { withRouter } from "react-router-dom";
 
 import Center from '../components/Center';
+import { center } from './style';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class ErrorBoundary extends React.Component {
       }, 10000);
       return (
         <Center>
-          <div style={{ textAlign: 'center' }}>
+          <div css={center}>
             <Loader size='md' speed='slow' content={redirectMsg} vertical />
           </div>
         </Center>

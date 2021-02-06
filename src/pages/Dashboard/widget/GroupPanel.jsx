@@ -4,17 +4,7 @@ import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
 import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
-
-const lineHeight = {
-  lineHeight: '39px'
-};
-
-const lineHeight2 = {
-  lineHeight: '106px',
-  fontSize: '30px',
-  padding: '5px 20px',
-  textAlign: 'center'
-};
+import { lineHeight, lineHeight2 } from '../style';
 
 const GroupPanel = () => {
   const dailyExpenses = useMemo(() => resources.dailyExpenses.read(), [resources]);
@@ -30,19 +20,19 @@ const GroupPanel = () => {
         <Panel bordered>
           <FlexboxGrid>
             <FlexboxGrid.Item colspan={12} className='target-expense'>
-              <div style={lineHeight}>
+              <div css={lineHeight()}>
                 <div>今月の出費目標額</div>
               </div>
-              <div style={lineHeight2}>
-                <div>50000<YenUnit style={{ fontSize: '20px' }} /></div>
+              <div css={lineHeight2}>
+                <div>50000<YenUnit style='font-size: 20px;' /></div>
               </div>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12} className='monthly-expense'>
-              <div style={lineHeight}>
+              <div css={lineHeight()}>
                 <div>現時点での出費額</div>
               </div>
-              <div style={lineHeight2}>
-                <div>{monthlyCost}<YenUnit style={{ fontSize: '20px' }} /></div>
+              <div css={lineHeight2}>
+                <div>{monthlyCost}<YenUnit style='font-size: 20px;' /></div>
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>

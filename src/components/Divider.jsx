@@ -1,15 +1,14 @@
 
 import React from 'react';
+import { css } from '@emotion/react';
 
-const height = (h) => {
-  return {
-    height: `${h}px`
-  };
-};
+const height = (h) => css`
+  height: ${h}px;
+`;
 
 const Divider = ({ height: h }) => {
   return (
-    <div style={height(h)} ></div>
+    <div css={height(h)} ></div>
   );
 };
 

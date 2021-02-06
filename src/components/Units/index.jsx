@@ -1,10 +1,7 @@
 import React from 'react';
 
-const yen = (style) => ({
-  marginLeft: 6,
-  ...style,
-});
+import { yen } from '../style';
 
 export const YenUnit = ({ style }) => {
-  return <span style={yen(style)}>円</span>;
+  return <span css={yen(style)}>円</span>;
 };

@@ -10,10 +10,11 @@ import { YenUnit } from '../../../components/Units';
 import { categoryOption } from '../../../looksup';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
+import { categoryTag, buttonMargin } from '../style';
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
-  return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
+  return <div><span css={categoryTag(color)}>{label}</span></div>;
 };
 
 const Cost = ({ cost }) => <span>{cost}<YenUnit /></span>;
@@ -26,7 +27,7 @@ const MemberName = ({ members, member_id }) => {
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
   <>
     <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
-    <Button color="red" size="sm" onClick={() => openConfirm(index)} style={{ marginLeft: 10 }} >削除</Button>
+    <Button color="red" size="sm" onClick={() => openConfirm(index)} css={buttonMargin} >削除</Button>
   </>
 );
 

@@ -5,6 +5,7 @@ import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { summaryColumns } from '../../../looksup';
 import { withCache } from '../hoc/index';
+import { categoryTag, costFont } from '../style';
 
 const { ColumnGroup, Column, HeaderCell, Cell } = Table;
 const CustomNav = ({ active, onSelect, ...props }) => {
@@ -21,12 +22,12 @@ const Month = ({ month, year }) => <div>{year}-{month < 10 && 0}{month}</div>;
 
 const Title = ({ name }) => {
   const { label, color } = (summaryColumns.find(({ value }) => name === value) || {});
-  return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
+  return <div><span css={categoryTag(color)}>{label}</span></div>;
 };
 
 const Cost = ({ value }) => {
   return (
-    <><span style={{ fontSize: 16 }}>{value}</span><YenUnit style={{ fontSize: 12 }} /></>
+    <><span css={costFont}>{value}</span><YenUnit style='font-size: 12px;' /></>
   );
 };
 

@@ -7,6 +7,7 @@ import { Button } from 'rsuite';
 import { serverUrl } from '../../../.env/resources';
 import Center from '../../components/Center';
 import SignInForm from './widget/SignInForm';
+import { buttonMargin, title } from './style';
 
 const httpClient = Axios.create({
   withCredentials: true
@@ -52,9 +53,9 @@ const SignIn = () => {
 
   return (
     <Center>
-      <h2 style={{ marginBottom: 20 }}>Sign In</h2>
+      <h2 css={title}>Sign In</h2>
       <SignInForm {...formProps} />
-      <div style={{ marginTop: 30, textAlign: 'right' }}>
+      <div css={buttonMargin}>
         <Button appearance="primary" onClick={() => checkUser()}>Submit</Button>
       </div>
     </Center>

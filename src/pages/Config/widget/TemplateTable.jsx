@@ -8,16 +8,17 @@ import { categoryOption } from '../../../looksup';
 import { withTemplate } from '../hoc/index';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
+import { categoryTag, confirmButton } from '../style';
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
-  return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
+  return <div><span css={categoryTag(color)}>{label}</span></div>;
 };
 
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
   <>
     <Button appearance='primary' size="sm" onClick={() => openCreateEditModal(index)}>編集</Button>
-    <Button color="red" size="sm" onClick={() => openConfirm(index)} style={{ marginLeft: 10 }} >削除</Button>
+    <Button color="red" size="sm" onClick={() => openConfirm(index)} css={confirmButton} >削除</Button>
   </>
 );
 
