@@ -5,20 +5,8 @@ import Axios from 'axios';
 import { serverUrl } from '../../../../.env/resources';
 import Divider from '../../../components/Divider';
 import CreateEditForm from './CreateEditForm';
+import { lineHeight, lineHeightH5, marginLeft, list, gridItem } from '../style';
 
-
-const lineHeight = {
-  lineHeight: '39px',
-  padding: '0 10px'
-};
-
-const lineHeightH5 = {
-  lineHeight: '42px',
-};
-
-const marginLeft = {
-  marginLeft: 10
-};
 
 const httpClient = Axios.create({
   withCredentials: true
@@ -100,7 +88,7 @@ const UserList = (props) => {
   }, [show]);
 
   return (
-    <List hover style={{ height: 210, overflow: 'scroll' }}>
+    <List hover css={list}>
       {members.map((member, index) => {
         const { id, account } = member;
         const { target = 100, paid = 100, left = 100 } = members[index];
@@ -109,34 +97,30 @@ const UserList = (props) => {
             <FlexboxGrid>
               <FlexboxGrid.Item
                 colspan={6}
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  overflow: 'hidden'
-                }}
+                css={gridItem}
               >
-                <div style={lineHeight}>
+                <div css={lineHeight}>
                   <Icon icon="user-circle-o" size='lg' />
-                  <span style={marginLeft}>{account}</span>
+                  <span css={marginLeft}>{account}</span>
                 </div>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={5}>
-                <div style={{ padding: '0 10px', lineHeight: '39px' }}>
+                <div css={lineHeight}>
                   <div>{target}</div>
                 </div>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={5} >
-                <div style={{ padding: '0 10px', lineHeight: '39px' }}>
+                <div css={lineHeight}>
                   <div>{paid}</div>
                 </div>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={5} >
-                <div style={lineHeight}>
+                <div css={lineHeight}>
                   <div>{left}</div>
                 </div>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={3} >
-                <Icon icon='pencil' size='lg' style={lineHeight} onClick={() => edit(id, account)} />
+                <Icon icon='pencil' size='lg' css={lineHeight} onClick={() => edit(id, account)} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </List.Item>
@@ -183,7 +167,7 @@ const UserPanel = () => {
     <Row>
       <Col>
         <FlexboxGrid justify='space-between' align='middle'>
-          <h5 style={lineHeightH5}>メンバー情報</h5>
+          <h5 css={lineHeightH5}>メンバー情報</h5>
           <Button {...addButtonProps}>追加する</Button>
         </FlexboxGrid>
       </Col>
@@ -193,28 +177,24 @@ const UserPanel = () => {
           <FlexboxGrid>
             <FlexboxGrid.Item
               colspan={6}
-              style={{
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                overflow: 'hidden'
-              }}
+              css={gridItem}
             >
-              <div style={lineHeight}>
+              <div css={lineHeight}>
                 ユーザー名
               </div>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={5}>
-              <div style={{ padding: '0 10px', lineHeight: '39px' }}>
+              <div css={lineHeight}>
                 <div>今月の出費目標額</div>
               </div>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={5} >
-              <div style={{ padding: '0 10px', lineHeight: '39px' }}>
+              <div css={lineHeight}>
                 <div>現時点での出費額</div>
               </div>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={5} >
-              <div style={lineHeight}>
+              <div css={lineHeight}>
                 <div>今月の使用額</div>
               </div>
             </FlexboxGrid.Item>

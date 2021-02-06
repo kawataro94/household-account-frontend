@@ -5,12 +5,13 @@ import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { categoryOption } from '../../../looksup';
+import { categoryTag } from '../style';
 
 const { Column, HeaderCell, Cell } = Table;
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
-  return <div><span style={{ backgroundColor: color, padding: '4px 10px', borderRadius: 4 }}>{label}</span></div>;
+  return <div><span css={categoryTag(color)}>{label}</span></div>;
 };
 
 const Cost = ({ cost }) => <span>{cost}<YenUnit /></span>;

@@ -4,6 +4,7 @@ import { Row, Col, Panel, Button, FlexboxGrid } from 'rsuite';
 import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import QuickFormModal from './QuickFormModal';
+import { gridItem } from '../style';
 
 const QuickFormPanel = () => {
   const templates = useMemo(() => resources.templates.read(), [resources]);
@@ -37,7 +38,7 @@ const QuickFormPanel = () => {
           <FlexboxGrid>
             {templates.map(({ templateName, ...content }, index) => {
               return (
-                <FlexboxGrid.Item key={index} style={{ padding: '10px 5px' }}>
+                <FlexboxGrid.Item key={index} css={gridItem}>
                   <Button onClick={() => openCreateModal(content)} appearance="primary">{templateName}</Button>
                 </FlexboxGrid.Item>
               );

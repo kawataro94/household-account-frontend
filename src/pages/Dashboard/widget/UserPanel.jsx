@@ -4,15 +4,7 @@ import { Row, Col, Panel, List, FlexboxGrid, Icon } from 'rsuite';
 import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
-
-const lineHeight = (style) => ({
-  lineHeight: '39px',
-  ...style
-});
-
-const marginLeft = {
-  marginLeft: 10
-};
+import { gridUserItem, lineHeight, marginLeft, padding } from '../style';
 
 const ListItem = (props) => {
   const { account, paidBy } = props;
@@ -21,20 +13,16 @@ const ListItem = (props) => {
       <FlexboxGrid>
         <FlexboxGrid.Item
           colspan={12}
-          style={{
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            overflow: 'hidden',
-          }}
+          css={gridUserItem}
         >
-          <div style={lineHeight({ padding: '0 20px' })} >
+          <div css={lineHeight(css`padding: 0 20px;`)} >
             <Icon icon="user-circle-o" size='lg' />
-            <span style={marginLeft}>{account}</span>
+            <span css={marginLeft}>{account}</span>
           </div>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={12} >
-          <div style={lineHeight({ padding: '0 20px', fontSize: '24px' })}>
-            <div style={{ padding: '0 20px' }}>{paidBy}<YenUnit style={{ fontSize: '18px' }} /></div>
+          <div css={lineHeight(css`padding: 0 20px;font-size: 24px;`)}>
+            <div css={padding}>{paidBy}<YenUnit style='font-size: 18px;' /></div>
           </div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
@@ -69,18 +57,14 @@ const UserPanel = (props) => {
           <FlexboxGrid>
             <FlexboxGrid.Item
               colspan={12}
-              style={{
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                overflow: 'hidden'
-              }}
+              css={gridUserItem}
             >
-              <div style={lineHeight({ padding: '0 10px' })}>
+              <div css={lineHeight('padding: 0 10px;')}>
                 ユーザー名
               </div>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12} >
-              <div style={lineHeight({ padding: '0 10px' })}>
+              <div css={lineHeight('padding: 0 10px;')}>
                 <div>今月の使用額</div>
               </div>
             </FlexboxGrid.Item>

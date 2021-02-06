@@ -4,13 +4,7 @@ import { Navbar, Nav, Icon } from 'rsuite';
 import Axios from 'axios';
 
 import { serverUrl } from '../../.env/resources';
-
-const navStyle = {
-  padding: '18px 20px',
-  display: 'inline-block',
-  fontSize: '16px',
-  fontWeight: 'bold'
-};
+import { navStyle } from './style';
 
 const httpClient = Axios.create({
   withCredentials: true
@@ -34,7 +28,7 @@ const Header = () => {
   return (
     <Navbar appearance="subtle">
       <Navbar.Header>
-        <a href="#" style={navStyle} >Household Account</a>
+        <a href="#" css={navStyle} >Household Account</a>
       </Navbar.Header>
       <Nav pullRight activeKey={pathname} >
         <Nav.Item className='mobile-menu' eventKey='/' icon={<Icon icon="dashboard" size="2x" />} onClick={() => toLink('/')} ></Nav.Item>

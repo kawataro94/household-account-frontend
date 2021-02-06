@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Sidenav, Nav } from 'rsuite';
 
 import { navItems } from '../looksup';
+import { sideNavWidth } from './style';
 
 const { Body } = Sidenav;
 const { Item } = Nav;
@@ -21,7 +22,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Sidenav activeKey={activeKey} onSelect={handleSelect} style={{ width: 250, height: 'calc(100vh - 56px)' }}>
+    <Sidenav activeKey={activeKey} onSelect={handleSelect} css={sideNavWidth}>
       <Body>
         <Nav>
           {navItems.map(({ title, to, ...rest }, key) => (

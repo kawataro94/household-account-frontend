@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import 'rsuite/dist/styles/rsuite-default.css';
+import { css } from '@emotion/react';
 
 import Dashboard from './pages/Dashboard';
 import Records from './pages/Records';
@@ -12,11 +13,15 @@ import Navbar from './components/Navbar';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
+const flex = css`
+  display: flex;
+`;
+
 const AuthTheme = ({ children }) => {
   return (
     <>
       <Navbar />
-      <div style={{ display: 'flex' }}>
+      <div css={flex}>
         <Sidebar />
         {children}
       </div>
