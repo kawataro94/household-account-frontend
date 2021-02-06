@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -10,26 +11,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|mjs|jsx)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                '@babel/preset-env',
-                '@babel/preset-react',
-              ],
-              plugins: ["transform-class-properties"]
-            }
-          }
-        ]
-      }
-    ]
+    publicPath: ''
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -39,7 +21,9 @@ module.exports = {
       title: 'Household-Accounts',
       hash: true,
     }),
-
+    new webpack.DefinePlugin({
+      'process.env.RUN_ENV': JSON.stringify('development')
+    })
   ],
   optimization: {
     minimizer: [
@@ -65,12 +49,7 @@ module.exports = {
       {
         test: /\.(scss|sass|less|css)$/i,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          'css-loader',
-          'sass-loader',
-          'less-loader'
+          MiniCssExtractPlugin.loader, 'css-loader'
         ],
       },
       {
@@ -95,7 +74,8 @@ module.exports = {
                 '@babel/preset-env',
                 '@babel/preset-react',
                 "@emotion/babel-preset-css-prop"
-              ]
+              ],
+              plugins: ["transform-class-properties"]
             }
           }
         ]
@@ -107,9 +87,10 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    open: true,
-    watchContentBase: true,
     port: 3000,
+    open: true,
+    compress: true,
     historyApiFallback: true
-  }
+  },
+  devtool: 'inline-source-map'
 };
