@@ -27,7 +27,6 @@ const CustomField = (props) => {
 
 const CreateEditForm = (props) => {
   const { formValue, setFormValue } = props;
-
   return (
     <Form
       model={model}

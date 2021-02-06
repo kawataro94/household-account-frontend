@@ -19,7 +19,8 @@ const QuickFormModal = (props) => {
       title: title || '',
       category: category || '',
       date: new Date,
-      paidBy: id
+      paidBy: id,
+      cost: ''
     });
   }, [template, id]);
 
@@ -60,7 +61,7 @@ const QuickFormModal = (props) => {
   return (
     <Modal show={isOpen} onHide={closeCreateModal} size="xs">
       <Header>
-        <Title>View</Title>
+        <Title>Form</Title>
       </Header>
       <Body>
         <QuickForm {...createFormProps} />

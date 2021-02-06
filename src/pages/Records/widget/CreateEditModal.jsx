@@ -17,7 +17,13 @@ const CreateEditModal = (props) => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    const fv = records ? records[selected] : undefined;
+    const fv = selected ? records[selected] : {
+      title: '',
+      category: null,
+      date: null,
+      paidBy: null,
+      cost: ''
+    };
     setFormValue(fv);
   }, [records, selected]);
 
@@ -74,7 +80,7 @@ const CreateEditModal = (props) => {
   return (
     <Modal show={show} onHide={closeCreateEditModal} size="xs">
       <Header>
-        <Title>View</Title>
+        <Title>Form</Title>
       </Header>
       <Body>
         <CreateEditForm {...createEditFormProps} />
