@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Modal, Alert } from 'rsuite';
 
-import { resources } from '../../../resources';
-import { useCreateRecord, useEditRecord } from '../../../hooks';
+import { useCreateRecord, useEditRecord, useFetchRecords } from '../../../hooks';
 import CreateEditForm from './CreateEditForm';
+import { RecordsContext } from '../context';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
   const { modalState, closeCreateEditModal } = props;
-  const records = useMemo(() => resources.records.read(), [resources]);
+  const { records, setRecords } = useContext(RecordsContext);
   const { create: createRecord } = useCreateRecord();
   const { edit: editRecord } = useEditRecord();
 
@@ -17,7 +17,7 @@ const CreateEditModal = (props) => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    const fv = selected ? records[selected] : {
+    const fv = Number.isFinite(selected) ? records[selected] : {
       title: '',
       category: null,
       date: null,
@@ -39,6 +39,7 @@ const CreateEditModal = (props) => {
         .then(() => {
           Alert.config({ top: 80 });
           Alert.success('新しいレコードを追加しました');
+          useFetchRecords().then(({ data }) => setRecords(data));
         })
         .catch((e) => {
           console.log(e, 'post error');
@@ -47,11 +48,9 @@ const CreateEditModal = (props) => {
     if (!createNew) {
       editRecord(formValue, selected)
         .then(() => {
-          //   const clone = Array.from(records);
-          //   clone.splice(selected, 1, data);
-          //   setRecords(clone);
           Alert.config({ top: 80 });
           Alert.success('レコードを編集しました');
+          useFetchRecords().then(({ data }) => setRecords(data));
         })
         .catch((e) => {
           console.log(e, 'post error');

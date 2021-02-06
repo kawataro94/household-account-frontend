@@ -1,7 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useContext } from 'react';
 import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
-import { resources } from '../../../resources';
 import { useDeleteRecord } from '../../../hooks';
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
@@ -11,6 +10,7 @@ import { categoryOption } from '../../../looksup';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
 import { categoryTag, buttonMargin } from '../style';
+import { RecordsContext } from '../context';
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
@@ -55,8 +55,7 @@ const makeColumns = ({ members }) => [
 ];
 
 const RecordTable = (props) => {
-  const records = useMemo(() => resources.records.read(), [resources]);
-  const members = useMemo(() => resources.members.read(), [resources]);
+  const { records, members } = useContext(RecordsContext);
   const { remove: deleteRecord } = useDeleteRecord();
 
   const [modalState, setModalState] = useState({
