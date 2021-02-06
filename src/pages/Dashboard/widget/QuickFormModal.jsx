@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button, Modal, Alert } from 'rsuite';
 
-import { resources } from '../../../resources';
-import { useCreateRecord } from '../../../hooks';
+import { useCreateRecord, useFetchRecords } from '../../../hooks';
+import { DashboardContext } from '../context';
 import QuickForm from './QuickForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const QuickFormModal = (props) => {
   const { isOpen, template, closeCreateModal } = props;
+  const { myProfile: { id }, setRecords } = useContext(DashboardContext);
   const { create: createRecord } = useCreateRecord();
-  const { id } = useMemo(() => resources.myProfile.read(), [resources]);
   const [formValue, setFormValue] = useState({});
   const [disabled, setDisabled] = useState(true);
 
@@ -34,6 +34,7 @@ const QuickFormModal = (props) => {
       .then(() => {
         Alert.config({ top: 80 });
         Alert.success('新しいレコードを追加しました');
+        useFetchRecords().then(({ data }) => setRecords(data));
       })
       .catch((e) => {
         console.log(e, 'post error');

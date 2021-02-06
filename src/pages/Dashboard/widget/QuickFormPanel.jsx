@@ -1,13 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useContext } from 'react';
 import { Row, Col, Panel, Button, FlexboxGrid } from 'rsuite';
 
-import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import QuickFormModal from './QuickFormModal';
 import { gridItem } from '../style';
+import { DashboardContext } from '../context';
 
 const QuickFormPanel = () => {
-  const templates = useMemo(() => resources.templates.read(), [resources]);
+  const { templates } = useContext(DashboardContext);
   const [isOpen, setIsOpen] = useState(false);
   const [template, setTemplate] = useState({});
 

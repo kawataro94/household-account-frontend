@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useContext } from 'react';
 import { Row, Col, Table, Panel } from 'rsuite';
 
-import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { categoryOption } from '../../../looksup';
 import { categoryTag } from '../style';
+import { DashboardContext } from '../context';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -22,8 +22,7 @@ const MemberName = ({ members, member_id }) => {
 };
 
 const RecordTable = () => {
-  const members = useMemo(() => resources.members.read(), [resources]);
-  const records = useMemo(() => resources.records.read(), [resources]);
+  const { members, records } = useContext(DashboardContext);
   const limited = records.slice(0, 5);
   return (
     <Row>

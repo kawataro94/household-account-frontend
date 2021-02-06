@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Row, Col, Panel, List, FlexboxGrid, Icon } from 'rsuite';
 
-import { withCache } from '../hoc/index';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { gridUserItem, lineHeight, marginLeft, padding } from '../style';
+import { DashboardContext } from '../context';
 
 const ListItem = (props) => {
   const { account, paidBy } = props;
@@ -30,10 +30,9 @@ const ListItem = (props) => {
   );
 };
 
-const UserList = (props) => {
-  const { members, dailyExpenses } = props;
+const UserList = () => {
+  const { members, dailyExpenses } = useContext(DashboardContext);
   const limited = members.slice(0, 2);
-
   return (
     <List hover>
       {limited.map((member, index) => {
@@ -44,8 +43,7 @@ const UserList = (props) => {
   );
 };
 
-const UserPanel = (props) => {
-  const { members, dailyExpenses } = props;
+const UserPanel = () => {
   return (
     <Row>
       <Col>
@@ -69,11 +67,11 @@ const UserPanel = (props) => {
               </div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
-          <UserList members={members} dailyExpenses={dailyExpenses} />
+          <UserList />
         </Panel>
       </Col>
     </Row >
   );
 };
 
-export default withCache(UserPanel);
+export default UserPanel;

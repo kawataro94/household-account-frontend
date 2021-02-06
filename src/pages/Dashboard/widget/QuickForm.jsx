@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useContext } from 'react';
 import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, DatePicker, SelectPicker } from 'rsuite';
 
-import { resources } from '../../../resources';
 import { categoryOption, makeMemberOption } from '../../../looksup';
+import { DashboardContext } from '../context';
 
 const { StringType, NumberType, DateType } = Schema.Types;
 const model = Schema.Model({
@@ -34,7 +34,7 @@ const CustomField = (props) => {
 
 const CreateEditForm = (props) => {
   const { formValue, setFormValue } = props;
-  const members = useMemo(() => resources.members.read(), [resources]);
+  const { members } = useContext(DashboardContext);
   const memberOption = makeMemberOption(members);
   return (
     <Form
