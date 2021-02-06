@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useContext } from 'react';
 import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
 
-import { resources } from '../../../resources';
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { lineHeight, lineHeight2 } from '../style';
+import { DashboardContext } from '../context';
 
 const GroupPanel = () => {
-  const dailyExpenses = useMemo(() => resources.dailyExpenses.read(), [resources]);
+  const { dailyExpenses } = useContext(DashboardContext);
   const monthlyCost = dailyExpenses.reduce((pre, current) => pre + Number(current.total), 0);
   return (
     <Row>

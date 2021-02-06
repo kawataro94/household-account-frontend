@@ -8,34 +8,33 @@ import QuickFormPanel from './widget/QuickFormPanel';
 import RecordTable from './widget/RecordTable';
 
 import ErrorBoundary from '../../hoc/error-boundary';
+import { Provider } from './context';
 
 const Dashboard = () => {
 
   return (
     <div className='wrap'>
       <ErrorBoundary>
-        <h2 >Dashboard</h2>
-        <Divider height='20' />
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item className='da-group-info'>
-            <Suspense fallback={<p>Loading...</p>}>
-              <GroupPanel />
-            </Suspense>
-          </FlexboxGrid.Item>
-          {/* <FlexboxGrid.Item className='da-member-info'>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Provider>
+            <h2 >Dashboard</h2>
+            <Divider height='20' />
+            <FlexboxGrid justify="space-between">
+              <FlexboxGrid.Item className='da-group-info'>
+                <GroupPanel />
+              </FlexboxGrid.Item>
+              {/* <FlexboxGrid.Item className='da-member-info'>
             <UserPanel />
           </FlexboxGrid.Item> */}
-          <FlexboxGrid.Item className='da-template-form'>
-            <Suspense fallback={<p>Loading...</p>}>
-              <QuickFormPanel />
-            </Suspense>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-        <div className='da-record-table'>
-          <Suspense fallback={<p>Loading...</p>}>
-            <RecordTable />
-          </Suspense>
-        </div>
+              <FlexboxGrid.Item className='da-template-form'>
+                <QuickFormPanel />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+            <div className='da-record-table'>
+              <RecordTable />
+            </div>
+          </Provider>
+        </Suspense>
       </ErrorBoundary>
     </div >
   );

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
-import { useDeleteRecord } from '../../../hooks';
+import { useDeleteRecord, useFetchRecords } from '../../../hooks';
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
@@ -55,7 +55,7 @@ const makeColumns = ({ members }) => [
 ];
 
 const RecordTable = (props) => {
-  const { records, members } = useContext(RecordsContext);
+  const { members, records, setRecords } = useContext(RecordsContext);
   const { remove: deleteRecord } = useDeleteRecord();
 
   const [modalState, setModalState] = useState({
@@ -101,11 +101,9 @@ const RecordTable = (props) => {
     onOk: () => {
       deleteRecord(records[selected].id)
         .then(() => {
-          // const clone = Array.from(records);
-          // clone.splice(index, 1);
-          // setRecords(clone);
           Alert.config({ top: 80 });
           Alert.success('レコードを削除しました');
+          useFetchRecords().then(({ data }) => setRecords(data));
         })
         .catch((e) => {
           console.log(e, 'delete error');
