@@ -5,13 +5,18 @@ import CreateEditForm from './CreateEditForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
+
   const { templates, modalState, closeCreateEditModal, createTemplate, editTemplate } = props;
   const { show, selected } = modalState;
   const [formValue, setFormValue] = useState();
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    const fv = templates ? templates[selected] : undefined;
+    const fv = selected ? templates[selected] : {
+      templateName: '',
+      title: '',
+      category: null
+    };
     setFormValue(fv);
   }, [templates, selected]);
 
@@ -47,7 +52,7 @@ const CreateEditModal = (props) => {
   return (
     <Modal show={show} onHide={closeCreateEditModal} size="xs">
       <Header>
-        <Title>View</Title>
+        <Title>Form</Title>
       </Header>
       <Body>
         <CreateEditForm {...createEditFormProps} />

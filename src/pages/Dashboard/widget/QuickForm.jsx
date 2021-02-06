@@ -36,7 +36,6 @@ const CreateEditForm = (props) => {
   const { formValue, setFormValue } = props;
   const members = useMemo(() => resources.members.read(), [resources]);
   const memberOption = makeMemberOption(members);
-
   return (
     <Form
       model={model}

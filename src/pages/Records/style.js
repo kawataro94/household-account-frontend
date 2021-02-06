@@ -18,3 +18,7 @@ export const categoryTag = (color) => css`
 export const buttonMargin = css`
   margin-left: 10px;
 `;
+
+export const textIndent = css`
+  text-indent: 29px;
+`;
