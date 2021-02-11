@@ -8,7 +8,7 @@ import { RecordsContext } from '../context';
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
   const { modalState, closeCreateEditModal } = props;
-  const { records, setRecords } = useContext(RecordsContext);
+  const { records, updateRecords } = useContext(RecordsContext);
   const { create: createRecord } = useCreateRecord();
   const { edit: editRecord } = useEditRecord();
 
@@ -39,7 +39,7 @@ const CreateEditModal = (props) => {
         .then(() => {
           Alert.config({ top: 80 });
           Alert.success('新しいレコードを追加しました');
-          useFetchRecords().then(({ data }) => setRecords(data));
+          useFetchRecords().then(({ data }) => updateRecords(data));
         })
         .catch((e) => {
           console.log(e, 'post error');
@@ -50,7 +50,7 @@ const CreateEditModal = (props) => {
         .then(() => {
           Alert.config({ top: 80 });
           Alert.success('レコードを編集しました');
-          useFetchRecords().then(({ data }) => setRecords(data));
+          useFetchRecords().then(({ data }) => updateRecords(data));
         })
         .catch((e) => {
           console.log(e, 'post error');

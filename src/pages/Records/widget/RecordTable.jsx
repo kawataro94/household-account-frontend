@@ -55,7 +55,7 @@ const makeColumns = ({ members }) => [
 ];
 
 const RecordTable = (props) => {
-  const { members, records, setRecords } = useContext(RecordsContext);
+  const { members, records, updateRecords } = useContext(RecordsContext);
   const { remove: deleteRecord } = useDeleteRecord();
 
   const [modalState, setModalState] = useState({
@@ -103,7 +103,7 @@ const RecordTable = (props) => {
         .then(() => {
           Alert.config({ top: 80 });
           Alert.success('レコードを削除しました');
-          useFetchRecords().then(({ data }) => setRecords(data));
+          useFetchRecords().then(({ data }) => updateRecords(data));
         })
         .catch((e) => {
           console.log(e, 'delete error');

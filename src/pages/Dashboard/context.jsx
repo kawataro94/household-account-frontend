@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-import { resources } from '../../resources';
+import { LoginContext } from '../../context';
+import { useResources } from '../../resources';
 
 export const DashboardContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-  const myProfile = resources.myProfile.read();
-  const members = resources.members.read();
-  const dailyExpenses = resources.dailyExpenses.read();
-  const templates = resources.templates.read();
-  const [records, setRecords] = useState(resources.records.read());
+  const { isLogin } = useContext(LoginContext);
+  const { resources } = useResources({ isLogin });
+  const myProfile = resources?.myProfile?.read() || {};
+  const members = resources?.members?.read() || [];
+  const dailyExpenses = resources?.dailyExpenses?.read() || [];
+  const templates = resources?.templates?.read() || [];
+  const [records, setRecords] = useState([]);
 
-  const value = { myProfile, members, dailyExpenses, templates, records, setRecords };
+  useEffect(() => {
+    setRecords(resources?.records?.read() || []);
+  }, [resources]);
+
+  const updateRecords = (data) => {
+    setRecords(data);
+  };
+
+  const value = { myProfile, members, dailyExpenses, templates, records, updateRecords };
 
   return <DashboardContext.Provider value={value} >{children}</DashboardContext.Provider>;
 };
