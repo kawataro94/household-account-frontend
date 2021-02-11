@@ -8,7 +8,7 @@ import QuickForm from './QuickForm';
 const { Header, Title, Body, Footer } = Modal;
 const QuickFormModal = (props) => {
   const { isOpen, template, closeCreateModal } = props;
-  const { myProfile: { id }, setRecords } = useContext(DashboardContext);
+  const { myProfile: { id }, updateRecords } = useContext(DashboardContext);
   const { create: createRecord } = useCreateRecord();
   const [formValue, setFormValue] = useState({});
   const [disabled, setDisabled] = useState(true);
@@ -34,7 +34,7 @@ const QuickFormModal = (props) => {
       .then(() => {
         Alert.config({ top: 80 });
         Alert.success('新しいレコードを追加しました');
-        useFetchRecords().then(({ data }) => setRecords(data));
+        useFetchRecords().then(({ data }) => updateRecords(data));
       })
       .catch((e) => {
         console.log(e, 'post error');

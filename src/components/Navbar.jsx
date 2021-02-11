@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { Navbar, Nav, Icon } from 'rsuite';
 import Axios from 'axios';
@@ -6,11 +6,14 @@ import Axios from 'axios';
 import { serverUrl } from '../../.env/resources';
 import { navStyle } from './style';
 
+import { LoginContext } from '../context';
+
 const httpClient = Axios.create({
   withCredentials: true
 });
 
 const Header = () => {
+  const { setIsLogin } = useContext(LoginContext);
   const history = useHistory();
   const { pathname } = useLocation();
   const toLink = (to) => {
@@ -22,6 +25,7 @@ const Header = () => {
       .post(`http://${serverUrl}/member/signout`)
       .then(() => {
         toLink('/signin');
+        setIsLogin(false);
       });
   };
 
