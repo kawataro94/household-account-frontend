@@ -33,7 +33,7 @@ const CreateEditModal = (props) => {
   }, [formValue]);
 
   const onOk = () => {
-    const createNew = typeof (selected) !== 'number' ? true : false;
+    const createNew = !Number.isFinite(selected);
     if (createNew) {
       createRecord(formValue)
         .then(() => {

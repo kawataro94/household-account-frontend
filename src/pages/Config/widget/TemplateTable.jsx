@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { Row, Col, Panel, Button } from 'rsuite';
+import React, { useState, useContext } from 'react';
+import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
+import { useDeleteTemplate, useFetchTemplates } from '../../../hooks';
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
 import { categoryOption } from '../../../looksup';
-import { withTemplate } from '../hoc/index';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
 import { categoryTag, confirmButton } from '../style';
+import { ConfigContext } from '../context';
 
 const Category = ({ category }) => {
   const { label, color } = (categoryOption.find(({ value }) => category === value) || {});
@@ -37,8 +38,10 @@ const columns = [
   }
 ];
 
-const TemplateTable = (props) => {
-  const { templates, deleteTemplate, isLoading } = props;
+const TemplateTable = () => {
+  const { templates, updateTemplates } = useContext(ConfigContext);
+  const { remove: deleteTemplate } = useDeleteTemplate();
+
   const [modalState, setModalState] = useState({
     show: false,
     selected: null
@@ -73,14 +76,21 @@ const TemplateTable = (props) => {
   const createEditModalProps = {
     modalState,
     closeCreateEditModal,
-    ...props
   };
 
   const confirmProps = {
     show: isConfirm,
     selected,
     onOk: (index) => {
-      deleteTemplate(index);
+      deleteTemplate(templates[index].id)
+        .then(() => {
+          Alert.config({ top: 80 });
+          Alert.success('レコードを削除しました');
+          useFetchTemplates().then(({ data }) => updateTemplates(data));
+        })
+        .catch((e) => {
+          console.log(e, 'delete error');
+        });
       setIsConfirm(false);
     },
     onCancel: () => setIsConfirm(false)
@@ -91,7 +101,6 @@ const TemplateTable = (props) => {
     data: templates,
     rowHeight: 57,
     shouldUpdateScroll: false,
-    loading: isLoading,
     columns,
     actions: function actionButton(index) { return <Actions {...{ index, openConfirm, openCreateEditModal }} />; }
   };
@@ -111,4 +120,4 @@ const TemplateTable = (props) => {
   );
 };
 
-export default withTemplate(TemplateTable);
+export default TemplateTable;

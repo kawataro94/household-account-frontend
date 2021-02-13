@@ -3,14 +3,6 @@ import { useState, useEffect } from 'react';
 import { useFetchDailyExpenses, useFetchMembers, useFetchMonthlyExpenses, useFetchMyProfile, useFetchRecords, useFetchTemplates } from '../hooks';
 import wrapPromise from './wrap-promise';
 
-export const resources = {
-  dailyExpenses: wrapPromise(useFetchDailyExpenses()),
-  members: wrapPromise(useFetchMembers()),
-  myProfile: wrapPromise(useFetchMyProfile()),
-  records: wrapPromise(useFetchRecords()),
-  templates: wrapPromise(useFetchTemplates())
-};
-
 function createResource() {
   return {
     dailyExpenses: wrapPromise(useFetchDailyExpenses()),

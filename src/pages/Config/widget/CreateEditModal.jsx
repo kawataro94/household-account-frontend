@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal } from 'rsuite';
+import React, { useState, useEffect, useContext } from 'react';
+import { Button, Modal, Alert } from 'rsuite';
 
+import { useCreateTemplate, useEditTemplate, useFetchTemplates } from '../../../hooks';
 import CreateEditForm from './CreateEditForm';
+import { ConfigContext } from '../context';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
 
-  const { templates, modalState, closeCreateEditModal, createTemplate, editTemplate } = props;
+  const { modalState, closeCreateEditModal } = props;
+  const { templates, updateTemplates } = useContext(ConfigContext);
+  const { create: createTemplate } = useCreateTemplate();
+  const { edit: editTemplate } = useEditTemplate();
+
   const { show, selected } = modalState;
   const [formValue, setFormValue] = useState();
   const [disabled, setDisabled] = useState(true);
@@ -26,9 +32,29 @@ const CreateEditModal = (props) => {
   }, [formValue]);
 
   const onOk = () => {
-    const createNew = typeof (selected) !== 'number' ? true : false;
-    if (createNew) createTemplate(formValue);
-    if (!createNew) editTemplate(formValue, selected);
+    const createNew = !Number.isFinite(selected);
+    if (createNew) {
+      createTemplate(formValue)
+        .then(() => {
+          Alert.config({ top: 80 });
+          Alert.success('新しいテンプレートを追加しました');
+          useFetchTemplates().then(({ data }) => updateTemplates(data));
+        })
+        .catch((e) => {
+          console.log(e, 'post error');
+        });
+    }
+    if (!createNew) {
+      editTemplate(formValue, selected)
+        .then(() => {
+          Alert.config({ top: 80 });
+          Alert.success('テンプレートを編集しました');
+          useFetchTemplates().then(({ data }) => updateTemplates(data));
+        })
+        .catch((e) => {
+          console.log(e, 'patch error');
+        });
+    }
     closeCreateEditModal();
   };
   const onCancel = () => {
