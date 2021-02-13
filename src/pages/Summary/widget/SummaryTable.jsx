@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Row, Table, Panel, Nav } from 'rsuite';
 
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { summaryColumns } from '../../../looksup';
-import { withCache } from '../hoc/index';
 import { categoryTag, costFont } from '../style';
+import { SummaryContext } from '../context';
 
 const { ColumnGroup, Column, HeaderCell, Cell } = Table;
 const CustomNav = ({ active, onSelect, ...props }) => {
@@ -31,8 +31,8 @@ const Cost = ({ value }) => {
   );
 };
 
-const SummaryTable = (props) => {
-  const { summary } = props;
+const SummaryTable = () => {
+  const { monthlyExpenses } = useContext(SummaryContext);
 
   const [active, setActive] = useState('news');
   const handleSelect = (activeKey) => {
@@ -43,7 +43,7 @@ const SummaryTable = (props) => {
       <CustomNav appearance="subtle" active={active} onSelect={handleSelect} />
       <Divider height='20' />
       <Panel bordered>
-        <Table height={500} data={summary} bordered cellBordered headerHeight={80}>
+        <Table height={500} data={monthlyExpenses} bordered cellBordered headerHeight={80}>
           <Column width={100} align="center" fixed='left'>
             <HeaderCell></HeaderCell>
             <Cell>{({ month, year }) => <Month {...{ month, year }} />}</Cell>
@@ -106,4 +106,4 @@ const SummaryTable = (props) => {
   );
 };
 
-export default withCache(SummaryTable);
+export default SummaryTable;

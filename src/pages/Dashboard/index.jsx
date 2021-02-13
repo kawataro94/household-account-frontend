@@ -15,10 +15,10 @@ const Dashboard = () => {
   return (
     <div className='wrap'>
       <ErrorBoundary>
+        <h2 >Dashboard</h2>
+        <Divider height='20' />
         <Suspense fallback={<p>Loading...</p>}>
           <Provider>
-            <h2 >Dashboard</h2>
-            <Divider height='20' />
             <FlexboxGrid justify="space-between">
               <FlexboxGrid.Item className='da-group-info'>
                 <GroupPanel />
