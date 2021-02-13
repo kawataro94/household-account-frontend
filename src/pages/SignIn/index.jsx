@@ -1,53 +1,27 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
-import "firebase/auth";
-import Axios from 'axios';
 import { Button } from 'rsuite';
 
-import { serverUrl } from '../../../.env/resources';
 import Center from '../../components/Center';
+import { LoginContext } from '../../context';
+import { useAuthentication } from '../../hooks';
 import SignInForm from './widget/SignInForm';
 import { buttonMargin, title } from './style';
-import { LoginContext } from '../../context';
-
-const httpClient = Axios.create({
-  withCredentials: true
-});
 
 const SignIn = () => {
   const { setIsLogin } = useContext(LoginContext);
   const history = useHistory();
+  const { checkAuth } = useAuthentication();
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
   });
 
-  const signIn = (uid) => {
-    const params = {
-      uid,
-    };
-    httpClient
-      .post(`http://${serverUrl}/member/signin`, params)
-      .then(() => {
-        history.push('/');
-        setIsLogin(true);
-      })
-      .catch((e) => {
-        console.log(e, 'post error');
-      });
-  };
-
-
-  const checkUser = () => {
-    const { email, password } = formValue;
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(({ user }) => {
-        signIn(user.uid);
-      })
-      .catch(({ code, message }) => {
-        console.log(code, message);
-      });
+  const signIn = () => {
+    checkAuth(formValue).then(() => {
+      setIsLogin(true);
+      history.push('/');
+    });
   };
 
   const formProps = {
@@ -60,7 +34,7 @@ const SignIn = () => {
       <h2 css={title}>Sign In</h2>
       <SignInForm {...formProps} />
       <div css={buttonMargin}>
-        <Button appearance="primary" onClick={() => checkUser()}>Submit</Button>
+        <Button appearance="primary" onClick={() => signIn()}>Submit</Button>
       </div>
     </Center>
   );

@@ -10,3 +10,4 @@ export { default as useFetchMonthlyExpenses } from './useFetchMonthlyExpenses';
 export { default as useFetchMyProfile } from './useFetchMyProfile';
 export { default as useFetchRecords } from './useFetchRecords';
 export { default as useFetchTemplates } from './useFetchTemplates';
+export { default as useAuthentication } from './useAuthentication';
