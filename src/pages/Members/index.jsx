@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
 
 import Divider from '../../components/Divider';
+import { Provider } from './context';
 import GroupPanel from './widget/GroupPanel';
 import UserPanel from './widget/UserPanel';
-import { Provider } from './context';
 
 const Members = () => {
   return (
