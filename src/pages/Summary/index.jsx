@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import { Provider } from './hoc/index';
 import Divider from '../../components/Divider';
+import { Provider } from './context';
 import SummaryTable from './widget/SummaryTable';
 
 const Summary = () => {
   return (
     <div className='wrap'>
-      <Provider>
-        <h2 >Summary</h2>
-        <Divider height='20' />
-        <SummaryTable />
-      </Provider>
+      <h2 >Summary</h2>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Provider>
+          <Divider height='20' />
+          <SummaryTable />
+        </Provider>
+      </Suspense>
     </div>
   );
 };
