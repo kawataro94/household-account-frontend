@@ -9,11 +9,12 @@ export const Provider = ({ children }) => {
   const { isLogin } = useContext(LoginContext);
   const { resources } = useResources({ isLogin });
   const members = resources?.members?.read() || [];
+  const r = resources?.records?.read();
   const [records, setRecords] = useState([]);
 
   useEffect(() => {
-    setRecords(resources?.records?.read() || []);
-  }, [resources]);
+    setRecords(r);
+  }, [r]);
 
   const updateRecords = (data) => {
     setRecords(data);
