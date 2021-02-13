@@ -9,11 +9,27 @@ const httpClient = Axios.create({
 });
 
 function useAuthentication() {
-  const checkUid = (uid) => {
+  const setUpAuth = ({ email, password, account }) => {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(({ user }) => ({ uid: user.uid, account }))
+      .catch(({ code, message }) => {
+        console.log(code, message);
+      });
+  };
+
+  const createUser = ({ uid, account }) => {
+    const params = {
+      account,
+      uid,
+      balance: "100",
+      password: "password",
+      group_id: "1",
+    };
+
     return httpClient
-      .post(`http://${serverUrl}/member/signin`, { uid })
+      .post(`http://${serverUrl}/member/signup`, params)
       .catch((e) => {
-        console.log(e, 'sign uid error');
+        console.log(e, 'signup error');
       });
   };
 
@@ -25,12 +41,25 @@ function useAuthentication() {
       });
   };
 
-  const signIn = async (formValue) => {
-    const uid = await checkEmailAndPassword(formValue);
-    return await checkUid(uid);
+  const checkUid = (uid) => {
+    return httpClient
+      .post(`http://${serverUrl}/member/signin`, { uid })
+      .catch((e) => {
+        console.log(e, 'sign uid error');
+      });
   };
 
-  return { signIn };
+  const checkAuth = async (formValue) => {
+    const uid = await checkEmailAndPassword(formValue);
+    return checkUid(uid);
+  };
+
+  const clearSession = () => {
+    return httpClient
+      .post(`http://${serverUrl}/member/signout`);
+  };
+
+  return { setUpAuth, createUser, checkAuth, clearSession };
 }
 
 export default useAuthentication;
