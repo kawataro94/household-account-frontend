@@ -54,13 +54,22 @@ function useAuthentication() {
     return checkUid(uid);
   };
 
-  const clearSession = async () => {
-    await firebase.auth().signOut().catch((error) => { console.log(error); });
-    return httpClient
-      .post(`http://${serverUrl}/member/signout`);
+  const checkStorage = (signIn, signOut) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        signOut();
+        return;
+      }
+
+      signIn(user);
+    });
   };
 
-  return { setUpAuth, createUser, checkAuth, clearSession };
+  const clearSession = () => httpClient.post(`http://${serverUrl}/member/signout`);
+
+  const clearStorage = () => firebase.auth().signOut();
+
+  return { setUpAuth, createUser, checkAuth, checkUid, checkStorage, clearSession, clearStorage };
 }
 
 export default useAuthentication;

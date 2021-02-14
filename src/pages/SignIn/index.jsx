@@ -10,8 +10,9 @@ import { buttonMargin, title } from './style';
 
 const SignIn = () => {
   const { setIsLogin } = useContext(LoginContext);
-  const history = useHistory();
   const { checkAuth } = useAuthentication();
+  const history = useHistory();
+  const jumpToDashboard = () => history.push('/');
   const [formValue, setFormValue] = useState({
     email: '',
     password: ''
@@ -20,7 +21,7 @@ const SignIn = () => {
   const signIn = () => {
     checkAuth(formValue).then(() => {
       setIsLogin(true);
-      history.push('/');
+      jumpToDashboard();
     });
   };
 

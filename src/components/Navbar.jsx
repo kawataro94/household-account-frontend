@@ -10,13 +10,14 @@ const Header = () => {
   const { setIsLogin } = useContext(LoginContext);
   const history = useHistory();
   const { pathname } = useLocation();
-  const { clearSession } = useAuthentication();
+  const { clearSession, clearStorage } = useAuthentication();
   const jumpToDashboard = () => history.push('/');
   const jumpToRecords = () => history.push('/records');
   const jumpToSignIn = () => history.push('/signin');
 
   const signOut = async () => {
     await clearSession();
+    await clearStorage();
     setIsLogin(false);
     jumpToSignIn();
   };

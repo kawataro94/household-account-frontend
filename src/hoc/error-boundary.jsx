@@ -3,6 +3,7 @@ import { Loader } from 'rsuite';
 import { withRouter } from "react-router-dom";
 
 import Center from '../components/Center';
+import { withAuth } from '../context';
 import { center } from './style';
 
 class ErrorBoundary extends React.Component {
@@ -17,18 +18,23 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.hasError) {
-      const { history } = this.props;
-      const redirectMsg = (
-        <div>
-          <div>ログイン情報がありません。</div>
-          <div>数秒後にサインインページに移動します。</div>
-        </div>
-      );
+    const { history, setIsLogin } = this.props;
+    const jumpToSignIn = () => history.push('/signin');
+    const { hasError } = this.state;
 
+    const redirectMsg = (
+      <div>
+        <div>エラーが発生しました。</div>
+        <div>数秒後にサインインページに移動します。</div>
+      </div>
+    );
+
+    if (hasError) {
       setTimeout(() => {
-        history.push('/signin');
+        jumpToSignIn();
+        setIsLogin(false);
       }, 10000);
+
       return (
         <Center>
           <div css={center}>
@@ -42,4 +48,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export default withRouter(ErrorBoundary);
+export default withRouter(withAuth(ErrorBoundary));
