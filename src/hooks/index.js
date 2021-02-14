@@ -1,3 +1,4 @@
+export { default as useAuthentication } from './useAuthentication';
 export { default as useCreateRecord } from './useCreateRecord';
 export { default as useCreateTemplate } from './useCreateTemplate';
 export { default as useDeleteRecord } from './useDeleteRecord';

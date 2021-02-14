@@ -1,32 +1,24 @@
 import React, { useContext } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { Navbar, Nav, Icon } from 'rsuite';
-import Axios from 'axios';
-
-import { serverUrl } from '../../.env/resources';
-import { navStyle } from './style';
 
 import { LoginContext } from '../context';
-
-const httpClient = Axios.create({
-  withCredentials: true
-});
+import { useAuthentication } from '../hooks';
+import { navStyle } from './style';
 
 const Header = () => {
   const { setIsLogin } = useContext(LoginContext);
   const history = useHistory();
   const { pathname } = useLocation();
-  const toLink = (to) => {
-    history.push(to);
-  };
+  const { clearSession } = useAuthentication();
+  const jumpToDashboard = () => history.push('/');
+  const jumpToRecords = () => history.push('/records');
+  const jumpToSignIn = () => history.push('/signin');
 
-  const signOut = () => {
-    httpClient
-      .post(`http://${serverUrl}/member/signout`)
-      .then(() => {
-        toLink('/signin');
-        setIsLogin(false);
-      });
+  const signOut = async () => {
+    await clearSession();
+    setIsLogin(false);
+    jumpToSignIn();
   };
 
   return (
@@ -35,9 +27,9 @@ const Header = () => {
         <a href="#" css={navStyle} >Household Account</a>
       </Navbar.Header>
       <Nav pullRight activeKey={pathname} >
-        <Nav.Item className='mobile-menu' eventKey='/' icon={<Icon icon="dashboard" size="2x" />} onClick={() => toLink('/')} ></Nav.Item>
-        <Nav.Item className='mobile-menu' eventKey='/records' icon={<Icon icon="table" size="2x" />} onClick={() => toLink('/records')}></Nav.Item>
-        <Nav.Item icon={<Icon icon="sign-out" size="2x" />} onClick={() => signOut()}></Nav.Item>
+        <Nav.Item className='mobile-menu' eventKey='/' icon={<Icon icon="dashboard" size="2x" />} onClick={jumpToDashboard} ></Nav.Item>
+        <Nav.Item className='mobile-menu' eventKey='/records' icon={<Icon icon="table" size="2x" />} onClick={jumpToRecords}></Nav.Item>
+        <Nav.Item icon={<Icon icon="sign-out" size="2x" />} onClick={signOut}></Nav.Item>
       </Nav>
     </Navbar>
   );
