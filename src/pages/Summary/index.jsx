@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 
+import ErrorBoundary from '../../hoc/error-boundary';
 import Divider from '../../components/Divider';
 import { Provider } from './context';
 import SummaryTable from './widget/SummaryTable';
@@ -7,13 +8,15 @@ import SummaryTable from './widget/SummaryTable';
 const Summary = () => {
   return (
     <div className='wrap'>
-      <h2 >Summary</h2>
-      <Suspense fallback={<p>Loading...</p>}>
-        <Provider>
-          <Divider height='20' />
-          <SummaryTable />
-        </Provider>
-      </Suspense>
+      <ErrorBoundary>
+        <h2 >Summary</h2>
+        <Divider height='20' />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Provider>
+            <SummaryTable />
+          </Provider>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };
