@@ -15,11 +15,10 @@ const Header = () => {
   const jumpToRecords = () => history.push('/records');
   const jumpToSignIn = () => history.push('/signin');
 
-  const signOut = () => {
-    clearSession().then(() => {
-      setIsLogin(false);
-      jumpToSignIn();
-    });
+  const signOut = async () => {
+    await clearSession();
+    setIsLogin(false);
+    jumpToSignIn();
   };
 
   return (

@@ -39,7 +39,6 @@ const AuthConfig = () => <AuthTheme><Config /></AuthTheme>;
 
 const Routes = () => {
   const { isLogin } = useContext(LoginContext);
-  console.log(isLogin, 'isLogin');
   return (
     <>
       {isLogin ? (

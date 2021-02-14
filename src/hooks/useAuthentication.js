@@ -54,7 +54,8 @@ function useAuthentication() {
     return checkUid(uid);
   };
 
-  const clearSession = () => {
+  const clearSession = async () => {
+    await firebase.auth().signOut().catch((error) => { console.log(error); });
     return httpClient
       .post(`http://${serverUrl}/member/signout`);
   };

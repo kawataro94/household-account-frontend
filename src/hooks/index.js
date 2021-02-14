@@ -1,3 +1,4 @@
+export { default as useAuthentication } from './useAuthentication';
 export { default as useCreateRecord } from './useCreateRecord';
 export { default as useCreateTemplate } from './useCreateTemplate';
 export { default as useDeleteRecord } from './useDeleteRecord';
@@ -10,4 +11,3 @@ export { default as useFetchMonthlyExpenses } from './useFetchMonthlyExpenses';
 export { default as useFetchMyProfile } from './useFetchMyProfile';
 export { default as useFetchRecords } from './useFetchRecords';
 export { default as useFetchTemplates } from './useFetchTemplates';
-export { default as useAuthentication } from './useAuthentication';
