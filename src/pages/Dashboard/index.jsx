@@ -1,13 +1,12 @@
 import React, { Suspense } from 'react';
 import { FlexboxGrid } from 'rsuite';
 
+import ErrorBoundary from '../../hoc/error-boundary';
 import Divider from '../../components/Divider';
 import GroupPanel from './widget/GroupPanel';
 // import UserPanel from './widget/UserPanel';
 import QuickFormPanel from './widget/QuickFormPanel';
 import RecordTable from './widget/RecordTable';
-
-import ErrorBoundary from '../../hoc/error-boundary';
 import { Provider } from './context';
 
 const Dashboard = () => {

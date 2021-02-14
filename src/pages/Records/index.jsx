@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 
+import ErrorBoundary from '../../hoc/error-boundary';
 import Divider from '../../components/Divider';
 import RecordTable from './widget/RecordTable';
 
@@ -9,14 +10,15 @@ const Records = () => {
 
   return (
     <div className='wrap'>
-      <h2 >Records</h2>
-      <Divider height='20' />
-      <Suspense fallback={<p>Loading ...</p>}>
-        <Provider>
-          <RecordTable />
-        </Provider>
-      </Suspense>
-      <Divider height='20' />
+      <ErrorBoundary>
+        <h2 >Records</h2>
+        <Divider height='20' />
+        <Suspense fallback={<p>Loading ...</p>}>
+          <Provider>
+            <RecordTable />
+          </Provider>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };
