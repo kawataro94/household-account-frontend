@@ -100,6 +100,10 @@ const SummaryTable = () => {
               <Cell>{({ gas_bill }) => <Cost value={gas_bill} />}</Cell>
             </Column>
           </ColumnGroup>
+          <Column width={130} align="right">
+            <HeaderCell><Title name='others' /></HeaderCell>
+            <Cell>{({ others }) => <Cost value={others} />}</Cell>
+          </Column>
         </Table>
       </Panel>
     </Row>
