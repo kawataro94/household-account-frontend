@@ -5,6 +5,7 @@ export { default as useDeleteRecord } from './useDeleteRecord';
 export { default as useDeleteTemplate } from './useDeleteTemplate';
 export { default as useEditRecord } from './useEditRecord';
 export { default as useEditTemplate } from './useEditTemplate';
+export { default as useFetchExpensesByMembers } from './useFetchExpensesByMembers';
 export { default as useFetchDailyExpenses } from './useFetchDailyExpenses';
 export { default as useFetchMembers } from './useFetchMembers';
 export { default as useFetchMonthlyExpenses } from './useFetchMonthlyExpenses';

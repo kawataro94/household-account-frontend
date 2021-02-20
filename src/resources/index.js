@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { useFetchDailyExpenses, useFetchMembers, useFetchMonthlyExpenses, useFetchMyProfile, useFetchRecords, useFetchTemplates } from '../hooks';
+import { useFetchExpensesByMembers, useFetchDailyExpenses, useFetchMembers, useFetchMonthlyExpenses, useFetchMyProfile, useFetchRecords, useFetchTemplates } from '../hooks';
 import wrapPromise from './wrap-promise';
 
 function createResource() {
   return {
+    expensesByMembers: wrapPromise(useFetchExpensesByMembers()),
     dailyExpenses: wrapPromise(useFetchDailyExpenses()),
     members: wrapPromise(useFetchMembers()),
     monthlyExpenses: wrapPromise(useFetchMonthlyExpenses()),
