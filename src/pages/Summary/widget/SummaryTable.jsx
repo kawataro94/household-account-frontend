@@ -1,40 +1,33 @@
 import React, { useState, useContext } from 'react';
-import { Row, Table, Panel, Nav } from 'rsuite';
+import { Row, Panel, Nav } from 'rsuite';
 
 import Divider from '../../../components/Divider';
-import { YenUnit } from '../../../components/Units';
-import { summaryColumns } from '../../../looksup';
-import { categoryTag, costFont } from '../style';
 import { SummaryContext } from '../context';
+import SummaryByCategories from './SummaryByCategories';
+import SummaryByMembers from './SummaryByMembers';
 
-const { ColumnGroup, Column, HeaderCell, Cell } = Table;
 const CustomNav = ({ active, onSelect, ...props }) => {
   return (
     <Nav {...props} activeKey={active} onSelect={onSelect}>
-      <Nav.Item eventKey="monthly">月ごとの集計</Nav.Item>
+      <Nav.Item eventKey="categories">月ごとの集計</Nav.Item>
       <Nav.Item eventKey="members">メンバーごとの集計</Nav.Item>
-      <Nav.Item eventKey="stores">購入場所ごとの集計</Nav.Item>
     </Nav>
   );
 };
 
-const Month = ({ month, year }) => <div>{year}-{month < 10 && 0}{month}</div>;
+const CustomTable = ({ active }) => {
+  const { monthlyExpenses, expensesByMembers, members } = useContext(SummaryContext);
 
-const Title = ({ name }) => {
-  const { label, color } = (summaryColumns.find(({ value }) => name === value) || {});
-  return <div><span css={categoryTag(color)}>{label}</span></div>;
-};
-
-const Cost = ({ value }) => {
   return (
-    <><span css={costFont}>{value}</span><YenUnit style='font-size: 12px;' /></>
+    <>
+      {active === 'categories' ? <SummaryByCategories {...{ monthlyExpenses }} /> : null}
+      {active === 'members' ? <SummaryByMembers {...{ expensesByMembers, members }} /> : null}
+    </>
   );
 };
 
 const SummaryTable = () => {
-  const { monthlyExpenses } = useContext(SummaryContext);
-
-  const [active, setActive] = useState('news');
+  const [active, setActive] = useState('categories');
   const handleSelect = (activeKey) => {
     setActive(activeKey);
   };
@@ -43,68 +36,7 @@ const SummaryTable = () => {
       <CustomNav appearance="subtle" active={active} onSelect={handleSelect} />
       <Divider height='20' />
       <Panel bordered>
-        <Table height={500} data={monthlyExpenses} bordered cellBordered headerHeight={80}>
-          <Column width={100} align="center" fixed='left'>
-            <HeaderCell></HeaderCell>
-            <Cell>{({ month, year }) => <Month {...{ month, year }} />}</Cell>
-          </Column>
-          <Column width={100} align="center" fixed='left'>
-            <HeaderCell><Title name='total' /></HeaderCell>
-            <Cell>{({ total }) => <strong><Cost value={total} /></strong>}</Cell>
-          </Column>
-          <Column width={130} align="right">
-            <HeaderCell><Title name='food_expenses' /></HeaderCell>
-            <Cell>{({ food_expenses }) => <Cost value={food_expenses} />}</Cell>
-          </Column>
-          <Column width={130} align="right">
-            <HeaderCell><Title name='living_expenses' /></HeaderCell>
-            <Cell>{({ living_expenses }) => <Cost value={living_expenses} />}</Cell>
-          </Column>
-          <ColumnGroup header={<Title name='rent' />} align="right">
-            <Column width={130} colSpan={2}>
-              <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="rentMonth" />
-            </Column>
-            <Column width={130}>
-              <HeaderCell>費用</HeaderCell>
-              <Cell>{({ rent }) => <Cost value={rent} />}</Cell>
-            </Column>
-          </ColumnGroup>
-          <ColumnGroup header={<Title name='electric_bill' />} align="right">
-            <Column width={130} colSpan={2}>
-              <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="rentMonth" />
-            </Column>
-            <Column width={130}>
-              <HeaderCell>費用</HeaderCell>
-              <Cell>{({ electric_bill }) => <Cost value={electric_bill} />}</Cell>
-            </Column>
-          </ColumnGroup>
-          <ColumnGroup header={<Title name='water_bill' />} align="right">
-            <Column width={130} colSpan={2}>
-              <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="rentMonth" />
-            </Column>
-            <Column width={130}>
-              <HeaderCell>費用</HeaderCell>
-              <Cell>{({ water_bill }) => <Cost value={water_bill} />}</Cell>
-            </Column>
-          </ColumnGroup>
-          <ColumnGroup header={<Title name='gas_bill' />} align="right">
-            <Column width={130} colSpan={2}>
-              <HeaderCell>支払い分</HeaderCell>
-              <Cell dataKey="rentMonth" />
-            </Column>
-            <Column width={130}>
-              <HeaderCell>費用</HeaderCell>
-              <Cell>{({ gas_bill }) => <Cost value={gas_bill} />}</Cell>
-            </Column>
-          </ColumnGroup>
-          <Column width={130} align="right">
-            <HeaderCell><Title name='others' /></HeaderCell>
-            <Cell>{({ others }) => <Cost value={others} />}</Cell>
-          </Column>
-        </Table>
+        <CustomTable active={active} />
       </Panel>
     </Row>
   );

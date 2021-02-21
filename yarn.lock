@@ -5797,6 +5797,30 @@ querystringify@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
 
+ramda.groupby@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda.groupby/-/ramda.groupby-0.26.1.tgz#64b32d1e28babcc9f3d5e53532530adb48be1e5f"
+
+ramda.map@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda.map/-/ramda.map-0.26.1.tgz#61c86171280b6df762162baea6ea9385721c3ad1"
+
+ramda.merge@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda.merge/-/ramda.merge-0.26.1.tgz#12dc7716f9e978b68d8c7e66b9cd634dd7c9f58f"
+
+ramda.pipe@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda.pipe/-/ramda.pipe-0.26.1.tgz#c342ce9ec88bc19ddedff6d7f1943a33ef1f8743"
+
+ramda.reduce@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda.reduce/-/ramda.reduce-0.26.1.tgz#ad9d25851e8719209542b27a3d32f71cc3c64045"
+
+ramda.values@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda.values/-/ramda.values-0.25.0.tgz#60cae96c8a995b1faf129f1dc0d05effbe3ce771"
+
 randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
