@@ -45,7 +45,7 @@ function useAuthentication() {
     return httpClient
       .post(`http://${serverUrl}/member/signin`, { uid })
       .catch((e) => {
-        console.log(e, 'sign uid error');
+        console.log(e, 'uid error');
       });
   };
 

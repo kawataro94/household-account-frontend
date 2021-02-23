@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,6 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+  mode: 'development',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -20,9 +20,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Household-Accounts',
       hash: true,
-    }),
-    new webpack.DefinePlugin({
-      'process.env.RUN_ENV': JSON.stringify('development')
     })
   ],
   optimization: {
@@ -84,13 +81,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx']
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 3000,
-    open: true,
-    compress: true,
-    historyApiFallback: true
-  },
-  devtool: 'inline-source-map'
+  }
 };
