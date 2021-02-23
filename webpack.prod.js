@@ -8,6 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+  mode: 'production',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
@@ -22,7 +23,7 @@ module.exports = {
       hash: true,
     }),
     new webpack.DefinePlugin({
-      'process.env.RUN_ENV': JSON.stringify('development')
+      'process.env.RUN_ENV': JSON.stringify('production')
     })
   ],
   optimization: {
@@ -84,13 +85,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx']
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 3000,
-    open: true,
-    compress: true,
-    historyApiFallback: true
-  },
-  devtool: 'inline-source-map'
+  }
 };
