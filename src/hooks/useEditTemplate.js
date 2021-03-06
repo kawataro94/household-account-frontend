@@ -3,15 +3,15 @@ import Axios from 'axios';
 import { serverUrl } from '../../.env/resources';
 
 const httpClient = Axios.create({
-  withCredentials: true
+    withCredentials: true,
 });
 
 function useEditTemplate() {
-  const edit = (template) => {
-    return httpClient.patch(`http://${serverUrl}/member/config/templates/${template.id}`, template);
-  };
+    const edit = (template) => {
+        return httpClient.patch(`http://${serverUrl}/member/config/templates/${template.id}`, template);
+    };
 
-  return { edit };
+    return { edit };
 }
 
 export default useEditTemplate;
