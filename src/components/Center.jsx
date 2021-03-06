@@ -2,9 +2,9 @@ import React from 'react';
 
 import { flex, content } from './style';
 
-const Center = ({ children }) => {
+const Center = ({ children, hasHeader }) => {
   return (
-    <div css={flex}>
+    <div css={flex(hasHeader)}>
       <div css={content}>
         {children}
       </div>

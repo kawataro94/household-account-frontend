@@ -36,7 +36,7 @@ class ErrorBoundary extends React.Component {
       }, 10000);
 
       return (
-        <Center>
+        <Center hasHeader={true}>
           <div css={center}>
             <Loader size='md' speed='slow' content={redirectMsg} vertical />
           </div>
