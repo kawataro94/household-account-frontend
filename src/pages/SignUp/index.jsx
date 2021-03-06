@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { Button } from 'rsuite';
 
 import Center from '../../components/Center';
@@ -9,38 +9,40 @@ import SignUpForm from './widget/Form';
 import { buttonMargin, title } from './style';
 
 const SignUp = () => {
-  const history = useHistory();
-  const [formValue, setFormValue] = useState({
-    account: '',
-    email: '',
-    password: ''
-  });
-  const { setUpAuth, createUser } = useAuthentication();
-  const { setIsLogin } = useContext(LoginContext);
-  const jumpToDashboard = () => history.push('/');
+	const history = useHistory();
+	const [formValue, setFormValue] = useState({
+		account: '',
+		email: '',
+		password: '',
+	});
+	const { setUpAuth, createUser } = useAuthentication();
+	const { setIsLogin } = useContext(LoginContext);
+	const jumpToDashboard = () => history.push('/');
 
-  const signUp = async () => {
-    const userInfo = await setUpAuth(formValue);
-    await createUser(userInfo);
+	const signUp = async () => {
+		const userInfo = await setUpAuth(formValue);
+		await createUser(userInfo);
 
-    setIsLogin(true);
-    jumpToDashboard();
-  };
+		setIsLogin(true);
+		jumpToDashboard();
+	};
 
-  const formProps = {
-    formValue,
-    setFormValue
-  };
+	const formProps = {
+		formValue,
+		setFormValue,
+	};
 
-  return (
-    <Center>
-      <h2 css={title}>Sign Up</h2>
-      <SignUpForm {...formProps} />
-      <div css={buttonMargin}>
-        <Button appearance="primary" onClick={signUp}>Submit</Button>
-      </div>
-    </Center>
-  );
+	return (
+		<Center>
+			<h2 css={title}>Sign Up</h2>
+			<SignUpForm {...formProps} />
+			<div css={buttonMargin}>
+				<Button appearance="primary" onClick={signUp}>
+					Submit
+				</Button>
+			</div>
+		</Center>
+	);
 };
 
 export default SignUp;

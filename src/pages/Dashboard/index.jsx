@@ -11,33 +11,32 @@ import RecordTable from './widget/RecordTable';
 import { Provider } from './context';
 
 const Dashboard = () => {
-
-  return (
-    <div className='wrap'>
-      <ErrorBoundary>
-        <h2 >Dashboard</h2>
-        <Divider height='20' />
-        <Suspense fallback={<Loader />}>
-          <Provider>
-            <FlexboxGrid justify="space-between">
-              <FlexboxGrid.Item className='da-group-info'>
-                <GroupPanel />
-              </FlexboxGrid.Item>
-              {/* <FlexboxGrid.Item className='da-member-info'>
+	return (
+		<div className="wrap">
+			<ErrorBoundary>
+				<h2>Dashboard</h2>
+				<Divider height="20" />
+				<Suspense fallback={<Loader />}>
+					<Provider>
+						<FlexboxGrid justify="space-between">
+							<FlexboxGrid.Item className="da-group-info">
+								<GroupPanel />
+							</FlexboxGrid.Item>
+							{/* <FlexboxGrid.Item className='da-member-info'>
             <UserPanel />
           </FlexboxGrid.Item> */}
-              <FlexboxGrid.Item className='da-template-form'>
-                <QuickFormPanel />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
-            <div className='da-record-table'>
-              <RecordTable />
-            </div>
-          </Provider>
-        </Suspense>
-      </ErrorBoundary>
-    </div >
-  );
+							<FlexboxGrid.Item className="da-template-form">
+								<QuickFormPanel />
+							</FlexboxGrid.Item>
+						</FlexboxGrid>
+						<div className="da-record-table">
+							<RecordTable />
+						</div>
+					</Provider>
+				</Suspense>
+			</ErrorBoundary>
+		</div>
+	);
 };
 
 export default Dashboard;

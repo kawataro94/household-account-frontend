@@ -1,75 +1,83 @@
 import Axios from 'axios';
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 import { serverUrl } from '../../.env/resources';
 
 const httpClient = Axios.create({
-  withCredentials: true
+    withCredentials: true,
 });
 
 function useAuthentication() {
-  const setUpAuth = ({ email, password, account }) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(({ user }) => ({ uid: user.uid, account }))
-      .catch(({ code, message }) => {
-        console.log(code, message);
-      });
-  };
-
-  const createUser = ({ uid, account }) => {
-    const params = {
-      account,
-      uid,
-      balance: "100",
-      password: "password",
-      group_id: "1",
+    const setUpAuth = ({ email, password, account }) => {
+        return firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(({ user }) => ({ uid: user.uid, account }))
+            .catch(({ code, message }) => {
+                console.log(code, message);
+            });
     };
 
-    return httpClient
-      .post(`http://${serverUrl}/member/signup`, params)
-      .catch((e) => {
-        console.log(e, 'signup error');
-      });
-  };
+    const createUser = ({ uid, account }) => {
+        const params = {
+            account,
+            uid,
+            balance: '100',
+            password: 'password',
+            group_id: '1',
+        };
 
-  const checkEmailAndPassword = ({ email, password }) => {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(({ user }) => user.uid)
-      .catch(({ code, message }) => {
-        console.log(code, message);
-      });
-  };
+        return httpClient.post(`http://${serverUrl}/member/signup`, params).catch((e) => {
+            console.log(e, 'signup error');
+        });
+    };
 
-  const checkUid = (uid) => {
-    return httpClient
-      .post(`http://${serverUrl}/member/signin`, { uid })
-      .catch((e) => {
-        console.log(e, 'uid error');
-      });
-  };
+    const checkEmailAndPassword = ({ email, password }) => {
+        return firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(({ user }) => user.uid)
+            .catch(({ code, message }) => {
+                console.log(code, message);
+            });
+    };
 
-  const checkAuth = async (formValue) => {
-    const uid = await checkEmailAndPassword(formValue);
-    return checkUid(uid);
-  };
+    const checkUid = (uid) => {
+        return httpClient.post(`http://${serverUrl}/member/signin`, { uid }).catch((e) => {
+            console.log(e, 'uid error');
+        });
+    };
 
-  const checkStorage = (signIn, signOut) => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        signOut();
-        return;
-      }
+    const checkAuth = async (formValue) => {
+        const uid = await checkEmailAndPassword(formValue);
+        return checkUid(uid);
+    };
 
-      signIn(user);
-    });
-  };
+    const checkStorage = (signIn, signOut) => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                signOut();
+                return;
+            }
 
-  const clearSession = () => httpClient.post(`http://${serverUrl}/member/signout`);
+            signIn(user);
+        });
+    };
 
-  const clearStorage = () => firebase.auth().signOut();
+    const clearSession = () => httpClient.post(`http://${serverUrl}/member/signout`);
 
-  return { setUpAuth, createUser, checkAuth, checkUid, checkStorage, clearSession, clearStorage };
+    const clearStorage = () => firebase.auth().signOut();
+
+    return {
+        setUpAuth,
+        createUser,
+        checkAuth,
+        checkUid,
+        checkStorage,
+        clearSession,
+        clearStorage,
+    };
 }
 
 export default useAuthentication;
