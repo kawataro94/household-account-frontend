@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
 
-export const flex = css`
+export const flex = (hasHeader) => css`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: ${hasHeader ? 'calc(100% - 56px)' : '100vh'}
 `;
 
 export const content = css`
@@ -32,4 +32,8 @@ export const yen = (style) => css`
 
 export const lineHeightH5 = css`
   line-height: 42px;
+`;
+
+export const alignCenter = css`
+  text-align: center;
 `;

@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 
 export const title = css`
   margin-bottom: 20px;
+  text-align: center;
 `;
 
 export const buttonMargin = css`
