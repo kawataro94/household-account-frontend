@@ -6,7 +6,7 @@ const height = (h) => css`
 `;
 
 const Divider = ({ height: h }) => {
-	return <div css={height(h)}></div>;
+    return <div css={height(h)}></div>;
 };
 
 export default Divider;

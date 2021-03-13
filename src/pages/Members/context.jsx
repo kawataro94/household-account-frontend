@@ -6,11 +6,11 @@ import { useResources } from '../../resources';
 export const MembersContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { isLogin } = useContext(LoginContext);
-	const { resources } = useResources({ isLogin });
-	const members = resources?.members?.read() || [];
+    const { isLogin } = useContext(LoginContext);
+    const { resources } = useResources({ isLogin });
+    const members = resources?.members?.read() || [];
 
-	const value = { members };
+    const value = { members };
 
-	return <MembersContext.Provider value={value}>{children}</MembersContext.Provider>;
+    return <MembersContext.Provider value={value}>{children}</MembersContext.Provider>;
 };
