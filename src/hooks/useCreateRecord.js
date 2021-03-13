@@ -12,8 +12,8 @@ function useCreateRecord() {
         const params = {
             ...record,
             date: Moment(record.date).format('YYYY-MM-DD'),
-            member_id: record.paidBy,
-            create_by: 2,
+            memberId: record.paidBy,
+            createBy: 2,
             description: 'TEST DESCRIPTION',
             fixed: false,
         };
