@@ -7,50 +7,50 @@ import { gridItem } from '../style';
 import { DashboardContext } from '../context';
 
 const QuickFormPanel = () => {
-    const { templates } = useContext(DashboardContext);
-    const [isOpen, setIsOpen] = useState(false);
-    const [template, setTemplate] = useState({});
+	const { templates } = useContext(DashboardContext);
+	const [isOpen, setIsOpen] = useState(false);
+	const [template, setTemplate] = useState({});
 
-    const openCreateModal = (content) => {
-        setIsOpen(true);
-        setTemplate(content);
-    };
+	const openCreateModal = (content) => {
+		setIsOpen(true);
+		setTemplate(content);
+	};
 
-    const closeCreateModal = () => {
-        setIsOpen(false);
-        setTemplate({});
-    };
+	const closeCreateModal = () => {
+		setIsOpen(false);
+		setTemplate({});
+	};
 
-    const createModalProps = {
-        isOpen,
-        template,
-        closeCreateModal,
-    };
+	const createModalProps = {
+		isOpen,
+		template,
+		closeCreateModal,
+	};
 
-    return (
-        <Row>
-            <Col>
-                <h5>クイック入力</h5>
-            </Col>
-            <Divider height="10" />
-            <Col>
-                <Panel bordered>
-                    <FlexboxGrid>
-                        {templates.map(({ templateName, ...content }, index) => {
-                            return (
-                                <FlexboxGrid.Item key={index} css={gridItem}>
-                                    <Button onClick={() => openCreateModal(content)} appearance="primary">
-                                        {templateName}
-                                    </Button>
-                                </FlexboxGrid.Item>
-                            );
-                        })}
-                    </FlexboxGrid>
-                </Panel>
-            </Col>
-            <QuickFormModal {...createModalProps} />
-        </Row>
-    );
+	return (
+		<Row>
+			<Col>
+				<h5>クイック入力</h5>
+			</Col>
+			<Divider height="10" />
+			<Col>
+				<Panel bordered>
+					<FlexboxGrid>
+						{templates.map(({ templateName, ...content }, index) => {
+							return (
+								<FlexboxGrid.Item key={index} css={gridItem}>
+									<Button onClick={() => openCreateModal(content)} appearance="primary">
+										{templateName}
+									</Button>
+								</FlexboxGrid.Item>
+							);
+						})}
+					</FlexboxGrid>
+				</Panel>
+			</Col>
+			<QuickFormModal {...createModalProps} />
+		</Row>
+	);
 };
 
 export default QuickFormPanel;

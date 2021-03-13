@@ -5,11 +5,11 @@ import Center from './Center';
 import { alignCenter } from './style';
 
 const Loader = () => (
-    <Center hasHeader={true}>
-        <div css={alignCenter}>
-            <RsuiteLoader size="md" speed="slow" />
-        </div>
-    </Center>
+	<Center hasHeader={true}>
+		<div css={alignCenter}>
+			<RsuiteLoader size="md" speed="slow" />
+		</div>
+	</Center>
 );
 
 export default Loader;

@@ -20,77 +20,77 @@ const flex = css`
 `;
 
 const AuthTheme = ({ children }) => {
-    return (
-        <>
-            <Navbar />
-            <div css={flex}>
-                <Sidebar />
-                {children}
-            </div>
-        </>
-    );
+	return (
+		<>
+			<Navbar />
+			<div css={flex}>
+				<Sidebar />
+				{children}
+			</div>
+		</>
+	);
 };
 
 const AuthDashboard = () => (
-    <AuthTheme>
-        <Dashboard />
-    </AuthTheme>
+	<AuthTheme>
+		<Dashboard />
+	</AuthTheme>
 );
 const AuthRecords = () => (
-    <AuthTheme>
-        <Records />
-    </AuthTheme>
+	<AuthTheme>
+		<Records />
+	</AuthTheme>
 );
 const AuthSummary = () => (
-    <AuthTheme>
-        <Summary />
-    </AuthTheme>
+	<AuthTheme>
+		<Summary />
+	</AuthTheme>
 );
 const AuthMembers = () => (
-    <AuthTheme>
-        <Members />
-    </AuthTheme>
+	<AuthTheme>
+		<Members />
+	</AuthTheme>
 );
 const AuthConfig = () => (
-    <AuthTheme>
-        <Config />
-    </AuthTheme>
+	<AuthTheme>
+		<Config />
+	</AuthTheme>
 );
 
 const Routes = () => {
-    const { isLogin } = useContext(LoginContext);
-    return (
-        <>
-            {isLogin ? (
-                <>
-                    <Route exact path="/" component={AuthDashboard} />
-                    <Route path="/records" component={AuthRecords} />
-                    <Route path="/summary" component={AuthSummary} />
-                    <Route path="/members" component={AuthMembers} />
-                    <Route path="/config" component={AuthConfig} />
-                </>
-            ) : (
-                <>
-                    <Route exact path="/signin" component={SignIn} />
-                    <Route exact path="/signup" component={SignUp} />
-                </>
-            )}
-        </>
-    );
+	const { isLogin } = useContext(LoginContext);
+	return (
+		<>
+			{isLogin ? (
+				<>
+					<Route exact path="/" component={AuthDashboard} />
+					<Route path="/records" component={AuthRecords} />
+					<Route path="/summary" component={AuthSummary} />
+					<Route path="/members" component={AuthMembers} />
+					<Route path="/config" component={AuthConfig} />
+				</>
+			) : (
+				<>
+					<Route exact path="/signin" component={SignIn} />
+					<Route exact path="/signup" component={SignUp} />
+				</>
+			)}
+		</>
+	);
 };
 
 const App = () => {
-    return (
-        <div className="App">
-            <Router>
-                <Switch>
-                    <Provider>
-                        <Routes />
-                    </Provider>
-                </Switch>
-            </Router>
-        </div>
-    );
+	return (
+		<div className="App">
+			<Router>
+				<Switch>
+					<Provider>
+						<Routes />
+					</Provider>
+				</Switch>
+			</Router>
+		</div>
+	);
 };
 
 export default App;

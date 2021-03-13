@@ -14,77 +14,77 @@ import { categoryTag, costFont } from '../style';
 const { Column, HeaderCell, Cell } = Table;
 
 const Month = ({ month, year }) => (
-    <div>
-        {year}-{month < 10 && 0}
-        {month}
-    </div>
+	<div>
+		{year}-{month < 10 && 0}
+		{month}
+	</div>
 );
 
 const Title = ({ name }) => {
-    const { label, color } = summaryColumns.find(({ value }) => name === value) || {};
-    return (
-        <div>
-            <span css={categoryTag(color)}>{label}</span>
-        </div>
-    );
+	const { label, color } = summaryColumns.find(({ value }) => name === value) || {};
+	return (
+		<div>
+			<span css={categoryTag(color)}>{label}</span>
+		</div>
+	);
 };
 
 const Cost = ({ value }) => {
-    return (
-        <>
-            <span css={costFont}>{value}</span>
-            <YenUnit style="font-size: 12px;" />
-        </>
-    );
+	return (
+		<>
+			<span css={costFont}>{value}</span>
+			<YenUnit style="font-size: 12px;" />
+		</>
+	);
 };
 
 const groupByMonth = groupBy((v) => `${v.year}-${v.month}`);
 const toArray = values;
 const formatByMembers = reduce(
-    (acc, v) => {
-        const totalByMembers = merge(acc.totalByMembers, {
-            [v.memberId]: v.total,
-        });
-        return {
-            ...acc,
-            month: v.month,
-            year: v.year,
-            total: acc.total + v.total,
-            totalByMembers,
-        };
-    },
-    { total: 0, totalByMembers: {} }
+	(acc, v) => {
+		const totalByMembers = merge(acc.totalByMembers, {
+			[v.memberId]: v.total,
+		});
+		return {
+			...acc,
+			month: v.month,
+			year: v.year,
+			total: acc.total + v.total,
+			totalByMembers,
+		};
+	},
+	{ total: 0, totalByMembers: {} }
 );
 
 const SummaryByMembers = ({ expensesByMembers: e, members }) => {
-    const expensesByMembers = pipe(groupByMonth, toArray, map(formatByMembers))(e);
+	const expensesByMembers = pipe(groupByMonth, toArray, map(formatByMembers))(e);
 
-    return (
-        <Table height={500} data={expensesByMembers} bordered cellBordered headerHeight={80}>
-            <Column width={100} align="center" fixed="left">
-                <HeaderCell></HeaderCell>
-                <Cell>{({ month, year }) => <Month {...{ month, year }} />}</Cell>
-            </Column>
-            <Column width={100} align="center" fixed="left">
-                <HeaderCell>
-                    <Title name="total" />
-                </HeaderCell>
-                <Cell>
-                    {({ total }) => (
-                        <strong>
-                            <Cost value={total} />
-                        </strong>
-                    )}
-                </Cell>
-            </Column>
-            {members.map(({ id, account }) => (
-                <Column width={100} align="center" fixed="left" key={id}>
-                    <HeaderCell>{account}</HeaderCell>
-                    <Cell>{({ totalByMembers }) => <Cost value={totalByMembers[id] || 0} />}</Cell>
-                </Column>
-            ))}
-        </Table>
-    );
+	return (
+		<Table height={500} data={expensesByMembers} bordered cellBordered headerHeight={80}>
+			<Column width={100} align="center" fixed="left">
+				<HeaderCell></HeaderCell>
+				<Cell>{({ month, year }) => <Month {...{ month, year }} />}</Cell>
+			</Column>
+			<Column width={100} align="center" fixed="left">
+				<HeaderCell>
+					<Title name="total" />
+				</HeaderCell>
+				<Cell>
+					{({ total }) => (
+						<strong>
+							<Cost value={total} />
+						</strong>
+					)}
+				</Cell>
+			</Column>
+			{members.map(({ id, account }) => (
+				<Column width={100} align="center" fixed="left" key={id}>
+					<HeaderCell>{account}</HeaderCell>
+					<Cell>{({ totalByMembers }) => <Cost value={totalByMembers[id] || 0} />}</Cell>
+				</Column>
+			))}
+		</Table>
+	);
 };
 
 export default SummaryByMembers;
