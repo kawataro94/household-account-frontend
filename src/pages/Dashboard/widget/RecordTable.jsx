@@ -25,8 +25,10 @@ const Cost = ({ cost }) => (
     </span>
 );
 
-const MemberName = ({ members, member_id }) => {
-    const member = (members || []).find(({ id }) => id === member_id);
+const MemberName = ({ members, memberId }) => {
+    const member = (members || []).find(({ id }) => id === memberId);
+    console.log(members, memberId, 'members, memberId');
+    console.log(member, 'member');
     return <span>{member && member.account}</span>;
 };
 
@@ -59,7 +61,7 @@ const RecordTable = () => {
                     </Column>
                     <Column flexGrow={1}>
                         <HeaderCell>支払った人</HeaderCell>
-                        <Cell>{({ member_id }) => <MemberName members={members} member_id={member_id} />}</Cell>
+                        <Cell>{({ memberId }) => <MemberName members={members} memberId={memberId} />}</Cell>
                     </Column>
                 </Table>
             </Panel>

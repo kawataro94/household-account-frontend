@@ -28,18 +28,18 @@ const Cost = ({ cost }) => (
     </span>
 );
 
-const MemberName = ({ members, member_id }) => {
-    const member = (members || []).find(({ id }) => id === member_id);
+const MemberName = ({ members, memberId }) => {
+    const member = (members || []).find(({ id }) => id === memberId);
     return <span>{member && member.account}</span>;
 };
 
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
     <>
         <Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
-			編集
+            編集
         </Button>
         <Button color="red" size="sm" onClick={() => openConfirm(index)} css={buttonMargin}>
-			削除
+            削除
         </Button>
     </>
 );
@@ -67,8 +67,8 @@ const makeColumns = ({ members }) => [
     },
     {
         header: '支払った人',
-        cell: function getMemberName({ member_id }) {
-            return <MemberName {...{ members, member_id }} />;
+        cell: function getMemberName({ memberId }) {
+            return <MemberName {...{ members, memberId }} />;
         },
     },
 ];

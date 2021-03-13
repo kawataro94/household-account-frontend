@@ -46,7 +46,7 @@ const CreateEditForm = (props) => {
                 label="Paid By"
                 accepter={SelectPicker}
                 data={memberOption}
-                value={(formValue || {}).member_id}
+                value={(formValue || {}).memberId}
                 block={true}
             />
             <CustomField name="cost" label="Cost" accepter={Input} />

@@ -50,7 +50,7 @@ const UserList = () => {
 		<List hover>
 			{limited.map((member, index) => {
 				const paidBy = dailyExpenses
-					.filter(({ member_id }) => Number(member_id) === member.id)
+					.filter(({ memberId }) => Number(memberId) === member.id)
 					.reduce((pre, current) => pre + Number(current.total), 0);
 				return <ListItem account={member.account} paidBy={paidBy} key={index} />;
 			})}

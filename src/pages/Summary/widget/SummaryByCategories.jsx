@@ -53,15 +53,15 @@ const SummaryByCategories = ({ monthlyExpenses }) => {
             </Column>
             <Column width={130} align="right">
                 <HeaderCell>
-                    <Title name="food_expenses" />
+                    <Title name="foodExpenses" />
                 </HeaderCell>
-                <Cell>{({ food_expenses }) => <Cost value={food_expenses} />}</Cell>
+                <Cell>{({ foodExpenses }) => <Cost value={foodExpenses} />}</Cell>
             </Column>
             <Column width={130} align="right">
                 <HeaderCell>
-                    <Title name="living_expenses" />
+                    <Title name="livingExpenses" />
                 </HeaderCell>
-                <Cell>{({ living_expenses }) => <Cost value={living_expenses} />}</Cell>
+                <Cell>{({ livingExpenses }) => <Cost value={livingExpenses} />}</Cell>
             </Column>
             <ColumnGroup header={<Title name="rent" />} align="right">
                 <Column width={130} colSpan={2}>
@@ -73,34 +73,34 @@ const SummaryByCategories = ({ monthlyExpenses }) => {
                     <Cell>{({ rent }) => <Cost value={rent} />}</Cell>
                 </Column>
             </ColumnGroup>
-            <ColumnGroup header={<Title name="electric_bill" />} align="right">
+            <ColumnGroup header={<Title name="electricBill" />} align="right">
                 <Column width={130} colSpan={2}>
                     <HeaderCell>支払い分</HeaderCell>
                     <Cell dataKey="rentMonth" />
                 </Column>
                 <Column width={130}>
                     <HeaderCell>費用</HeaderCell>
-                    <Cell>{({ electric_bill }) => <Cost value={electric_bill} />}</Cell>
+                    <Cell>{({ electricBill }) => <Cost value={electricBill} />}</Cell>
                 </Column>
             </ColumnGroup>
-            <ColumnGroup header={<Title name="water_bill" />} align="right">
+            <ColumnGroup header={<Title name="waterBill" />} align="right">
                 <Column width={130} colSpan={2}>
                     <HeaderCell>支払い分</HeaderCell>
                     <Cell dataKey="rentMonth" />
                 </Column>
                 <Column width={130}>
                     <HeaderCell>費用</HeaderCell>
-                    <Cell>{({ water_bill }) => <Cost value={water_bill} />}</Cell>
+                    <Cell>{({ waterBill }) => <Cost value={waterBill} />}</Cell>
                 </Column>
             </ColumnGroup>
-            <ColumnGroup header={<Title name="gas_bill" />} align="right">
+            <ColumnGroup header={<Title name="gasBill" />} align="right">
                 <Column width={130} colSpan={2}>
                     <HeaderCell>支払い分</HeaderCell>
                     <Cell dataKey="rentMonth" />
                 </Column>
                 <Column width={130}>
                     <HeaderCell>費用</HeaderCell>
-                    <Cell>{({ gas_bill }) => <Cost value={gas_bill} />}</Cell>
+                    <Cell>{({ gasBill }) => <Cost value={gasBill} />}</Cell>
                 </Column>
             </ColumnGroup>
             <Column width={130} align="right">

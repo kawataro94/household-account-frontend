@@ -43,7 +43,7 @@ const toArray = values;
 const formatByMembers = reduce(
     (acc, v) => {
         const totalByMembers = merge(acc.totalByMembers, {
-            [v.member_id]: v.total,
+            [v.memberId]: v.total,
         });
         return {
             ...acc,
