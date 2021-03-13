@@ -36,10 +36,10 @@ const MemberName = ({ members, memberId }) => {
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
     <>
         <Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
-            編集
+			編集
         </Button>
         <Button color="red" size="sm" onClick={() => openConfirm(index)} css={buttonMargin}>
-            削除
+			削除
         </Button>
     </>
 );

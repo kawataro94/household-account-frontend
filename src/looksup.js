@@ -19,7 +19,7 @@ export const summaryColumns = [
     { label: '水道', value: 'waterBill', color: '#ddece7' },
     { label: 'ガス', value: 'gasBill', color: '#fbeed5' },
     { label: 'その他', value: 'others', color: '#e6e6e5' },
-    { label: '合計', value: 'total', color: '#e9d5cf' }
+    { label: '合計', value: 'total', color: '#e9d5cf' },
 ];
 
 export const makeMemberOption = (members) => {
