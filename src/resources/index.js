@@ -23,16 +23,12 @@ function createResource() {
 	};
 }
 
-export const useResources = ({ isLogin }) => {
+export const useResources = () => {
 	const [resources, setResources] = useState({});
 
 	useEffect(() => {
-		if (!isLogin) {
-			setResources({});
-			return;
-		}
 		setResources(createResource());
-	}, [isLogin]);
+	}, []);
 
 	return { resources };
 };

@@ -24,7 +24,7 @@ const CustomField = (props) => {
 };
 
 const CreateEditForm = (props) => {
-	const { formValue, setFormValue } = props;
+	const { formValue, setFormValue, isCreate } = props;
 	const { members } = useContext(RecordsContext);
 	const memberOption = makeMemberOption(members);
 
@@ -43,11 +43,12 @@ const CreateEditForm = (props) => {
 			<CustomField name="date" label="Date" accepter={DatePicker} block={true} />
 			<CustomField
 				name="paidBy"
-				label="Paid By"
+				label={`Paid By ${!isCreate ? '(readOnly)' : ''}`}
 				accepter={SelectPicker}
 				data={memberOption}
 				value={(formValue || {}).memberId}
 				block={true}
+				readOnly={!isCreate}
 			/>
 			<CustomField name="cost" label="Cost" accepter={Input} />
 		</Form>

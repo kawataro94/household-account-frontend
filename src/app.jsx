@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import 'rsuite/dist/styles/rsuite-default.css';
 import { css } from '@emotion/react';
 
@@ -20,6 +20,15 @@ const flex = css`
 `;
 
 const AuthTheme = ({ children }) => {
+	const { isLogin } = useContext(LoginContext);
+	const history = useHistory();
+	const jumpToSignIn = () => history.push('/signin');
+
+	useEffect(() => {
+		if (isLogin === undefined) return;
+		if (!isLogin) jumpToSignIn();
+	}, [isLogin]);
+
 	return (
 		<>
 			<Navbar />
@@ -57,27 +66,17 @@ const AuthConfig = () => (
 	</AuthTheme>
 );
 
-const Routes = () => {
-	const { isLogin } = useContext(LoginContext);
-	return (
-		<>
-			{isLogin ? (
-				<>
-					<Route exact path="/" component={AuthDashboard} />
-					<Route path="/records" component={AuthRecords} />
-					<Route path="/summary" component={AuthSummary} />
-					<Route path="/members" component={AuthMembers} />
-					<Route path="/config" component={AuthConfig} />
-				</>
-			) : (
-				<>
-					<Route exact path="/signin" component={SignIn} />
-					<Route exact path="/signup" component={SignUp} />
-				</>
-			)}
-		</>
-	);
-};
+const Routes = () => (
+	<>
+		<Route exact path="/" component={AuthDashboard} />
+		<Route path="/records" component={AuthRecords} />
+		<Route path="/summary" component={AuthSummary} />
+		<Route path="/members" component={AuthMembers} />
+		<Route path="/config" component={AuthConfig} />
+		<Route exact path="/signin" component={SignIn} />
+		<Route exact path="/signup" component={SignUp} />
+	</>
+);
 
 const App = () => {
 	return (
