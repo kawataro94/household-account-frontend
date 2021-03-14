@@ -4,10 +4,9 @@ import { useAuthentication } from './hooks';
 
 export const LoginContext = React.createContext();
 export const Provider = ({ children }) => {
-	const [isLogin, setIsLogin] = useState(false);
+	const [isLogin, setIsLogin] = useState();
 	const { checkStorage, checkUid, clearSession } = useAuthentication();
 	const history = useHistory();
-	const jumpToDashboard = () => history.push('/');
 	const jumpToSignIn = () => history.push('/signin');
 
 	useEffect(() => {
@@ -16,7 +15,6 @@ export const Provider = ({ children }) => {
 
 	const signIn = async (user) => {
 		await checkUid(user.uid);
-		jumpToDashboard();
 		setIsLogin(true);
 	};
 

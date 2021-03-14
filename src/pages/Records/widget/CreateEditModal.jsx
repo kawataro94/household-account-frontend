@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Button, Modal, Alert } from 'rsuite';
 
 import { useCreateRecord, useEditRecord, useFetchRecords } from '../../../hooks';
@@ -15,6 +15,8 @@ const CreateEditModal = (props) => {
 	const { show, selected } = modalState;
 	const [formValue, setFormValue] = useState();
 	const [disabled, setDisabled] = useState(true);
+
+	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
 
 	useEffect(() => {
 		const fv = Number.isFinite(selected)
@@ -35,8 +37,7 @@ const CreateEditModal = (props) => {
 	}, [formValue]);
 
 	const onOk = () => {
-		const createNew = !Number.isFinite(selected);
-		if (createNew) {
+		if (isCreate) {
 			createRecord(formValue)
 				.then(() => {
 					Alert.config({ top: 80 });
@@ -47,7 +48,7 @@ const CreateEditModal = (props) => {
 					console.log(e, 'post error');
 				});
 		}
-		if (!createNew) {
+		if (!isCreate) {
 			editRecord(formValue, selected)
 				.then(() => {
 					Alert.config({ top: 80 });
@@ -67,6 +68,7 @@ const CreateEditModal = (props) => {
 	const createEditFormProps = {
 		formValue,
 		setFormValue,
+		isCreate,
 	};
 	const okButtonProps = {
 		onClick: () => onOk(),

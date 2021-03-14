@@ -27,8 +27,6 @@ const Cost = ({ cost }) => (
 
 const MemberName = ({ members, memberId }) => {
 	const member = (members || []).find(({ id }) => id === memberId);
-	console.log(members, memberId, 'members, memberId');
-	console.log(member, 'member');
 	return <span>{member && member.account}</span>;
 };
 

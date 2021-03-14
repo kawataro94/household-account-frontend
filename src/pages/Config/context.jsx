@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { LoginContext } from '../../context';
 import { useResources } from '../../resources';
 
 export const ConfigContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { isLogin } = useContext(LoginContext);
-	const { resources } = useResources({ isLogin });
+	const { resources } = useResources();
 	const t = resources?.templates?.read();
 	const [templates, setTemplates] = useState([]);
 

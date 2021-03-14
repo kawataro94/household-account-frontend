@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'rsuite';
 
@@ -9,7 +9,7 @@ import SignInForm from './widget/SignInForm';
 import { buttonMargin, title } from './style';
 
 const SignIn = () => {
-	const { setIsLogin } = useContext(LoginContext);
+	const { isLogin, setIsLogin } = useContext(LoginContext);
 	const { checkAuth } = useAuthentication();
 	const history = useHistory();
 	const jumpToDashboard = () => history.push('/');
@@ -17,6 +17,10 @@ const SignIn = () => {
 		email: '',
 		password: '',
 	});
+
+	useEffect(() => {
+		if (isLogin) jumpToDashboard();
+	}, [isLogin]);
 
 	const signIn = () => {
 		checkAuth(formValue).then(() => {
