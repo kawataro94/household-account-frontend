@@ -12,11 +12,10 @@ module.exports = merge(common, {
 		new webpack.DefinePlugin({
 			'process.env.RUN_ENV': JSON.stringify('development'),
 		}),
-		new HtmlWebpackPlugin({
+        new HtmlWebpackPlugin({
 			title: 'Household-Accounts DEV',
 			template: path.resolve(__dirname, 'template.ejs'),
-			hash: true,
-		}),
+        }),
 		new GenerateSW({
 			clientsClaim: true,
 			skipWaiting: true,
