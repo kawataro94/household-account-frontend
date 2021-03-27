@@ -1,0 +1,25 @@
+<% var opt = htmlWebpackPlugin.options; %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title><%= opt.title %></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+	</head>
+	<body>
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker
+						.register('service-worker.js')
+						.then((registration) => {
+							console.log('SW registered: ', registration);
+						})
+						.catch((registrationError) => {
+							console.log('registrationError: ', registrationError);
+						});
+				});
+			}
+		</script>
+	</body>
+</html>
