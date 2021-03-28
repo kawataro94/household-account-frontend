@@ -37,21 +37,23 @@ function useAuthentication() {
 		return firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(({ user }) => user.uid)
+			.then(({ user }) => user)
 			.catch(({ code, message }) => {
 				console.log(code, message);
 			});
 	};
 
-	const checkUid = (uid) => {
-		return httpClient.post(`http://${serverUrl}/member/signin`, { uid }).catch((e) => {
+	const checkUid = async (user) => {
+		const idToken = await user.getIdToken().then(token => token);
+		const uid = user.uid;
+		return httpClient.post(`http://${serverUrl}/member/signin`, { idToken, uid }).catch((e) => {
 			console.log(e, 'uid error');
 		});
 	};
 
 	const checkAuth = async (formValue) => {
-		const uid = await checkEmailAndPassword(formValue);
-		return checkUid(uid);
+		const user = await checkEmailAndPassword(formValue);
+		return checkUid(user);
 	};
 
 	const checkStorage = (signIn, signOut) => {
