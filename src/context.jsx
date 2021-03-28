@@ -14,7 +14,7 @@ export const Provider = ({ children }) => {
 	}, []);
 
 	const signIn = async (user) => {
-		await checkUid(user.uid);
+		await checkUid(user);
 		setIsLogin(true);
 	};
 
