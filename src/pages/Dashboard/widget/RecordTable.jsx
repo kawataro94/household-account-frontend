@@ -32,7 +32,7 @@ const MemberName = ({ members, memberId }) => {
 
 const RecordTable = () => {
 	const { members, records } = useContext(DashboardContext);
-	const limited = records.slice(0, 5);
+	const limited = records?.slice(0, 5) || [];
 	return (
 		<Row>
 			<Col>
