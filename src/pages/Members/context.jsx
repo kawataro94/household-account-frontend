@@ -5,7 +5,7 @@ import { useResources } from '../../resources';
 export const MembersContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources();
+	const { resources } = useResources({ keys: ['members'] });
 	const members = resources?.members?.read() || [];
 
 	const value = { members };

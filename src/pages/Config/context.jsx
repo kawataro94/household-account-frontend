@@ -5,7 +5,7 @@ import { useResources } from '../../resources';
 export const ConfigContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources();
+	const { resources } = useResources({ keys: ['templates']});
 	const t = resources?.templates?.read();
 	const [templates, setTemplates] = useState([]);
 

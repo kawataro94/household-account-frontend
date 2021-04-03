@@ -1,11 +1,7 @@
-import Axios from 'axios';
 import Moment from 'moment';
 
 import { serverUrl } from '../../.env/resources';
-
-const httpClient = Axios.create({
-	withCredentials: true,
-});
+import { httpClient } from '../setting'
 
 function useCreateRecord() {
 	const create = (record) => {

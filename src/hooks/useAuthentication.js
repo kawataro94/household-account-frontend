@@ -1,12 +1,8 @@
-import Axios from 'axios';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import { serverUrl } from '../../.env/resources';
-
-const httpClient = Axios.create({
-	withCredentials: true,
-});
+import { httpClient } from '../setting'
 
 function useAuthentication() {
 	const setUpAuth = ({ email, password, account }) => {
