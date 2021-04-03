@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {
 	useFetchExpensesByMembers,
 	useFetchDailyExpenses,
+	useFetchLendingRecords,
 	useFetchMembers,
 	useFetchMonthlyExpenses,
 	useFetchMyProfile,
@@ -14,6 +15,7 @@ import wrapPromise from './wrap-promise';
 const apiHooks = {
 		expensesByMembers: () => useFetchExpensesByMembers(),
 		dailyExpenses: () => useFetchDailyExpenses(),
+		lendingRecords: () => useFetchLendingRecords(),
 		members: () => useFetchMembers(),
 		monthlyExpenses: () => useFetchMonthlyExpenses(),
 		myProfile: () => useFetchMyProfile(),

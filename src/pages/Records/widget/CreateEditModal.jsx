@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Modal, Alert } from 'rsuite';
 
-import { useCreateRecord, useEditRecord, useFetchRecords } from '../../../hooks';
 import CreateEditForm from './CreateEditForm';
-import { RecordsContext } from '../context';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
-	const { modalState, closeCreateEditModal } = props;
-	const { records, updateRecords } = useContext(RecordsContext);
-	const { create: createRecord } = useCreateRecord();
-	const { edit: editRecord } = useEditRecord();
-
+	const { modalState, closeCreateEditModal, recordProps } = props;
+	const { initialValue, records, fetchRecord, updateRecords, createRecord, editRecord } = recordProps;
 	const { show, selected } = modalState;
 	const [formValue, setFormValue] = useState();
 	const [disabled, setDisabled] = useState(true);
@@ -21,19 +16,13 @@ const CreateEditModal = (props) => {
 	useEffect(() => {
 		const fv = Number.isFinite(selected)
 			? records[selected]
-			: {
-					title: '',
-					category: null,
-					date: null,
-					paidBy: null,
-					cost: '',
-			  };
+			: initialValue;
 		setFormValue(fv);
 	}, [records, selected]);
 
 	useEffect(() => {
 		const inputValue = Object.values(formValue || {});
-		setDisabled(inputValue.length < 5 || !Object.values(formValue || {}).every((v) => v !== undefined));
+		setDisabled(inputValue.length < Object.keys(initialValue).length || !Object.values(formValue || {}).every((v) => v !== undefined));
 	}, [formValue]);
 
 	const onOk = () => {
@@ -42,7 +31,7 @@ const CreateEditModal = (props) => {
 				.then(() => {
 					Alert.config({ top: 80 });
 					Alert.success('新しいレコードを追加しました');
-					useFetchRecords().then(({ data }) => updateRecords(data));
+					fetchRecord().then(({ data }) => updateRecords(data));
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
@@ -53,7 +42,7 @@ const CreateEditModal = (props) => {
 				.then(() => {
 					Alert.config({ top: 80 });
 					Alert.success('レコードを編集しました');
-					useFetchRecords().then(({ data }) => updateRecords(data));
+					fetchRecord().then(({ data }) => updateRecords(data));
 				})
 				.catch((e) => {
 					console.log(e, 'post error');

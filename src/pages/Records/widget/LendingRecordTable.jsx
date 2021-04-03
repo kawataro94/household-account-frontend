@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Alert } from 'rsuite';
 
-import { useFetchRecords, useCreateRecord, useEditRecord, useDeleteRecord } from '../../../hooks';
+import { useFetchLendingRecords, useCreateLendingRecord, useEditLendingRecord, useDeleteLendingRecord } from '../../../hooks';
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
@@ -80,12 +80,12 @@ const initialValue = {
 	cost: '',
 }
 
-const RecordTable = (props) => {
-	const { members, records, updateRecords } = props;
-	const fetchRecord = () => useFetchRecords();
-	const { create: createRecord } = useCreateRecord();
-	const { edit: editRecord } = useEditRecord();
-	const { remove: deleteRecord } = useDeleteRecord();
+const LendingRecordTable = (props) => {
+	const { members, lendingRecords, updateLendingRecords } = props;
+	const fetchRecord = () => useFetchLendingRecords();
+	const { create: createRecord } = useCreateLendingRecord();
+	const { edit: editRecord } = useEditLendingRecord();
+	const { remove: deleteRecord } = useDeleteLendingRecord();
 
 	const [modalState, setModalState] = useState({
 		show: false,
@@ -120,9 +120,9 @@ const RecordTable = (props) => {
 
 	const recordProps = {
 		initialValue,
-		records,
+		records: lendingRecords,
 		fetchRecord,
-		updateRecords,
+		updateRecords: updateLendingRecords,
 		createRecord,
 		editRecord
 	}
@@ -138,11 +138,11 @@ const RecordTable = (props) => {
 		show: isConfirm,
 		selected,
 		onOk: () => {
-			deleteRecord(records[selected].id)
+			deleteRecord(lendingRecords[selected].id)
 				.then(() => {
 					Alert.config({ top: 80 });
 					Alert.success('レコードを削除しました');
-					fetchRecord().then(({ data }) => updateRecords(data));
+					fetchRecord().then(({ data }) => updateLendingRecords(data));
 				})
 				.catch((e) => {
 					console.log(e, 'delete error');
@@ -154,10 +154,10 @@ const RecordTable = (props) => {
 
 	const tableProps = {
 		height: 520,
-		data: records,
+		data: lendingRecords,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
-		columns: makeColumns({ ...records, members }),
+		columns: makeColumns({ members }),
 		actions: function actionButton(index) {
 			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
 		},
@@ -176,4 +176,4 @@ const RecordTable = (props) => {
 	);
 };
 
-export default RecordTable;
+export default LendingRecordTable;
