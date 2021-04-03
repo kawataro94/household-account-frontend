@@ -1,12 +1,16 @@
 export { default as useAuthentication } from './useAuthentication';
+export { default as useCreateLendingRecord } from './useCreateLendingRecord';
 export { default as useCreateRecord } from './useCreateRecord';
 export { default as useCreateTemplate } from './useCreateTemplate';
+export { default as useDeleteLendingRecord } from './useDeleteLendingRecord';
 export { default as useDeleteRecord } from './useDeleteRecord';
 export { default as useDeleteTemplate } from './useDeleteTemplate';
+export { default as useEditLendingRecord } from './useEditLendingRecord';
 export { default as useEditRecord } from './useEditRecord';
 export { default as useEditTemplate } from './useEditTemplate';
 export { default as useFetchExpensesByMembers } from './useFetchExpensesByMembers';
 export { default as useFetchDailyExpenses } from './useFetchDailyExpenses';
+export { default as useFetchLendingRecords } from './useFetchLendingRecords';
 export { default as useFetchMembers } from './useFetchMembers';
 export { default as useFetchMonthlyExpenses } from './useFetchMonthlyExpenses';
 export { default as useFetchMyProfile } from './useFetchMyProfile';
