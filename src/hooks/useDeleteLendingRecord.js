@@ -3,7 +3,7 @@ import { httpClient } from '../setting'
 
 function useLendingDeleteRecord() {
 	const remove = (id) => {
-		return httpClient.delete(`http://${serverUrl}/member/lending_records/${id}`);
+		return httpClient.delete(`${serverUrl}/member/lending_records/${id}`);
 	};
 
 	return { remove };

@@ -14,7 +14,7 @@ function useCreateRecord() {
 			fixed: false,
 		};
 
-		return httpClient.post(`http://${serverUrl}/member/records`, params);
+		return httpClient.post(`${serverUrl}/member/records`, params);
 	};
 	return { create };
 }
