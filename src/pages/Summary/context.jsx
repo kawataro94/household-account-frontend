@@ -5,12 +5,13 @@ import { useResources } from '../../resources';
 export const SummaryContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources({ keys: ['members', 'monthlyExpenses', 'expensesByMembers'] });
+	const { resources } = useResources({ keys: ['members', 'monthlyExpenses', 'expensesByMembers', 'lendingByMembers'] });
+	const members = resources?.members?.read() || [];
 	const monthlyExpenses = resources?.monthlyExpenses?.read() || [];
 	const expensesByMembers = resources?.expensesByMembers?.read() || [];
-	const members = resources?.members?.read() || [];
+	const lendingByMembers = resources?.lendingByMembers?.read() || [];
 
-	const value = { monthlyExpenses, expensesByMembers, members };
+	const value = { members, monthlyExpenses, expensesByMembers, lendingByMembers };
 
 	return <SummaryContext.Provider value={value}>{children}</SummaryContext.Provider>;
 };
