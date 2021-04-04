@@ -13,6 +13,7 @@ export { default as useFetchDailyExpenses } from './useFetchDailyExpenses';
 export { default as useFetchLendingRecords } from './useFetchLendingRecords';
 export { default as useFetchMembers } from './useFetchMembers';
 export { default as useFetchMonthlyExpenses } from './useFetchMonthlyExpenses';
+export { default as useFetchLendingByMembers } from './useFetchLendingByMembers';
 export { default as useFetchMyProfile } from './useFetchMyProfile';
 export { default as useFetchRecords } from './useFetchRecords';
 export { default as useFetchTemplates } from './useFetchTemplates';

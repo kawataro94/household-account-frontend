@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {
 	useFetchExpensesByMembers,
 	useFetchDailyExpenses,
+	useFetchLendingByMembers,
 	useFetchLendingRecords,
 	useFetchMembers,
 	useFetchMonthlyExpenses,
@@ -16,6 +17,7 @@ const apiHooks = {
 		expensesByMembers: () => useFetchExpensesByMembers(),
 		dailyExpenses: () => useFetchDailyExpenses(),
 		lendingRecords: () => useFetchLendingRecords(),
+		lendingByMembers: () => useFetchLendingByMembers(),
 		members: () => useFetchMembers(),
 		monthlyExpenses: () => useFetchMonthlyExpenses(),
 		myProfile: () => useFetchMyProfile(),

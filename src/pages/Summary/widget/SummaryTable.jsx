@@ -5,23 +5,26 @@ import Divider from '../../../components/Divider';
 import { SummaryContext } from '../context';
 import SummaryByCategories from './SummaryByCategories';
 import SummaryByMembers from './SummaryByMembers';
+import LendingSummary from './LendingSummary';
 
 const CustomNav = ({ active, onSelect, ...props }) => {
 	return (
 		<Nav {...props} activeKey={active} onSelect={onSelect}>
 			<Nav.Item eventKey="categories">月ごとの集計</Nav.Item>
 			<Nav.Item eventKey="members">メンバーごとの集計</Nav.Item>
+			<Nav.Item eventKey="lending">貸付集計</Nav.Item>
 		</Nav>
 	);
 };
 
 const CustomTable = ({ active }) => {
-	const { monthlyExpenses, expensesByMembers, members } = useContext(SummaryContext);
+	const { monthlyExpenses, expensesByMembers, lendingByMembers, members } = useContext(SummaryContext);
 
 	return (
 		<>
 			{active === 'categories' ? <SummaryByCategories {...{ monthlyExpenses }} /> : null}
 			{active === 'members' ? <SummaryByMembers {...{ expensesByMembers, members }} /> : null}
+			{active === 'lending' ? <LendingSummary {...{ lendingByMembers, members }} /> : null}
 		</>
 	);
 };
