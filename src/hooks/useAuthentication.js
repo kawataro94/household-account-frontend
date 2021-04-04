@@ -24,7 +24,7 @@ function useAuthentication() {
 			groupId: '1',
 		};
 
-		return httpClient.post(`http://${serverUrl}/member/signup`, params).catch((e) => {
+		return httpClient.post(`${serverUrl}/member/signup`, params).catch((e) => {
 			console.log(e, 'signup error');
 		});
 	};
@@ -42,7 +42,7 @@ function useAuthentication() {
 	const checkUid = async (user) => {
 		const idToken = await user.getIdToken().then(token => token);
 		const uid = user.uid;
-		return httpClient.post(`http://${serverUrl}/member/signin`, { idToken, uid }).catch((e) => {
+		return httpClient.post(`${serverUrl}/member/signin`, { idToken, uid }).catch((e) => {
 			console.log(e, 'uid error');
 		});
 	};
@@ -63,7 +63,7 @@ function useAuthentication() {
 		});
 	};
 
-	const clearSession = () => httpClient.post(`http://${serverUrl}/member/signout`);
+	const clearSession = () => httpClient.post(`${serverUrl}/member/signout`);
 
 	const clearStorage = () => firebase.auth().signOut();
 

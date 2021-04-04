@@ -10,7 +10,7 @@ function useEditRecord() {
 			date: Moment(record.date).format('YYYY-MM-DD'),
 		};
 
-		return httpClient.patch(`http://${serverUrl}/member/records/${record.id}`, params);
+		return httpClient.patch(`${serverUrl}/member/records/${record.id}`, params);
 	};
 
 	return { edit };

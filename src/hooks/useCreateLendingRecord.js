@@ -14,7 +14,7 @@ function useCreateRecord() {
 			fixed: false,
 		};
 
-		return httpClient.post(`http://${serverUrl}/member/lending_records`, params);
+		return httpClient.post(`${serverUrl}/member/lending_records`, params);
 	};
 	return { create };
 }
