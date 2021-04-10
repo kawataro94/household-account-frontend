@@ -1,5 +1,5 @@
 import { serverUrl } from '../../.env/resources';
-import { httpClient } from '../setting'
+import { httpClient } from '../setting';
 
 function useDeleteTemplate() {
 	const remove = (id) => {

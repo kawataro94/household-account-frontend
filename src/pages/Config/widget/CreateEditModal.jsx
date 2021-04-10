@@ -1,56 +1,49 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Alert } from 'rsuite';
 
-import { useCreateTemplate, useEditTemplate, useFetchTemplates } from '../../../hooks';
 import CreateEditForm from './CreateEditForm';
-import { ConfigContext } from '../context';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
-	const { modalState, closeCreateEditModal } = props;
-	const { templates, updateTemplates } = useContext(ConfigContext);
-	const { create: createTemplate } = useCreateTemplate();
-	const { edit: editTemplate } = useEditTemplate();
+	const { modalState, closeCreateEditModal, fieldSchema, methods, data, initialValue } = props;
+	const { fetch, create, edit, update } = methods;
 
 	const { show, selected } = modalState;
 	const [formValue, setFormValue] = useState();
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
-		const fv = selected
-			? templates[selected]
-			: {
-					templateName: '',
-					title: '',
-					category: null,
-			  };
+		const fv = Number.isFinite(selected) ? data[selected] : initialValue;
 		setFormValue(fv);
-	}, [templates, selected]);
+	}, [data, selected]);
 
 	useEffect(() => {
 		const inputValue = Object.values(formValue || {});
-		setDisabled(inputValue.length < 3 || !Object.values(formValue || {}).every((v) => v !== undefined));
+		setDisabled(
+			inputValue.length < Object.keys(initialValue).length ||
+				!Object.values(formValue || {}).every((v) => v !== undefined)
+		);
 	}, [formValue]);
 
 	const onOk = () => {
 		const createNew = !Number.isFinite(selected);
 		if (createNew) {
-			createTemplate(formValue)
+			create(formValue)
 				.then(() => {
 					Alert.config({ top: 80 });
 					Alert.success('新しいテンプレートを追加しました');
-					useFetchTemplates().then(({ data }) => updateTemplates(data));
+					fetch().then(({ data }) => update(data));
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
 				});
 		}
 		if (!createNew) {
-			editTemplate(formValue, selected)
+			edit(formValue, selected)
 				.then(() => {
 					Alert.config({ top: 80 });
 					Alert.success('テンプレートを編集しました');
-					useFetchTemplates().then(({ data }) => updateTemplates(data));
+					fetch().then(({ data }) => update(data));
 				})
 				.catch((e) => {
 					console.log(e, 'patch error');
@@ -65,6 +58,7 @@ const CreateEditModal = (props) => {
 	const createEditFormProps = {
 		formValue,
 		setFormValue,
+		fieldSchema,
 	};
 	const okButtonProps = {
 		onClick: () => onOk(),

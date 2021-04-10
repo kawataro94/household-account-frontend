@@ -5,7 +5,9 @@ import { useResources } from '../../resources';
 export const SummaryContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources({ keys: ['members', 'monthlyExpenses', 'expensesByMembers', 'lendingByMembers'] });
+	const { resources } = useResources({
+		keys: ['members', 'monthlyExpenses', 'expensesByMembers', 'lendingByMembers'],
+	});
 	const members = resources?.members?.read() || [];
 	const monthlyExpenses = resources?.monthlyExpenses?.read() || [];
 	const expensesByMembers = resources?.expensesByMembers?.read() || [];
