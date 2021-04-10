@@ -19,9 +19,7 @@ const getAccepter = (type) => {
 
 const CustomField = (props) => {
 	const { name, label, type, ...rest } = props;
-
 	const accepter = getAccepter(type); 
-	console.log(props, 'props')
 	return (
 		<FormGroup>
 			<ControlLabel>{label} </ControlLabel>
