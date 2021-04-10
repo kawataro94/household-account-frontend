@@ -5,7 +5,7 @@ import { useResources } from '../../resources';
 export const RecordsContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources({ keys: ['members', 'records', 'lendingRecords']});
+	const { resources } = useResources({ keys: ['members', 'records', 'lendingRecords'] });
 	const members = resources?.members?.read() || [];
 	const r = resources?.records?.read();
 	const l = resources?.lendingRecords?.read();
@@ -28,12 +28,12 @@ export const Provider = ({ children }) => {
 		setLendingRecords(data);
 	};
 
-	const value = { 
+	const value = {
 		members,
 		records,
 		lendingRecords,
 		updateRecords,
-		updateLendingRecords 
+		updateLendingRecords,
 	};
 
 	return <RecordsContext.Provider value={value}>{children}</RecordsContext.Provider>;

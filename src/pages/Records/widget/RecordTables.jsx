@@ -20,8 +20,10 @@ const CustomTable = ({ active }) => {
 
 	return (
 		<>
-			{active === 'default' ? <RecordTable {...{ members, records, updateRecords }}/> : null}
-			{active === 'irregular' ? <LendingRecordTable {...{ members, lendingRecords, updateLendingRecords }}/> : null}
+			{active === 'default' ? <RecordTable {...{ members, records, updateRecords }} /> : null}
+			{active === 'irregular' ? (
+				<LendingRecordTable {...{ members, lendingRecords, updateLendingRecords }} />
+			) : null}
 		</>
 	);
 };

@@ -13,15 +13,16 @@ const CreateEditModal = (props) => {
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
-		const fv = Number.isFinite(selected)
-			? data[selected]
-			: initialValue;
+		const fv = Number.isFinite(selected) ? data[selected] : initialValue;
 		setFormValue(fv);
 	}, [data, selected]);
 
 	useEffect(() => {
 		const inputValue = Object.values(formValue || {});
-		setDisabled(inputValue.length < Object.keys(initialValue).length || !Object.values(formValue || {}).every((v) => v !== undefined));
+		setDisabled(
+			inputValue.length < Object.keys(initialValue).length ||
+				!Object.values(formValue || {}).every((v) => v !== undefined)
+		);
 	}, [formValue]);
 
 	const onOk = () => {
@@ -57,7 +58,7 @@ const CreateEditModal = (props) => {
 	const createEditFormProps = {
 		formValue,
 		setFormValue,
-		fieldSchema
+		fieldSchema,
 	};
 	const okButtonProps = {
 		onClick: () => onOk(),

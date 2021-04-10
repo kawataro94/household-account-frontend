@@ -1,7 +1,7 @@
-import { useCallback } from 'react'
+import { useCallback } from 'react';
 
 import { serverUrl } from '../../../.env/resources';
-import { httpClient } from '../../setting'
+import { httpClient } from '../../setting';
 
 function useCreateCategory() {
 	const create = useCallback((category) => {

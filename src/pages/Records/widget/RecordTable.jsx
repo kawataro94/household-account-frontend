@@ -78,7 +78,7 @@ const initialValue = {
 	date: null,
 	paidBy: null,
 	cost: '',
-}
+};
 
 const RecordTable = (props) => {
 	const { members, records, updateRecords } = props;
@@ -124,8 +124,8 @@ const RecordTable = (props) => {
 		fetchRecord,
 		updateRecords,
 		createRecord,
-		editRecord
-	}
+		editRecord,
+	};
 
 	const createEditModalProps = {
 		modalState,

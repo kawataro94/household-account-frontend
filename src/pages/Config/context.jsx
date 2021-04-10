@@ -5,7 +5,7 @@ import { useResources } from '../../resources';
 export const ConfigContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources({ keys: ['categories', 'places', 'templates']});
+	const { resources } = useResources({ keys: ['categories', 'places', 'templates'] });
 	const c = resources?.categories?.read();
 	const p = resources?.places?.read();
 	const t = resources?.templates?.read();
@@ -27,23 +27,23 @@ export const Provider = ({ children }) => {
 
 	const categoryProps = {
 		categories,
-		updateCategories: (v) => setCategories(v)
-	}
+		updateCategories: (v) => setCategories(v),
+	};
 
 	const placeProps = {
 		places,
-		updatePlaces: (v) => setPlaces(v)
-	}
+		updatePlaces: (v) => setPlaces(v),
+	};
 
 	const templateProps = {
 		templates,
-		updateTemplates: (v) => setTemplates(v)
-	}
+		updateTemplates: (v) => setTemplates(v),
+	};
 
-	const merged = { 
-		categoryProps, 
-		placeProps, 
-		templateProps 
+	const merged = {
+		categoryProps,
+		placeProps,
+		templateProps,
 	};
 
 	return <ConfigContext.Provider value={merged}>{children}</ConfigContext.Provider>;

@@ -25,19 +25,19 @@ const columns = [
 	{
 		header: '購入場所',
 		key: 'name',
-	}
+	},
 ];
 
 const fieldSchema = [
 	{
 		name: 'name',
 		label: '購入場所',
-		type: 'input'
-	}
+		type: 'input',
+	},
 ];
 
 const PlaceTable = (props) => {
-	const { places, updatePlaces } = props
+	const { places, updatePlaces } = props;
 	const { remove: deletePlace } = useDeletePlace();
 
 	const [modalState, setModalState] = useState({
@@ -79,10 +79,10 @@ const PlaceTable = (props) => {
 			fetch: usePlaces,
 			create: useCreatePlace().create,
 			edit: useUpdatePlace().edit,
-			update: (data) => updatePlaces(data)
+			update: (data) => updatePlaces(data),
 		},
 		data: places,
-		initialValue: { name: '' }
+		initialValue: { name: '' },
 	};
 
 	const confirmProps = {

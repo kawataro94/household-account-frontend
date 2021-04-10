@@ -10,7 +10,7 @@ const CustomNav = ({ active, onSelect, ...props }) => {
 		<Nav {...props} activeKey={active} onSelect={onSelect}>
 			<Nav.Item eventKey="template">テンプレート一覧</Nav.Item>
 			<Nav.Item eventKey="category">カテゴリ一覧</Nav.Item>
-            <Nav.Item eventKey="place">購入場所一覧</Nav.Item>
+			<Nav.Item eventKey="place">購入場所一覧</Nav.Item>
 		</Nav>
 	);
 };
@@ -20,9 +20,9 @@ const CustomTable = ({ active }) => {
 
 	return (
 		<>
-			{active === 'template' ? <TemplateTable {...templateProps}/> : null}
-			{active === 'category' ? <CategoryTable {...categoryProps}/> : null}
-            {active === 'place' ? <PlaceTable {...placeProps}/> : null}
+			{active === 'template' ? <TemplateTable {...templateProps} /> : null}
+			{active === 'category' ? <CategoryTable {...categoryProps} /> : null}
+			{active === 'place' ? <PlaceTable {...placeProps} /> : null}
 		</>
 	);
 };

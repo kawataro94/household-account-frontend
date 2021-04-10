@@ -15,18 +15,18 @@ import { useCategories, usePlaces } from '../hooks/read';
 import wrapPromise from './wrap-promise';
 
 const apiHooks = {
-		categories: () => useCategories(),
-		dailyExpenses: () => useFetchDailyExpenses(),
-		expensesByMembers: () => useFetchExpensesByMembers(),
-		lendingRecords: () => useFetchLendingRecords(),
-		lendingByMembers: () => useFetchLendingByMembers(),
-		members: () => useFetchMembers(),
-		monthlyExpenses: () => useFetchMonthlyExpenses(),
-		myProfile: () => useFetchMyProfile(),
-		places: () => usePlaces(),
-		records: () => useFetchRecords(),
-		templates: () => useFetchTemplates(),
-}
+	categories: () => useCategories(),
+	dailyExpenses: () => useFetchDailyExpenses(),
+	expensesByMembers: () => useFetchExpensesByMembers(),
+	lendingRecords: () => useFetchLendingRecords(),
+	lendingByMembers: () => useFetchLendingByMembers(),
+	members: () => useFetchMembers(),
+	monthlyExpenses: () => useFetchMonthlyExpenses(),
+	myProfile: () => useFetchMyProfile(),
+	places: () => usePlaces(),
+	records: () => useFetchRecords(),
+	templates: () => useFetchTemplates(),
+};
 
 function createResource({ keys }) {
 	const resources = keys?.reduce((acc, key) => {
@@ -34,8 +34,8 @@ function createResource({ keys }) {
 		return {
 			...acc,
 			[key]: wrapPromise(fetch()),
-		}
-	}, {}); 
+		};
+	}, {});
 
 	return resources;
 }

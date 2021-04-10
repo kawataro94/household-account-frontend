@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import { serverUrl } from '../../.env/resources';
-import { httpClient } from '../setting'
+import { httpClient } from '../setting';
 
 function useAuthentication() {
 	const setUpAuth = ({ email, password, account }) => {
@@ -40,7 +40,7 @@ function useAuthentication() {
 	};
 
 	const checkUid = async (user) => {
-		const idToken = await user.getIdToken().then(token => token);
+		const idToken = await user.getIdToken().then((token) => token);
 		const uid = user.uid;
 		return httpClient.post(`${serverUrl}/member/signin`, { idToken, uid }).catch((e) => {
 			console.log(e, 'uid error');

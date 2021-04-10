@@ -25,15 +25,15 @@ const columns = [
 	{
 		header: 'カテゴリ名',
 		key: 'name',
-	}
+	},
 ];
 
 const fieldSchema = [
 	{
 		name: 'name',
 		label: 'カテゴリ名',
-		type: 'input'
-	}
+		type: 'input',
+	},
 ];
 
 const TemplateTable = (props) => {
@@ -79,10 +79,10 @@ const TemplateTable = (props) => {
 			fetch: useCategories,
 			create: useCreateCategory().create,
 			edit: useUpdateCategory().edit,
-			update: (data) => updateCategories(data)
+			update: (data) => updateCategories(data),
 		},
 		data: categories,
-		initialValue: { name: '' }
+		initialValue: { name: '' },
 	};
 
 	const confirmProps = {

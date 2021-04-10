@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Alert } from 'rsuite';
 
-import { useFetchLendingRecords, useCreateLendingRecord, useEditLendingRecord, useDeleteLendingRecord } from '../../../hooks';
+import {
+	useFetchLendingRecords,
+	useCreateLendingRecord,
+	useEditLendingRecord,
+	useDeleteLendingRecord,
+} from '../../../hooks';
 import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
@@ -78,7 +83,7 @@ const initialValue = {
 	date: null,
 	paidBy: null,
 	cost: '',
-}
+};
 
 const LendingRecordTable = (props) => {
 	const { members, lendingRecords, updateLendingRecords } = props;
@@ -124,8 +129,8 @@ const LendingRecordTable = (props) => {
 		fetchRecord,
 		updateRecords: updateLendingRecords,
 		createRecord,
-		editRecord
-	}
+		editRecord,
+	};
 
 	const createEditModalProps = {
 		modalState,

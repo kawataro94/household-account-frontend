@@ -15,11 +15,11 @@ const getAccepter = (type) => {
 		case 'selectPicker':
 			return SelectPicker;
 	}
-}
+};
 
 const CustomField = (props) => {
 	const { name, label, type, ...rest } = props;
-	const accepter = getAccepter(type); 
+	const accepter = getAccepter(type);
 	return (
 		<FormGroup>
 			<ControlLabel>{label} </ControlLabel>
@@ -41,7 +41,9 @@ const CreateEditForm = (props) => {
 			checkTrigger="change"
 			fluid={true}
 		>
-			{fieldSchema.map((schema, i) => <CustomField {...schema} key={i}/>)}
+			{fieldSchema.map((schema, i) => (
+				<CustomField {...schema} key={i} />
+			))}
 		</Form>
 	);
 };

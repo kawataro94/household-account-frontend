@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
-import { useDeleteTemplate, useFetchTemplates, useCreateTemplate, useEditTemplate, } from '../../../../hooks';
+import { useDeleteTemplate, useFetchTemplates, useCreateTemplate, useEditTemplate } from '../../../../hooks';
 import { SectionTitle, Table } from '../../../../components';
 import { categoryOption } from '../../../../looksup';
 import CreateEditModal from '../CreateEditModal';
@@ -49,24 +49,24 @@ const fieldSchema = [
 	{
 		name: 'templateName',
 		label: 'Template Name',
-		type: 'input'
-	}, 
+		type: 'input',
+	},
 	{
 		name: 'title',
 		label: 'Title',
-		type: 'input'
+		type: 'input',
 	},
 	{
 		name: 'category',
 		label: 'Category',
 		type: 'selectPicker',
 		data: categoryOption,
-		block: true
-	}
+		block: true,
+	},
 ];
 
 const TemplateTable = (props) => {
-	const { templates, updateTemplates } = props
+	const { templates, updateTemplates } = props;
 	const { remove: deleteTemplate } = useDeleteTemplate();
 
 	const [modalState, setModalState] = useState({
@@ -108,14 +108,14 @@ const TemplateTable = (props) => {
 			fetch: useFetchTemplates,
 			create: useCreateTemplate().create,
 			edit: useEditTemplate().edit,
-			update: (data) => updateTemplates(data)
+			update: (data) => updateTemplates(data),
 		},
 		data: templates,
 		initialValue: {
 			templateName: '',
 			title: '',
 			category: null,
-	  	}
+		},
 	};
 
 	const confirmProps = {
