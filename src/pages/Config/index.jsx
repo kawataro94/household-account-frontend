@@ -4,7 +4,7 @@ import ErrorBoundary from '../../hoc/error-boundary';
 import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
 import { Provider } from './context';
-import TemplateTable from './widget/TemplateTable';
+import ConfigTables from './widget/ConfigTables';
 
 const Config = () => {
 	return (
@@ -14,7 +14,7 @@ const Config = () => {
 				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
 					<Provider>
-						<TemplateTable />
+						<ConfigTables />
 					</Provider>
 				</Suspense>
 			</ErrorBoundary>

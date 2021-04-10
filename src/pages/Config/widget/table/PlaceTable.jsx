@@ -1,24 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
-import { useDeleteTemplate, useFetchTemplates } from '../../../hooks';
-import Divider from '../../../components/Divider';
-import SectionTitle from '../../../components/SectionTitle';
-import Table from '../../../components/Table';
-import { categoryOption } from '../../../looksup';
-import CreateEditModal from './CreateEditModal';
-import ConfirmModal from './ConfirmModal';
-import { categoryTag, confirmButton } from '../style';
-import { ConfigContext } from '../context';
-
-const Category = ({ category }) => {
-	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
-	return (
-		<div>
-			<span css={categoryTag(color)}>{label}</span>
-		</div>
-	);
-};
+import { useDeletePlace } from '../../../../hooks/delete';
+import { usePlaces } from '../../../../hooks/read';
+import { useCreatePlace } from '../../../../hooks/create';
+import { useUpdatePlace } from '../../../../hooks/update';
+import { SectionTitle, Table } from '../../../../components';
+import CreateEditModal from '../CreateEditModal';
+import ConfirmModal from '../ConfirmModal';
+import { confirmButton } from '../../style';
 
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	<>
@@ -33,24 +23,22 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 
 const columns = [
 	{
-		header: 'テンプレート名',
-		key: 'templateName',
-	},
-	{
-		header: 'タイトル',
-		key: 'title',
-	},
-	{
-		header: 'カテゴリ',
-		cell: function getCategory({ category }) {
-			return <Category {...{ category }} />;
-		},
-	},
+		header: '購入場所',
+		key: 'name',
+	}
 ];
 
-const TemplateTable = () => {
-	const { templates, updateTemplates } = useContext(ConfigContext);
-	const { remove: deleteTemplate } = useDeleteTemplate();
+const fieldSchema = [
+	{
+		name: 'name',
+		label: '購入場所',
+		type: 'input'
+	}
+];
+
+const PlaceTable = (props) => {
+	const { places, updatePlaces } = props
+	const { remove: deletePlace } = useDeletePlace();
 
 	const [modalState, setModalState] = useState({
 		show: false,
@@ -86,17 +74,26 @@ const TemplateTable = () => {
 	const createEditModalProps = {
 		modalState,
 		closeCreateEditModal,
+		fieldSchema,
+		methods: {
+			fetch: usePlaces,
+			create: useCreatePlace().create,
+			edit: useUpdatePlace().edit,
+			update: (data) => updatePlaces(data)
+		},
+		data: places,
+		initialValue: { name: '' }
 	};
 
 	const confirmProps = {
 		show: isConfirm,
 		selected,
 		onOk: (index) => {
-			deleteTemplate(templates[index].id)
+			deletePlace(places[index].id)
 				.then(() => {
 					Alert.config({ top: 80 });
 					Alert.success('レコードを削除しました');
-					useFetchTemplates().then(({ data }) => updateTemplates(data));
+					usePlaces().then(({ data }) => updatePlaces(data));
 				})
 				.catch((e) => {
 					console.log(e, 'delete error');
@@ -108,7 +105,7 @@ const TemplateTable = () => {
 
 	const tableProps = {
 		height: 520,
-		data: templates,
+		data: places,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
 		columns,
@@ -120,9 +117,8 @@ const TemplateTable = () => {
 	return (
 		<Row>
 			<Col>
-				<SectionTitle title="テンプレート一覧" {...createButtonProps} />
+				<SectionTitle {...createButtonProps} />
 			</Col>
-			<Divider height="10" />
 			<Panel>
 				<Table {...tableProps} />
 			</Panel>
@@ -132,4 +128,4 @@ const TemplateTable = () => {
 	);
 };
 
-export default TemplateTable;
+export default PlaceTable;

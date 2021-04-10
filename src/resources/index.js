@@ -11,16 +11,19 @@ import {
 	useFetchRecords,
 	useFetchTemplates,
 } from '../hooks';
+import { useCategories, usePlaces } from '../hooks/read';
 import wrapPromise from './wrap-promise';
 
 const apiHooks = {
-		expensesByMembers: () => useFetchExpensesByMembers(),
+		categories: () => useCategories(),
 		dailyExpenses: () => useFetchDailyExpenses(),
+		expensesByMembers: () => useFetchExpensesByMembers(),
 		lendingRecords: () => useFetchLendingRecords(),
 		lendingByMembers: () => useFetchLendingByMembers(),
 		members: () => useFetchMembers(),
 		monthlyExpenses: () => useFetchMonthlyExpenses(),
 		myProfile: () => useFetchMyProfile(),
+		places: () => usePlaces(),
 		records: () => useFetchRecords(),
 		templates: () => useFetchTemplates(),
 }

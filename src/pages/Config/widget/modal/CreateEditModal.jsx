@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Modal, Alert } from 'rsuite';
 
-import CreateEditForm from './CreateEditForm';
+import CreateEditForm from '../CreateEditForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
-	const { modalState, closeCreateEditModal, fieldSchema, methods, data, initialValue } = props;
-	const { fetch, create, edit, update } = methods;
-
+	const { modalState, closeCreateEditModal, recordProps } = props;
+	const { initialValue, records, fetchRecord, updateRecords, createRecord, editRecord } = recordProps;
 	const { show, selected } = modalState;
 	const [formValue, setFormValue] = useState();
 	const [disabled, setDisabled] = useState(true);
 
+	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
+
 	useEffect(() => {
 		const fv = Number.isFinite(selected)
-			? data[selected]
+			? records[selected]
 			: initialValue;
 		setFormValue(fv);
-	}, [data, selected]);
+	}, [records, selected]);
 
 	useEffect(() => {
 		const inputValue = Object.values(formValue || {});
@@ -25,27 +26,26 @@ const CreateEditModal = (props) => {
 	}, [formValue]);
 
 	const onOk = () => {
-		const createNew = !Number.isFinite(selected);
-		if (createNew) {
-			create(formValue)
+		if (isCreate) {
+			createRecord(formValue)
 				.then(() => {
 					Alert.config({ top: 80 });
-					Alert.success('新しいテンプレートを追加しました');
-					fetch().then(({ data }) => update(data));
+					Alert.success('新しいレコードを追加しました');
+					fetchRecord().then(({ data }) => updateRecords(data));
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
 				});
 		}
-		if (!createNew) {
-			edit(formValue, selected)
+		if (!isCreate) {
+			editRecord(formValue, selected)
 				.then(() => {
 					Alert.config({ top: 80 });
-					Alert.success('テンプレートを編集しました');
-					fetch().then(({ data }) => update(data));
+					Alert.success('レコードを編集しました');
+					fetchRecord().then(({ data }) => updateRecords(data));
 				})
 				.catch((e) => {
-					console.log(e, 'patch error');
+					console.log(e, 'post error');
 				});
 		}
 		closeCreateEditModal();
@@ -57,7 +57,7 @@ const CreateEditModal = (props) => {
 	const createEditFormProps = {
 		formValue,
 		setFormValue,
-		fieldSchema
+		isCreate,
 	};
 	const okButtonProps = {
 		onClick: () => onOk(),

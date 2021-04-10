@@ -1,15 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
-import { useDeleteTemplate, useFetchTemplates } from '../../../hooks';
-import Divider from '../../../components/Divider';
-import SectionTitle from '../../../components/SectionTitle';
-import Table from '../../../components/Table';
-import { categoryOption } from '../../../looksup';
-import CreateEditModal from './CreateEditModal';
-import ConfirmModal from './ConfirmModal';
-import { categoryTag, confirmButton } from '../style';
-import { ConfigContext } from '../context';
+import { useDeleteTemplate, useFetchTemplates, useCreateTemplate, useEditTemplate, } from '../../../../hooks';
+import { SectionTitle, Table } from '../../../../components';
+import { categoryOption } from '../../../../looksup';
+import CreateEditModal from '../CreateEditModal';
+import ConfirmModal from '../ConfirmModal';
+import { categoryTag, confirmButton } from '../../style';
 
 const Category = ({ category }) => {
 	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
@@ -48,8 +45,28 @@ const columns = [
 	},
 ];
 
-const TemplateTable = () => {
-	const { templates, updateTemplates } = useContext(ConfigContext);
+const fieldSchema = [
+	{
+		name: 'templateName',
+		label: 'Template Name',
+		type: 'input'
+	}, 
+	{
+		name: 'title',
+		label: 'Title',
+		type: 'input'
+	},
+	{
+		name: 'category',
+		label: 'Category',
+		type: 'selectPicker',
+		data: categoryOption,
+		block: true
+	}
+];
+
+const TemplateTable = (props) => {
+	const { templates, updateTemplates } = props
 	const { remove: deleteTemplate } = useDeleteTemplate();
 
 	const [modalState, setModalState] = useState({
@@ -86,6 +103,19 @@ const TemplateTable = () => {
 	const createEditModalProps = {
 		modalState,
 		closeCreateEditModal,
+		fieldSchema,
+		methods: {
+			fetch: useFetchTemplates,
+			create: useCreateTemplate().create,
+			edit: useEditTemplate().edit,
+			update: (data) => updateTemplates(data)
+		},
+		data: templates,
+		initialValue: {
+			templateName: '',
+			title: '',
+			category: null,
+	  	}
 	};
 
 	const confirmProps = {
@@ -120,9 +150,8 @@ const TemplateTable = () => {
 	return (
 		<Row>
 			<Col>
-				<SectionTitle title="テンプレート一覧" {...createButtonProps} />
+				<SectionTitle {...createButtonProps} />
 			</Col>
-			<Divider height="10" />
 			<Panel>
 				<Table {...tableProps} />
 			</Panel>

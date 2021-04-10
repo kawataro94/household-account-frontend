@@ -1,8 +1,6 @@
 import React from 'react';
 import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, SelectPicker } from 'rsuite';
 
-import { categoryOption } from '../../../looksup';
-
 const { StringType } = Schema.Types;
 const model = Schema.Model({
 	categoryName: StringType().isRequired('This field is required.'),
@@ -10,8 +8,20 @@ const model = Schema.Model({
 	category: StringType().isRequired('This field is required.'),
 });
 
+const getAccepter = (type) => {
+	switch (type) {
+		case 'input':
+			return Input;
+		case 'selectPicker':
+			return SelectPicker;
+	}
+}
+
 const CustomField = (props) => {
-	const { name, label, accepter, ...rest } = props;
+	const { name, label, type, ...rest } = props;
+
+	const accepter = getAccepter(type); 
+	console.log(props, 'props')
 	return (
 		<FormGroup>
 			<ControlLabel>{label} </ControlLabel>
@@ -21,7 +31,8 @@ const CustomField = (props) => {
 };
 
 const CreateEditForm = (props) => {
-	const { formValue, setFormValue } = props;
+	const { formValue, setFormValue, fieldSchema } = props;
+
 	return (
 		<Form
 			model={model}
@@ -32,9 +43,7 @@ const CreateEditForm = (props) => {
 			checkTrigger="change"
 			fluid={true}
 		>
-			<CustomField name="templateName" label="Template Name" accepter={Input} />
-			<CustomField name="title" label="Title" accepter={Input} />
-			<CustomField name="category" label="Category" accepter={SelectPicker} data={categoryOption} block={true} />
+			{fieldSchema.map((schema, i) => <CustomField {...schema} key={i}/>)}
 		</Form>
 	);
 };
