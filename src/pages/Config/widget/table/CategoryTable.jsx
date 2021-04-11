@@ -44,10 +44,9 @@ const fieldSchema = [
 		label: 'カラー',
 		type: 'selectPicker',
 		data: colorOption.map(({ label, value }) => ({
-				value,
-				label: <span css={categoryTag(colors[value])}>{label}</span>
-			})
-		),
+			value,
+			label: <span css={categoryTag(colors[value])}>{label}</span>,
+		})),
 		block: true,
 	},
 ];

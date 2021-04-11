@@ -11,15 +11,15 @@ export const categoryOption = [
 	{ label: 'その他', value: 'others', color: '#e6e6e5' },
 ];
 
-export const colors = { 
+export const colors = {
 	orange: '#fddede',
 	red: '#faddeb',
 	purple: '#dfd6ef',
 	blue: '#dce9f7',
 	green: '#ddece7',
 	yellow: '#fbeed5',
-	gray: '#e6e6e5'
-}
+	gray: '#e6e6e5',
+};
 
 export const colorOption = [
 	{ label: 'オレンジ', value: 'orange' },
