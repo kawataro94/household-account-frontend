@@ -5,10 +5,11 @@ import { useDeleteCategory } from '../../../../hooks/delete';
 import { useCategories } from '../../../../hooks/read';
 import { useCreateCategory } from '../../../../hooks/create';
 import { useUpdateCategory } from '../../../../hooks/update';
+import { colors, colorOption } from '../../../../looksup';
 import { SectionTitle, Table } from '../../../../components';
 import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
-import { confirmButton } from '../../style';
+import { confirmButton, categoryTag } from '../../style';
 
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	<>
@@ -26,6 +27,10 @@ const columns = [
 		header: 'カテゴリ名',
 		key: 'name',
 	},
+	{
+		header: 'カラー',
+		key: 'color',
+	},
 ];
 
 const fieldSchema = [
@@ -33,6 +38,16 @@ const fieldSchema = [
 		name: 'name',
 		label: 'カテゴリ名',
 		type: 'input',
+	},
+	{
+		name: 'color',
+		label: 'カラー',
+		type: 'selectPicker',
+		data: colorOption.map(({ label, value }) => ({
+			value,
+			label: <span css={categoryTag(colors[value])}>{label}</span>,
+		})),
+		block: true,
 	},
 ];
 

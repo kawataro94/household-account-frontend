@@ -11,6 +11,26 @@ export const categoryOption = [
 	{ label: 'その他', value: 'others', color: '#e6e6e5' },
 ];
 
+export const colors = {
+	orange: '#fddede',
+	red: '#faddeb',
+	purple: '#dfd6ef',
+	blue: '#dce9f7',
+	green: '#ddece7',
+	yellow: '#fbeed5',
+	gray: '#e6e6e5',
+};
+
+export const colorOption = [
+	{ label: 'オレンジ', value: 'orange' },
+	{ label: '赤', value: 'red' },
+	{ label: '紫', value: 'purple' },
+	{ label: '青', value: 'blue' },
+	{ label: '緑', value: 'green' },
+	{ label: '黄色', value: 'yellow' },
+	{ label: '灰色', value: 'gray' },
+];
+
 export const summaryColumns = [
 	{ label: '食費', value: 'foodExpenses', color: '#fddede' },
 	{ label: '生活用品', value: 'livingExpenses', color: '#faddeb' },
