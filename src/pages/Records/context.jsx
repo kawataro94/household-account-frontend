@@ -5,8 +5,9 @@ import { useResources } from '../../resources';
 export const RecordsContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources({ keys: ['members', 'records', 'lendingRecords'] });
+	const { resources } = useResources({ keys: ['members', 'records', 'lendingRecords', 'categories'] });
 	const members = resources?.members?.read() || [];
+	const categories = resources?.categories?.read() || [];
 	const r = resources?.records?.read();
 	const l = resources?.lendingRecords?.read();
 	const [records, setRecords] = useState([]);
@@ -30,6 +31,7 @@ export const Provider = ({ children }) => {
 
 	const value = {
 		members,
+		categories,
 		records,
 		lendingRecords,
 		updateRecords,

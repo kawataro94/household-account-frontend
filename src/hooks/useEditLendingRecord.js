@@ -7,6 +7,7 @@ function useEditRecord() {
 	const edit = (record) => {
 		const params = {
 			...record,
+			categoryId: Number(record.categoryId),
 			date: Moment(record.date).format('YYYY-MM-DD'),
 		};
 

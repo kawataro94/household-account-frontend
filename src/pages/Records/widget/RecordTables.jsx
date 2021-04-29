@@ -16,13 +16,15 @@ const CustomNav = ({ active, onSelect, ...props }) => {
 };
 
 const CustomTable = ({ active }) => {
-	const { members, records, lendingRecords, updateRecords, updateLendingRecords } = useContext(RecordsContext);
+	const { members, categories, records, lendingRecords, updateRecords, updateLendingRecords } = useContext(
+		RecordsContext
+	);
 
 	return (
 		<>
-			{active === 'default' ? <RecordTable {...{ members, records, updateRecords }} /> : null}
+			{active === 'default' ? <RecordTable {...{ members, categories, records, updateRecords }} /> : null}
 			{active === 'irregular' ? (
-				<LendingRecordTable {...{ members, lendingRecords, updateLendingRecords }} />
+				<LendingRecordTable {...{ members, categories, lendingRecords, updateLendingRecords }} />
 			) : null}
 		</>
 	);
