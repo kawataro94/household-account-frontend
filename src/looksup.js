@@ -43,9 +43,20 @@ export const summaryColumns = [
 ];
 
 export const makeMemberOption = (members) => {
-	const option = members.map(({ id, account }) => {
-		return { label: account, value: id };
-	});
+	const option = members.map(({ id, account }) => ({
+		label: account,
+		value: id,
+	}));
+
+	return option;
+};
+
+export const makeCategoryOption = (categories) => {
+	const option = categories.map(({ id, name, color }) => ({
+		label: name,
+		value: id,
+		color: colors[color],
+	}));
 
 	return option;
 };

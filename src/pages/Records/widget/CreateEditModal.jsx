@@ -46,7 +46,7 @@ const CreateEditModal = (props) => {
 					fetchRecord().then(({ data }) => updateRecords(data));
 				})
 				.catch((e) => {
-					console.log(e, 'post error');
+					console.log(e, 'patch error');
 				});
 		}
 		closeCreateEditModal();

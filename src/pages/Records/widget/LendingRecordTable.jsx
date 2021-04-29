@@ -11,13 +11,13 @@ import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
 import { YenUnit } from '../../../components/Units';
-import { categoryOption } from '../../../looksup';
+import { makeCategoryOption } from '../../../looksup';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
 import { categoryTag, buttonMargin } from '../style';
 
-const Category = ({ category }) => {
-	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
+const Category = ({ categoryId, categoryOption }) => {
+	const { label, color } = categoryOption.find(({ value }) => categoryId === value) || {};
 	return (
 		<div>
 			<span css={categoryTag(color)}>{label}</span>
@@ -48,7 +48,7 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	</>
 );
 
-const makeColumns = ({ members }) => [
+const makeColumns = ({ members, categoryOption }) => [
 	{
 		header: '日付',
 		key: 'date',
@@ -59,8 +59,8 @@ const makeColumns = ({ members }) => [
 	},
 	{
 		header: 'カテゴリ',
-		cell: function getCategory({ category }) {
-			return <Category {...{ category }} />;
+		cell: function getCategory({ categoryId }) {
+			return <Category {...{ categoryId, categoryOption }} />;
 		},
 	},
 	{
@@ -79,14 +79,15 @@ const makeColumns = ({ members }) => [
 
 const initialValue = {
 	title: '',
-	category: null,
+	categoryId: null,
 	date: null,
 	paidBy: null,
 	cost: '',
 };
 
 const LendingRecordTable = (props) => {
-	const { members, lendingRecords, updateLendingRecords } = props;
+	const { members, categories, lendingRecords, updateLendingRecords } = props;
+	const categoryOption = makeCategoryOption(categories);
 	const fetchRecord = () => useFetchLendingRecords();
 	const { create: createRecord } = useCreateLendingRecord();
 	const { edit: editRecord } = useEditLendingRecord();
@@ -162,7 +163,7 @@ const LendingRecordTable = (props) => {
 		data: lendingRecords,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
-		columns: makeColumns({ members }),
+		columns: makeColumns({ members, categoryOption }),
 		actions: function actionButton(index) {
 			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
 		},
