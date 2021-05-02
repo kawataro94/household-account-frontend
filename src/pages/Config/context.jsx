@@ -37,6 +37,8 @@ export const Provider = ({ children }) => {
 
 	const templateProps = {
 		templates,
+		categories,
+		places,
 		updateTemplates: (v) => setTemplates(v),
 	};
 

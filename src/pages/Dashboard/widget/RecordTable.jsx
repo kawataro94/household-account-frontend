@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
-import { Row, Col, Table, Panel } from 'rsuite';
+import { Row, Col, Panel } from 'rsuite';
 
-import Divider from '../../../components/Divider';
+import { Divider, Table } from '../../../components';
 import { YenUnit } from '../../../components/Units';
-import { categoryOption } from '../../../looksup';
+import { makeMemberOption, makeCategoryOption, makePlaceOption } from '../../../looksup';
 import { categoryTag } from '../style';
 import { DashboardContext } from '../context';
 
-const { Column, HeaderCell, Cell } = Table;
-
-const Category = ({ category }) => {
-	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
+const Category = ({ categoryId, categoryOption }) => {
+	const { label, color } = categoryOption?.find(({ value }) => categoryId === value) || {};
 	return (
 		<div>
 			<span css={categoryTag(color)}>{label}</span>
@@ -25,14 +23,61 @@ const Cost = ({ cost }) => (
 	</span>
 );
 
-const MemberName = ({ members, memberId }) => {
-	const member = (members || []).find(({ id }) => id === memberId);
+const MemberName = ({ memberId, memberOption }) => {
+	const member = (memberOption || []).find(({ id }) => id === memberId);
 	return <span>{member && member.account}</span>;
 };
 
+const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
+	{
+		header: '日付',
+		key: 'date',
+	},
+	{
+		header: 'タイトル',
+		key: 'title',
+	},
+	{
+		header: 'カテゴリ',
+		cell: function getCategory({ categoryId }) {
+			return <Category {...{ categoryId, categoryOption }} />;
+		},
+	},
+	{
+		header: '購入場所',
+		cell: function getCategory({ placeId }) {
+			return <Category {...{ placeId, placeOption }} />;
+		},
+	},
+	{
+		header: 'コスト',
+		cell: function getCost({ cost }) {
+			return <Cost {...{ cost }} />;
+		},
+	},
+	{
+		header: '支払った人',
+		cell: function getMemberName({ memberId }) {
+			return <MemberName {...{ memberId, memberOption }} />;
+		},
+	},
+];
+
 const RecordTable = () => {
-	const { members, records } = useContext(DashboardContext);
+	const { members, records, categories, places } = useContext(DashboardContext);
+	const memberOption = makeMemberOption(members);
+	const categoryOption = makeCategoryOption(categories);
+	const placeOption = makePlaceOption(places);
 	const limited = records?.slice(0, 5) || [];
+
+	const tableProps = {
+		height: 520,
+		data: limited,
+		rowHeight: 57,
+		shouldUpdateScroll: false,
+		columns: makeColumns({ memberOption, categoryOption, placeOption }),
+	};
+
 	return (
 		<Row>
 			<Col>
@@ -40,28 +85,7 @@ const RecordTable = () => {
 			</Col>
 			<Divider height="10" />
 			<Panel bordered>
-				<Table height={280} data={limited}>
-					<Column flexGrow={1}>
-						<HeaderCell>日付</HeaderCell>
-						<Cell dataKey="date" />
-					</Column>
-					<Column flexGrow={1}>
-						<HeaderCell>タイトル</HeaderCell>
-						<Cell dataKey="title" />
-					</Column>
-					<Column flexGrow={1}>
-						<HeaderCell>カテゴリ</HeaderCell>
-						<Cell dataKey="category">{({ category }) => <Category category={category} />}</Cell>
-					</Column>
-					<Column flexGrow={1}>
-						<HeaderCell>コスト</HeaderCell>
-						<Cell dataKey="cost">{({ cost }) => <Cost cost={cost} />}</Cell>
-					</Column>
-					<Column flexGrow={1}>
-						<HeaderCell>支払った人</HeaderCell>
-						<Cell>{({ memberId }) => <MemberName members={members} memberId={memberId} />}</Cell>
-					</Column>
-				</Table>
+				<Table height={280} {...tableProps} />
 			</Panel>
 		</Row>
 	);
