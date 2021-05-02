@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, DatePicker, SelectPicker } from 'rsuite';
 
-import { makeCategoryOption, makeMemberOption } from '../../../looksup';
+import { makeMemberOption, makeCategoryOption, makePlaceOption } from '../../../looksup';
 import { DashboardContext } from '../context';
 
 const { StringType, NumberType, DateType } = Schema.Types;
 const model = Schema.Model({
 	title: StringType().isRequired('This field is required.'),
 	categoryId: NumberType().isRequired('This field is required.'),
+	placeId: NumberType().isRequired('This field is required.'),
 	date: DateType().isRequired('This field is required.'),
 	paidBy: NumberType().isRequired('This field is required.'),
 	cost: NumberType().isRequired('This field is required.'),
@@ -26,9 +27,10 @@ const CustomField = (props) => {
 
 const CreateEditForm = (props) => {
 	const { formValue, setFormValue } = props;
-	const { members, categories } = useContext(DashboardContext);
+	const { members, categories, places } = useContext(DashboardContext);
 	const memberOption = makeMemberOption(members);
 	const categoryOption = makeCategoryOption(categories);
+	const placeOption = makePlaceOption(places);
 	return (
 		<Form
 			model={model}
@@ -57,6 +59,13 @@ const CreateEditForm = (props) => {
 				block={true}
 			/>
 			<CustomField name="date" label="Date" accepter={DatePicker} block={true} />
+			<CustomField
+				name="placeId"
+				label="Place"
+				accepter={SelectPicker}
+				data={placeOption}
+				block={true}
+			/>
 		</Form>
 	);
 };

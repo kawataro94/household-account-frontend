@@ -23,9 +23,18 @@ const Cost = ({ cost }) => (
 	</span>
 );
 
+const Place = ({ placeId, placeOption }) => {
+	const { label } = placeOption.find(({ value }) => Number(placeId) === value) || {};
+	return (
+		<div>
+			<span>{label}</span>
+		</div>
+	);
+};
+
 const MemberName = ({ memberId, memberOption }) => {
-	const member = (memberOption || []).find(({ id }) => id === memberId);
-	return <span>{member && member.account}</span>;
+	const member = (memberOption || []).find(({ value }) => value === memberId);
+	return <span>{member && member.label}</span>;
 };
 
 const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
@@ -45,8 +54,8 @@ const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
 	},
 	{
 		header: '購入場所',
-		cell: function getCategory({ placeId }) {
-			return <Category {...{ placeId, placeOption }} />;
+		cell: function getPlace({ placeId }) {
+			return <Place {...{ placeId, placeOption }} />;
 		},
 	},
 	{
