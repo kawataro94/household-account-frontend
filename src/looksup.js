@@ -52,10 +52,19 @@ export const makeMemberOption = (members) => {
 };
 
 export const makeCategoryOption = (categories) => {
-	const option = categories.map(({ id, name, color }) => ({
+	const option = categories?.map(({ id, name, color }) => ({
 		label: name,
 		value: id,
 		color: colors[color],
+	}));
+
+	return option;
+};
+
+export const makePlaceOption = (places) => {
+	const option = places?.map(({ id, name }) => ({
+		label: name,
+		value: id,
 	}));
 
 	return option;

@@ -17,10 +17,10 @@ const QuickFormModal = (props) => {
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
-		const { title, category } = template;
+		const { title, categoryId } = template;
 		setFormValue({
 			title: title || '',
-			category: category || '',
+			categoryId: Number(categoryId) || '',
 			date: new Date(),
 			paidBy: id,
 			cost: '',
