@@ -21,7 +21,7 @@ function useAuthentication() {
 			uid,
 			balance: '100',
 			password: 'password',
-			groupId: '1',
+			groupId: 2,
 		};
 
 		return httpClient.post(`${serverUrl}/member/signup`, params).catch((e) => {

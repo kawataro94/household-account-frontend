@@ -6,13 +6,13 @@ export const DashboardContext = React.createContext({});
 
 export const Provider = ({ children }) => {
 	const { resources } = useResources({
-		keys: ['myProfile', 'members', 'dailyExpenses', 'templates', 'records', 'categories', 'places'],
+		keys: ['myProfile', 'members', 'monthlyExpenses', 'templates', 'records', 'categories', 'places'],
 	});
 	const myProfile = resources?.myProfile?.read() || {};
 	const members = resources?.members?.read() || [];
 	const categories = resources?.categories?.read() || [];
 	const places = resources?.places?.read() || [];
-	const dailyExpenses = resources?.dailyExpenses?.read() || [];
+	const monthlyExpenses = resources?.monthlyExpenses?.read() || [];
 	const templates = resources?.templates?.read() || [];
 	const r = resources?.records?.read();
 	const [records, setRecords] = useState([]);
@@ -30,7 +30,7 @@ export const Provider = ({ children }) => {
 		members,
 		categories,
 		places,
-		dailyExpenses,
+		monthlyExpenses,
 		templates,
 		records,
 		updateRecords,
