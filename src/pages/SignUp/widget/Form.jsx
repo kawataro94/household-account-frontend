@@ -31,6 +31,7 @@ const SignUpForm = (props) => {
 			checkTrigger="change"
 			fluid={true}
 		>
+			<CustomField name="groupName" label="group name" accepter={Input} />
 			<CustomField name="account" label="account name" accepter={Input} />
 			<CustomField name="email" label="email" accepter={Input} />
 			<CustomField name="password" label="password" accepter={Input} />

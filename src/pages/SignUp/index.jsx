@@ -11,20 +11,21 @@ import { buttonMargin, title } from './style';
 const SignUp = () => {
 	const history = useHistory();
 	const [formValue, setFormValue] = useState({
+		groupName: '',
 		account: '',
 		email: '',
 		password: '',
 	});
 	const { setUpAuth, createUser } = useAuthentication();
 	const { setIsLogin } = useContext(LoginContext);
-	const jumpToDashboard = () => history.push('/');
+	const jumpToSignIn = () => history.push('/signin');
 
 	const signUp = async () => {
 		const userInfo = await setUpAuth(formValue);
 		await createUser(userInfo);
 
-		setIsLogin(true);
-		jumpToDashboard();
+		setIsLogin(false);
+		jumpToSignIn();
 	};
 
 	const formProps = {

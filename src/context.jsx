@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useAuthentication } from './hooks';
+// import { useHistory } from 'react-router-dom';
+// import { useAuthentication } from './hooks';
 
 export const LoginContext = React.createContext();
 export const Provider = ({ children }) => {
 	const [isLogin, setIsLogin] = useState();
-	const { checkStorage, checkUid, clearSession } = useAuthentication();
-	const history = useHistory();
-	const jumpToSignIn = () => history.push('/signin');
+	// const { checkStorage, checkUid, clearSession } = useAuthentication();
+	// const history = useHistory();
+	// const jumpToSignIn = () => history.push('/signin');
 
 	useEffect(() => {
-		checkStorage(signIn, signOut);
+		// checkStorage(signIn, signOut);
 	}, []);
 
-	const signIn = async (user) => {
-		await checkUid(user);
-		setIsLogin(true);
-	};
+	// const signIn = async (user) => {
+	// 	await checkUid(user);
+	// 	setIsLogin(true);
+	// };
 
-	const signOut = async () => {
-		await clearSession();
-		jumpToSignIn();
-		setIsLogin(false);
-	};
+	// const signOut = async () => {
+	// 	await clearSession();
+	// 	jumpToSignIn();
+	// 	setIsLogin(false);
+	// };
 
 	const value = { isLogin, setIsLogin };
 
