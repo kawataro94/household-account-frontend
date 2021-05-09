@@ -13,6 +13,7 @@ const SignIn = () => {
 	const { checkAuth } = useAuthentication();
 	const history = useHistory();
 	const jumpToDashboard = () => history.push('/');
+	const jumpToSignUp = () => history.push('/signup');
 	const [formValue, setFormValue] = useState({
 		email: '',
 		password: '',
@@ -39,6 +40,9 @@ const SignIn = () => {
 			<h2 css={title}>Sign In</h2>
 			<SignInForm {...formProps} />
 			<div css={buttonMargin}>
+				<Button appearance="primary" onClick={() => jumpToSignUp()}>
+					Sign Up
+				</Button>
 				<Button appearance="primary" onClick={() => signIn()}>
 					Submit
 				</Button>

@@ -17,10 +17,12 @@ const Table = (props) => {
 					</Column>
 				);
 			})}
-			<Column flexGrow={1} minWidth={130} key={'action'}>
-				<HeaderCell></HeaderCell>
-				<Cell>{(_, index) => actions(index)}</Cell>
-			</Column>
+			{actions ? (
+				<Column flexGrow={1} minWidth={130} key={'action'}>
+					<HeaderCell></HeaderCell>
+					<Cell>{(_, index) => actions(index)}</Cell>
+				</Column>
+			) : null}
 		</RsuiteTable>
 	);
 };

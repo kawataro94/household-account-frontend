@@ -11,13 +11,13 @@ import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
 import { YenUnit } from '../../../components/Units';
-import { categoryOption } from '../../../looksup';
+import { makeMemberOption, makeCategoryOption, makePlaceOption } from '../../../looksup';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
 import { categoryTag, buttonMargin } from '../style';
 
-const Category = ({ category }) => {
-	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
+const Category = ({ categoryId, categoryOption }) => {
+	const { label, color } = categoryOption.find(({ value }) => categoryId === value) || {};
 	return (
 		<div>
 			<span css={categoryTag(color)}>{label}</span>
@@ -32,9 +32,19 @@ const Cost = ({ cost }) => (
 	</span>
 );
 
-const MemberName = ({ members, memberId }) => {
-	const member = (members || []).find(({ id }) => id === memberId);
-	return <span>{member && member.account}</span>;
+const Place = ({ placeId, placeOption }) => {
+	console.log(placeId, placeOption, 'placeId, placeOption');
+	const { label } = placeOption?.find(({ value }) => placeId === value) || {};
+	return (
+		<div>
+			<span>{label}</span>
+		</div>
+	);
+};
+
+const MemberName = ({ memberId, memberOption }) => {
+	const member = (memberOption || []).find(({ value }) => value === memberId);
+	return <span>{member && member.label}</span>;
 };
 
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
@@ -48,7 +58,7 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	</>
 );
 
-const makeColumns = ({ members }) => [
+const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
 	{
 		header: '日付',
 		key: 'date',
@@ -59,8 +69,14 @@ const makeColumns = ({ members }) => [
 	},
 	{
 		header: 'カテゴリ',
-		cell: function getCategory({ category }) {
-			return <Category {...{ category }} />;
+		cell: function getCategory({ categoryId }) {
+			return <Category {...{ categoryId, categoryOption }} />;
+		},
+	},
+	{
+		header: '購入場所',
+		cell: function getPlace({ placeId }) {
+			return <Place {...{ placeId, placeOption }} />;
 		},
 	},
 	{
@@ -72,21 +88,24 @@ const makeColumns = ({ members }) => [
 	{
 		header: '支払った人',
 		cell: function getMemberName({ memberId }) {
-			return <MemberName {...{ members, memberId }} />;
+			return <MemberName {...{ memberId, memberOption }} />;
 		},
 	},
 ];
 
 const initialValue = {
 	title: '',
-	category: null,
+	categoryId: null,
 	date: null,
 	paidBy: null,
 	cost: '',
 };
 
 const LendingRecordTable = (props) => {
-	const { members, lendingRecords, updateLendingRecords } = props;
+	const { members, categories, places, lendingRecords, updateLendingRecords } = props;
+	const memberOption = makeMemberOption(members);
+	const categoryOption = makeCategoryOption(categories);
+	const placeOption = makePlaceOption(places);
 	const fetchRecord = () => useFetchLendingRecords();
 	const { create: createRecord } = useCreateLendingRecord();
 	const { edit: editRecord } = useEditLendingRecord();
@@ -162,7 +181,7 @@ const LendingRecordTable = (props) => {
 		data: lendingRecords,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
-		columns: makeColumns({ members }),
+		columns: makeColumns({ memberOption, categoryOption, placeOption }),
 		actions: function actionButton(index) {
 			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
 		},

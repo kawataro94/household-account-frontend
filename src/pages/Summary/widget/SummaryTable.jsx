@@ -18,11 +18,11 @@ const CustomNav = ({ active, onSelect, ...props }) => {
 };
 
 const CustomTable = ({ active }) => {
-	const { monthlyExpenses, expensesByMembers, lendingByMembers, members } = useContext(SummaryContext);
+	const { monthlyExpenses, expensesByMembers, lendingByMembers, members, categories } = useContext(SummaryContext);
 
 	return (
 		<>
-			{active === 'categories' ? <SummaryByCategories {...{ monthlyExpenses }} /> : null}
+			{active === 'categories' ? <SummaryByCategories {...{ monthlyExpenses, categories }} /> : null}
 			{active === 'members' ? <SummaryByMembers {...{ expensesByMembers, members }} /> : null}
 			{active === 'lending' ? <LendingSummary {...{ lendingByMembers, members }} /> : null}
 		</>

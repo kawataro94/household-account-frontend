@@ -1,11 +1,17 @@
 import React from 'react';
 import { Table } from 'rsuite';
+import groupBy from 'ramda.groupby';
+import pipe from 'ramda.pipe';
+import values from 'ramda.values';
+import map from 'ramda.map';
+import reduce from 'ramda.reduce';
+import merge from 'ramda.merge';
 
 import { YenUnit } from '../../../components/Units';
 import { summaryColumns } from '../../../looksup';
 import { categoryTag, costFont } from '../style';
 
-const { ColumnGroup, Column, HeaderCell, Cell } = Table;
+const { Column, HeaderCell, Cell } = Table;
 
 const Month = ({ month, year }) => (
 	<div>
@@ -23,6 +29,14 @@ const Title = ({ name }) => {
 	);
 };
 
+const Category = ({ name, color }) => {
+	return (
+		<div>
+			<span css={categoryTag(color)}>{name}</span>
+		</div>
+	);
+};
+
 const Cost = ({ value }) => {
 	return (
 		<>
@@ -32,9 +46,29 @@ const Cost = ({ value }) => {
 	);
 };
 
-const SummaryByCategories = ({ monthlyExpenses }) => {
+const groupByMonth = groupBy((v) => `${v.year}-${v.month}`);
+const toArray = values;
+const formatByCategories = reduce(
+	(acc, v) => {
+		const totalByCategories = merge(acc.totalByCategories, {
+			[v.categoryId]: v.total,
+		});
+		return {
+			...acc,
+			month: v.month,
+			year: v.year,
+			total: acc.total + v.total,
+			totalByCategories,
+		};
+	},
+	{ total: 0, totalByCategories: {} }
+);
+
+const SummaryByCategories = ({ monthlyExpenses, categories }) => {
+	const expensesByCategories = pipe(groupByMonth, toArray, map(formatByCategories))(monthlyExpenses);
+
 	return (
-		<Table height={500} data={monthlyExpenses} bordered cellBordered headerHeight={80}>
+		<Table height={500} data={expensesByCategories} bordered cellBordered headerHeight={80}>
 			<Column width={100} align="center" fixed="left">
 				<HeaderCell></HeaderCell>
 				<Cell>{({ month, year }) => <Month {...{ month, year }} />}</Cell>
@@ -51,64 +85,14 @@ const SummaryByCategories = ({ monthlyExpenses }) => {
 					)}
 				</Cell>
 			</Column>
-			<Column width={130} align="right">
-				<HeaderCell>
-					<Title name="foodExpenses" />
-				</HeaderCell>
-				<Cell>{({ foodExpenses }) => <Cost value={foodExpenses} />}</Cell>
-			</Column>
-			<Column width={130} align="right">
-				<HeaderCell>
-					<Title name="livingExpenses" />
-				</HeaderCell>
-				<Cell>{({ livingExpenses }) => <Cost value={livingExpenses} />}</Cell>
-			</Column>
-			<ColumnGroup header={<Title name="rent" />} align="right">
-				<Column width={130} colSpan={2}>
-					<HeaderCell>支払い分</HeaderCell>
-					<Cell dataKey="rentMonth" />
+			{categories.map(({ id, name, color }) => (
+				<Column width={100} align="center" fixed="left" key={id}>
+					<HeaderCell>
+						<Category {...{ name, color }} />
+					</HeaderCell>
+					<Cell>{({ totalByCategories }) => <Cost value={totalByCategories[id] || 0} />}</Cell>
 				</Column>
-				<Column width={130}>
-					<HeaderCell>費用</HeaderCell>
-					<Cell>{({ rent }) => <Cost value={rent} />}</Cell>
-				</Column>
-			</ColumnGroup>
-			<ColumnGroup header={<Title name="electricBill" />} align="right">
-				<Column width={130} colSpan={2}>
-					<HeaderCell>支払い分</HeaderCell>
-					<Cell dataKey="rentMonth" />
-				</Column>
-				<Column width={130}>
-					<HeaderCell>費用</HeaderCell>
-					<Cell>{({ electricBill }) => <Cost value={electricBill} />}</Cell>
-				</Column>
-			</ColumnGroup>
-			<ColumnGroup header={<Title name="waterBill" />} align="right">
-				<Column width={130} colSpan={2}>
-					<HeaderCell>支払い分</HeaderCell>
-					<Cell dataKey="rentMonth" />
-				</Column>
-				<Column width={130}>
-					<HeaderCell>費用</HeaderCell>
-					<Cell>{({ waterBill }) => <Cost value={waterBill} />}</Cell>
-				</Column>
-			</ColumnGroup>
-			<ColumnGroup header={<Title name="gasBill" />} align="right">
-				<Column width={130} colSpan={2}>
-					<HeaderCell>支払い分</HeaderCell>
-					<Cell dataKey="rentMonth" />
-				</Column>
-				<Column width={130}>
-					<HeaderCell>費用</HeaderCell>
-					<Cell>{({ gasBill }) => <Cost value={gasBill} />}</Cell>
-				</Column>
-			</ColumnGroup>
-			<Column width={130} align="right">
-				<HeaderCell>
-					<Title name="others" />
-				</HeaderCell>
-				<Cell>{({ others }) => <Cost value={others} />}</Cell>
-			</Column>
+			))}
 		</Table>
 	);
 };

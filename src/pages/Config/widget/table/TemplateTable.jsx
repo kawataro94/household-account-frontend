@@ -3,16 +3,25 @@ import { Row, Col, Panel, Button, Alert } from 'rsuite';
 
 import { useDeleteTemplate, useFetchTemplates, useCreateTemplate, useEditTemplate } from '../../../../hooks';
 import { SectionTitle, Table } from '../../../../components';
-import { categoryOption } from '../../../../looksup';
+import { makeCategoryOption, makePlaceOption } from '../../../../looksup';
 import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
 import { categoryTag, confirmButton } from '../../style';
 
-const Category = ({ category }) => {
-	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
+const Category = ({ categoryId, categoryOption }) => {
+	const { label, color } = categoryOption.find(({ value }) => Number(categoryId) === value) || {};
 	return (
 		<div>
 			<span css={categoryTag(color)}>{label}</span>
+		</div>
+	);
+};
+
+const Place = ({ placeId, placeOption }) => {
+	const { label } = placeOption.find(({ value }) => Number(placeId) === value) || {};
+	return (
+		<div>
+			<span>{label}</span>
 		</div>
 	);
 };
@@ -28,7 +37,7 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	</>
 );
 
-const columns = [
+const makeColumns = ({ categoryOption, placeOption }) => [
 	{
 		header: 'テンプレート名',
 		key: 'templateName',
@@ -39,13 +48,19 @@ const columns = [
 	},
 	{
 		header: 'カテゴリ',
-		cell: function getCategory({ category }) {
-			return <Category {...{ category }} />;
+		cell: function getCategory({ categoryId }) {
+			return <Category {...{ categoryId, categoryOption }} />;
+		},
+	},
+	{
+		header: '購入場所',
+		cell: function getPlace({ placeId }) {
+			return <Place {...{ placeId, placeOption }} />;
 		},
 	},
 ];
 
-const fieldSchema = [
+const makeFieldSchema = ({ categoryOption, placeOption }) => [
 	{
 		name: 'templateName',
 		label: 'Template Name',
@@ -57,16 +72,25 @@ const fieldSchema = [
 		type: 'input',
 	},
 	{
-		name: 'category',
+		name: 'categoryId',
 		label: 'Category',
 		type: 'selectPicker',
 		data: categoryOption,
 		block: true,
 	},
+	{
+		name: 'placeId',
+		label: 'Place',
+		type: 'selectPicker',
+		data: placeOption,
+		block: true,
+	},
 ];
 
 const TemplateTable = (props) => {
-	const { templates, updateTemplates } = props;
+	const { templates, updateTemplates, categories, places } = props;
+	const categoryOption = makeCategoryOption(categories);
+	const placeOption = makePlaceOption(places);
 	const { remove: deleteTemplate } = useDeleteTemplate();
 
 	const [modalState, setModalState] = useState({
@@ -103,18 +127,23 @@ const TemplateTable = (props) => {
 	const createEditModalProps = {
 		modalState,
 		closeCreateEditModal,
-		fieldSchema,
+		fieldSchema: makeFieldSchema({ categoryOption, placeOption }),
 		methods: {
 			fetch: useFetchTemplates,
 			create: useCreateTemplate().create,
 			edit: useEditTemplate().edit,
 			update: (data) => updateTemplates(data),
 		},
-		data: templates,
+		data: templates?.map((template) => ({
+			...template,
+			categoryId: Number(template.categoryId),
+			placeId: Number(template.placeId),
+		})),
 		initialValue: {
 			templateName: '',
 			title: '',
-			category: null,
+			categoryId: null,
+			placeId: null,
 		},
 	};
 
@@ -141,7 +170,7 @@ const TemplateTable = (props) => {
 		data: templates,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
-		columns,
+		columns: makeColumns({ categoryOption, placeOption }),
 		actions: function actionButton(index) {
 			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
 		},

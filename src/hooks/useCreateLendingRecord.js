@@ -9,6 +9,7 @@ function useCreateRecord() {
 			...record,
 			date: Moment(record.date).format('YYYY-MM-DD'),
 			memberId: record.paidBy,
+			categoryId: Number(record.categoryId),
 			createBy: 2,
 			description: 'TEST DESCRIPTION',
 			fixed: false,
