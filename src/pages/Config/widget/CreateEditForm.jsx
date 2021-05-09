@@ -1,7 +1,7 @@
 import React from 'react';
-import { TwitterPicker } from 'react-color'
+import { TwitterPicker } from 'react-color';
 import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, SelectPicker } from 'rsuite';
-import { colorOption } from '../../../looksup'
+import { colorOption } from '../../../looksup';
 import { css } from '@emotion/react';
 
 const { StringType, NumberType } = Schema.Types;
@@ -18,22 +18,22 @@ const colorStyle = (c) => css`
 	margin-bottom: 10px;
 	border-radius: 6px;
 	background-color: ${c};
-`
+`;
 
 const ColorPicker = ({ formValue, setFormValue }) => {
 	const handleChange = (c) => {
-		setFormValue((state) => ({ ...state, color: c.hex }))
+		setFormValue((state) => ({ ...state, color: c.hex }));
 	};
 
 	return (
 		<div>
-        	<div>
-          		<div css={colorStyle(formValue?.color)} />
-        	</div>
-          <TwitterPicker colors={colorOption} onChange={handleChange} />
-      	</div>
-	)
-}
+			<div>
+				<div css={colorStyle(formValue?.color)} />
+			</div>
+			<TwitterPicker colors={colorOption} onChange={handleChange} />
+		</div>
+	);
+};
 
 const getAccepter = (type) => {
 	switch (type) {
@@ -56,7 +56,7 @@ const CustomField = (props) => {
 				<ControlLabel>{label} </ControlLabel>
 				<ColorPicker setFormValue={setFormValue} formValue={formValue} />
 			</FormGroup>
-		)
+		);
 	}
 
 	return (

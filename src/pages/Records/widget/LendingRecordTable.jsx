@@ -33,7 +33,7 @@ const Cost = ({ cost }) => (
 );
 
 const Place = ({ placeId, placeOption }) => {
-	console.log(placeId, placeOption, 'placeId, placeOption')
+	console.log(placeId, placeOption, 'placeId, placeOption');
 	const { label } = placeOption?.find(({ value }) => placeId === value) || {};
 	return (
 		<div>

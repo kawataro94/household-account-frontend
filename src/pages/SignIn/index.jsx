@@ -22,7 +22,7 @@ const SignIn = () => {
 	useEffect(() => {
 		if (isLogin) jumpToDashboard();
 	}, [isLogin]);
- 
+
 	const signIn = () => {
 		checkAuth(formValue).then(() => {
 			setIsLogin(true);

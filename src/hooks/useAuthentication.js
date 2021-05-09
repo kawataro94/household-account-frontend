@@ -12,14 +12,16 @@ function useAuthentication() {
 
 		try {
 			await httpClient.post(`${serverUrl}/member/groups`, params);
-			const { data: { id: groupId} } = await httpClient.get(`${serverUrl}/member/groups/${groupName}`);
+			const {
+				data: { id: groupId },
+			} = await httpClient.get(`${serverUrl}/member/groups/${groupName}`);
 
 			return firebase
 				.auth()
 				.createUserWithEmailAndPassword(email, password)
-				.then(({ user }) => ({ uid: user.uid, account, groupId }))
+				.then(({ user }) => ({ uid: user.uid, account, groupId }));
 		} catch (e) {
-			console.error("group create error:", e.message);
+			console.error('group create error:', e.message);
 		}
 	};
 
@@ -29,7 +31,7 @@ function useAuthentication() {
 			uid,
 			balance: '100',
 			password: 'password',
-			groupId
+			groupId,
 		};
 
 		return httpClient.post(`${serverUrl}/member/signup`, params).catch((e) => {
