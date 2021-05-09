@@ -8,7 +8,7 @@ import reduce from 'ramda.reduce';
 import merge from 'ramda.merge';
 
 import { YenUnit } from '../../../components/Units';
-import { summaryColumns, colors } from '../../../looksup';
+import { summaryColumns } from '../../../looksup';
 import { categoryTag, costFont } from '../style';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -32,7 +32,7 @@ const Title = ({ name }) => {
 const Category = ({ name, color }) => {
 	return (
 		<div>
-			<span css={categoryTag(colors[color])}>{name}</span>
+			<span css={categoryTag(color)}>{name}</span>
 		</div>
 	);
 };

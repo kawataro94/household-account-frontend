@@ -59,13 +59,7 @@ const CreateEditForm = (props) => {
 				block={true}
 			/>
 			<CustomField name="date" label="Date" accepter={DatePicker} block={true} />
-			<CustomField
-				name="placeId"
-				label="Place"
-				accepter={SelectPicker}
-				data={placeOption}
-				block={true}
-			/>
+			<CustomField name="placeId" label="Place" accepter={SelectPicker} data={placeOption} block={true} />
 		</Form>
 	);
 };

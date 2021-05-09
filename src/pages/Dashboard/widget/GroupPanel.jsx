@@ -11,10 +11,12 @@ const GroupPanel = () => {
 	const { monthlyExpenses } = useContext(DashboardContext);
 	const thisYear = Moment().year();
 	const thisMonth = Moment().month();
-	const monthlyTotal = monthlyExpenses.filter(({ year, month }) => {
-		return thisYear === Number(year) && thisMonth + 1 === Number(month)
-	}).reduce((acc, cur) => acc + cur.total, 0)
-	
+	const monthlyTotal = monthlyExpenses
+		.filter(({ year, month }) => {
+			return thisYear === Number(year) && thisMonth + 1 === Number(month);
+		})
+		.reduce((acc, cur) => acc + cur.total, 0);
+
 	return (
 		<Row>
 			<Col>

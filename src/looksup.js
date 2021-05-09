@@ -22,13 +22,23 @@ export const colors = {
 };
 
 export const colorOption = [
-	{ label: 'オレンジ', value: 'orange' },
-	{ label: '赤', value: 'red' },
-	{ label: '紫', value: 'purple' },
-	{ label: '青', value: 'blue' },
-	{ label: '緑', value: 'green' },
-	{ label: '黄色', value: 'yellow' },
-	{ label: '灰色', value: 'gray' },
+	'#fddede',
+	'#faddeb',
+	'#dfd6ef',
+	'#dce9f7',
+	'#ddece7',
+	'#fbeed5',
+	'#e6e6e5',
+	'#FF6900',
+	'#FCB900',
+	'#7BDCB5',
+	'#00D084',
+	'#8ED1FC',
+	'#0693E3',
+	'#ABB8C3',
+	'#EB144C',
+	'#F78DA7',
+	'#9900EF',
 ];
 
 export const summaryColumns = [
@@ -55,7 +65,7 @@ export const makeCategoryOption = (categories) => {
 	const option = categories?.map(({ id, name, color }) => ({
 		label: name,
 		value: id,
-		color: colors[color],
+		color,
 	}));
 
 	return option;
