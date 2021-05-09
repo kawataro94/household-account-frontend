@@ -5,7 +5,6 @@ import { useDeleteCategory } from '../../../../hooks/delete';
 import { useCategories } from '../../../../hooks/read';
 import { useCreateCategory } from '../../../../hooks/create';
 import { useUpdateCategory } from '../../../../hooks/update';
-import { colorOption } from '../../../../looksup';
 import { SectionTitle, Table } from '../../../../components';
 import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
@@ -52,12 +51,7 @@ const fieldSchema = [
 	{
 		name: 'color',
 		label: 'カラー',
-		type: 'selectPicker',
-		data: colorOption.map(({ label, value }) => ({
-			value,
-			label: <span css={categoryTag(value)}>{label}</span>,
-		})),
-		block: true,
+		type: 'colorPicker',
 	},
 ];
 
@@ -107,7 +101,7 @@ const TemplateTable = (props) => {
 			update: (data) => updateCategories(data),
 		},
 		data: categories,
-		initialValue: { name: '' },
+		initialValue: { name: null, color: '#fddede' },
 	};
 
 	const confirmProps = {

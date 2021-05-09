@@ -22,13 +22,23 @@ export const colors = {
 };
 
 export const colorOption = [
-	{ label: 'オレンジ', value: '#fddede' },
-	{ label: '赤', value: '#faddeb' },
-	{ label: '紫', value: '#dfd6ef' },
-	{ label: '青', value: '#dce9f7' },
-	{ label: '緑', value: '#ddece7' },
-	{ label: '黄色', value: '#fbeed5' },
-	{ label: '灰色', value: '#e6e6e5' },
+	'#fddede',
+	'#faddeb',
+	'#dfd6ef',
+	'#dce9f7',
+	'#ddece7',
+	'#fbeed5',
+	'#e6e6e5',
+	'#FF6900', 
+	'#FCB900', 
+	'#7BDCB5', 
+	'#00D084', 
+	'#8ED1FC', 
+	'#0693E3', 
+	'#ABB8C3', 
+	'#EB144C', 
+	'#F78DA7', 
+	'#9900EF'
 ];
 
 export const summaryColumns = [

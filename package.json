@@ -39,6 +39,7 @@
 		"ramda.reduce": "^0.26.1",
 		"ramda.values": "^0.25.0",
 		"react": "^16.13.1",
+		"react-color": "^2.19.3",
 		"react-dom": "^16.13.1",
 		"react-router-dom": "^5.2.0",
 		"rsuite": "^4.8.0",
