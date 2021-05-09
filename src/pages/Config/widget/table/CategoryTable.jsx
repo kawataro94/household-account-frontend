@@ -5,11 +5,19 @@ import { useDeleteCategory } from '../../../../hooks/delete';
 import { useCategories } from '../../../../hooks/read';
 import { useCreateCategory } from '../../../../hooks/create';
 import { useUpdateCategory } from '../../../../hooks/update';
-import { colors, colorOption } from '../../../../looksup';
+import { colorOption } from '../../../../looksup';
 import { SectionTitle, Table } from '../../../../components';
 import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
 import { confirmButton, categoryTag } from '../../style';
+
+const Category = ({ color }) => {
+	return (
+		<div>
+			<span css={categoryTag(color)}>{color}</span>
+		</div>
+	);
+};
 
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	<>
@@ -29,7 +37,9 @@ const columns = [
 	},
 	{
 		header: 'カラー',
-		key: 'color',
+		cell: function getCategory({ color }) {
+			return <Category {...{ color }} />;
+		},
 	},
 ];
 
@@ -45,7 +55,7 @@ const fieldSchema = [
 		type: 'selectPicker',
 		data: colorOption.map(({ label, value }) => ({
 			value,
-			label: <span css={categoryTag(colors[value])}>{label}</span>,
+			label: <span css={categoryTag(value)}>{label}</span>,
 		})),
 		block: true,
 	},
