@@ -6,25 +6,22 @@ import { httpClient } from '../setting';
 
 function useAuthentication() {
 	const fetchGroupId = async ({ groupName }) => {
-
 		try {
 			const {
 				data: { id: groupId },
 			} = await httpClient.get(`${serverUrl}/member/groups/${groupName}`);
 
-			return groupId
-
+			return groupId;
 		} catch (e) {
 			console.error('fetch group error:', e.message);
 		}
 	};
 
 	const createMember = async ({ email, password, account, groupId }) => {
-
 		const data = await firebase
-				.auth()
-				.createUserWithEmailAndPassword(email, password)
-				.then(({ user }) => ({ uid: user.uid }));
+			.auth()
+			.createUserWithEmailAndPassword(email, password)
+			.then(({ user }) => ({ uid: user.uid }));
 
 		const params = {
 			account: account,

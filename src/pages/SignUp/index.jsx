@@ -22,7 +22,7 @@ const SignUp = () => {
 	const jumpToSignIn = () => history.push('/signin');
 
 	const signUp = async () => {
-		const { email, password, account, groupName } = formValue
+		const { email, password, account, groupName } = formValue;
 		const groupId = await fetchGroupId({ groupName });
 
 		if (groupId) {
@@ -31,7 +31,7 @@ const SignUp = () => {
 		}
 
 		if (!groupId) {
-			const { data } = await createGroup(groupName)
+			const { data } = await createGroup(groupName);
 			createMember({ email, password, account, groupId: data.id });
 			console.log('新規GroupUser');
 		}

@@ -6,13 +6,11 @@ import SectionTitle from '../../../components/SectionTitle';
 import UserList from './UserList';
 import { lineHeight, gridItem } from '../style';
 
-
 const UserPanel = () => {
-
 	const createButtonProps = {
 		buttonText: '追加する',
 		// onClick: () => openCreateEditModal(),
-		onClick: () => {}
+		onClick: () => {},
 	};
 
 	return (

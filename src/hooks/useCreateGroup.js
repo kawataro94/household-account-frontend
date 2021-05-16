@@ -4,10 +4,10 @@ import { httpClient } from '../setting';
 function useCreateGroup() {
 	const create = (name) => {
 		const params = {
-            name
+			name,
 		};
 
-		return httpClient.post(`${serverUrl}/member/groups`, params)
+		return httpClient.post(`${serverUrl}/member/groups`, params);
 	};
 	return { create };
 }
