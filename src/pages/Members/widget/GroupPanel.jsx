@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Panel, FlexboxGrid, List, Button } from 'rsuite';
+import { Row, Col, Panel, FlexboxGrid, List } from 'rsuite';
 
 import Divider from '../../../components/Divider';
 
@@ -35,12 +35,7 @@ const GroupPanel = () => {
 	return (
 		<Row>
 			<Col>
-				<FlexboxGrid justify="space-between" align="middle">
-					<h5 css={lineHeightH5}>グループ情報</h5>
-					<Button appearance="primary" size="lg">
-						編集する
-					</Button>
-				</FlexboxGrid>
+				<h5 css={lineHeightH5}>グループ情報</h5>
 			</Col>
 			<Divider />
 			<Divider height="10" />

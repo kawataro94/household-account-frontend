@@ -1,4 +1,5 @@
 export { default as useAuthentication } from './useAuthentication';
+export { default as useCreateGroup } from './useCreateGroup';
 export { default as useCreateLendingRecord } from './useCreateLendingRecord';
 export { default as useCreateRecord } from './useCreateRecord';
 export { default as useCreateTemplate } from './useCreateTemplate';

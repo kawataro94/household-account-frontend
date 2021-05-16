@@ -9,3 +9,7 @@ export const buttonMargin = css`
 	margin-top: 30px;
 	text-align: right;
 `;
+
+export const space = css`
+	margin-left: 10px;
+`;

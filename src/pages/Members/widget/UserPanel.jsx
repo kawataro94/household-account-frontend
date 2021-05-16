@@ -2,17 +2,22 @@ import React from 'react';
 import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
 
 import Divider from '../../../components/Divider';
+import SectionTitle from '../../../components/SectionTitle';
 import UserList from './UserList';
-import { lineHeight, lineHeightH5, gridItem } from '../style';
+import { lineHeight, gridItem } from '../style';
+
 
 const UserPanel = () => {
+
+	const createButtonProps = {
+		buttonText: '追加する',
+		// onClick: () => openCreateEditModal(),
+		onClick: () => {}
+	};
+
 	return (
 		<Row>
-			<Col>
-				<FlexboxGrid justify="space-between" align="middle">
-					<h5 css={lineHeightH5}>メンバー情報</h5>
-				</FlexboxGrid>
-			</Col>
+			<SectionTitle title="メンバー情報" {...createButtonProps} />
 			<Divider height="10" />
 			<Col>
 				<Panel bordered>
