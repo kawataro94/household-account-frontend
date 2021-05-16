@@ -6,7 +6,7 @@ import Center from '../../components/Center';
 import { LoginContext } from '../../context';
 import { useAuthentication } from '../../hooks';
 import SignInForm from './widget/SignInForm';
-import { buttonMargin, title } from './style';
+import { buttonMargin, title, space } from './style';
 
 const SignIn = () => {
 	const { isLogin, setIsLogin } = useContext(LoginContext);
@@ -43,6 +43,7 @@ const SignIn = () => {
 				<Button appearance="primary" onClick={() => jumpToSignUp()}>
 					Sign Up
 				</Button>
+				<span css={space} />
 				<Button appearance="primary" onClick={() => signIn()}>
 					Submit
 				</Button>

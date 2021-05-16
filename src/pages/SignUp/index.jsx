@@ -4,7 +4,7 @@ import { Button } from 'rsuite';
 
 import Center from '../../components/Center';
 import { LoginContext } from '../../context';
-import { useAuthentication } from '../../hooks';
+import { useAuthentication, useCreateGroup } from '../../hooks';
 import SignUpForm from './widget/Form';
 import { buttonMargin, title } from './style';
 
@@ -16,13 +16,25 @@ const SignUp = () => {
 		email: '',
 		password: '',
 	});
-	const { setUpAuth, createUser } = useAuthentication();
+	const { fetchGroupId, createMember } = useAuthentication();
+	const { create: createGroup } = useCreateGroup();
 	const { setIsLogin } = useContext(LoginContext);
 	const jumpToSignIn = () => history.push('/signin');
 
 	const signUp = async () => {
-		const userInfo = await setUpAuth(formValue);
-		await createUser(userInfo);
+		const { email, password, account, groupName } = formValue;
+		const groupId = await fetchGroupId({ groupName });
+
+		if (groupId) {
+			createMember({ email, password, account, groupId });
+			console.log('既存GroupUser');
+		}
+
+		if (!groupId) {
+			const { data } = await createGroup(groupName);
+			createMember({ email, password, account, groupId: data.id });
+			console.log('新規GroupUser');
+		}
 
 		setIsLogin(false);
 		jumpToSignIn();

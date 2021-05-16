@@ -5,30 +5,27 @@ import { serverUrl } from '../../.env/resources';
 import { httpClient } from '../setting';
 
 function useAuthentication() {
-	const setUpAuth = async ({ groupName, account, email, password }) => {
-		const params = {
-			name: groupName,
-		};
-
+	const fetchGroupId = async ({ groupName }) => {
 		try {
-			await httpClient.post(`${serverUrl}/member/groups`, params);
 			const {
 				data: { id: groupId },
 			} = await httpClient.get(`${serverUrl}/member/groups/${groupName}`);
 
-			return firebase
-				.auth()
-				.createUserWithEmailAndPassword(email, password)
-				.then(({ user }) => ({ uid: user.uid, account, groupId }));
+			return groupId;
 		} catch (e) {
-			console.error('group create error:', e.message);
+			console.error('fetch group error:', e.message);
 		}
 	};
 
-	const createUser = ({ uid, account, groupId }) => {
+	const createMember = async ({ email, password, account, groupId }) => {
+		const data = await firebase
+			.auth()
+			.createUserWithEmailAndPassword(email, password)
+			.then(({ user }) => ({ uid: user.uid }));
+
 		const params = {
-			account,
-			uid,
+			account: account,
+			uid: data.uid,
 			balance: '100',
 			password: 'password',
 			groupId,
@@ -78,8 +75,8 @@ function useAuthentication() {
 	const clearStorage = () => firebase.auth().signOut();
 
 	return {
-		setUpAuth,
-		createUser,
+		fetchGroupId,
+		createMember,
 		checkAuth,
 		checkUid,
 		checkStorage,
