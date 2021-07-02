@@ -7,10 +7,10 @@ import { DashboardContext } from '../context';
 const { StringType, NumberType, DateType } = Schema.Types;
 const model = Schema.Model({
 	title: StringType().isRequired('This field is required.'),
-	categoryId: NumberType().isRequired('This field is required.'),
-	placeId: NumberType().isRequired('This field is required.'),
+	category: StringType().isRequired('This field is required.'),
+	place: StringType().isRequired('This field is required.'),
 	date: DateType().isRequired('This field is required.'),
-	paidBy: NumberType().isRequired('This field is required.'),
+	paidBy: StringType().isRequired('This field is required.'),
 	cost: NumberType().isRequired('This field is required.'),
 });
 
@@ -42,24 +42,11 @@ const CreateEditForm = (props) => {
 			fluid={true}
 		>
 			<CustomField name="cost" label="Cost" accepter={Input} />
-			<CustomField
-				name="paidBy"
-				label="Paid By"
-				accepter={SelectPicker}
-				data={memberOption}
-				value={(formValue || {}).memberId}
-				block={true}
-			/>
+			<CustomField name="paidBy" label="Paid By" accepter={SelectPicker} data={memberOption} block={true} />
 			<CustomField name="title" label="Title" accepter={Input} />
-			<CustomField
-				name="categoryId"
-				label="Category"
-				accepter={SelectPicker}
-				data={categoryOption}
-				block={true}
-			/>
+			<CustomField name="category" label="Category" accepter={SelectPicker} data={categoryOption} block={true} />
 			<CustomField name="date" label="Date" accepter={DatePicker} block={true} />
-			<CustomField name="placeId" label="Place" accepter={SelectPicker} data={placeOption} block={true} />
+			<CustomField name="place" label="Place" accepter={SelectPicker} data={placeOption} block={true} />
 		</Form>
 	);
 };

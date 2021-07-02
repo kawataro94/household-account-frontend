@@ -8,20 +8,11 @@ import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
 import { categoryTag, confirmButton } from '../../style';
 
-const Category = ({ categoryId, categoryOption }) => {
-	const { label, color } = categoryOption.find(({ value }) => Number(categoryId) === value) || {};
+const Category = ({ category, categoryOption }) => {
+	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
 	return (
 		<div>
 			<span css={categoryTag(color)}>{label}</span>
-		</div>
-	);
-};
-
-const Place = ({ placeId, placeOption }) => {
-	const { label } = placeOption.find(({ value }) => Number(placeId) === value) || {};
-	return (
-		<div>
-			<span>{label}</span>
 		</div>
 	);
 };
@@ -37,7 +28,7 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	</>
 );
 
-const makeColumns = ({ categoryOption, placeOption }) => [
+const makeColumns = ({ categoryOption }) => [
 	{
 		header: 'テンプレート名',
 		key: 'templateName',
@@ -48,15 +39,13 @@ const makeColumns = ({ categoryOption, placeOption }) => [
 	},
 	{
 		header: 'カテゴリ',
-		cell: function getCategory({ categoryId }) {
-			return <Category {...{ categoryId, categoryOption }} />;
+		cell: function getCategory({ category }) {
+			return <Category {...{ category, categoryOption }} />;
 		},
 	},
 	{
 		header: '購入場所',
-		cell: function getPlace({ placeId }) {
-			return <Place {...{ placeId, placeOption }} />;
-		},
+		key: 'place',
 	},
 ];
 
@@ -72,14 +61,14 @@ const makeFieldSchema = ({ categoryOption, placeOption }) => [
 		type: 'input',
 	},
 	{
-		name: 'categoryId',
+		name: 'category',
 		label: 'Category',
 		type: 'selectPicker',
 		data: categoryOption,
 		block: true,
 	},
 	{
-		name: 'placeId',
+		name: 'place',
 		label: 'Place',
 		type: 'selectPicker',
 		data: placeOption,
@@ -130,20 +119,18 @@ const TemplateTable = (props) => {
 		fieldSchema: makeFieldSchema({ categoryOption, placeOption }),
 		methods: {
 			fetch: useFetchTemplates,
-			create: useCreateTemplate().create,
-			edit: useEditTemplate().edit,
+			create: useCreateTemplate(categories, places).create,
+			edit: useEditTemplate(categories, places).edit,
 			update: (data) => updateTemplates(data),
 		},
 		data: templates?.map((template) => ({
 			...template,
-			categoryId: Number(template.categoryId),
-			placeId: Number(template.placeId),
 		})),
 		initialValue: {
 			templateName: '',
 			title: '',
-			categoryId: null,
-			placeId: null,
+			category: '',
+			place: '',
 		},
 	};
 
@@ -170,7 +157,7 @@ const TemplateTable = (props) => {
 		data: templates,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
-		columns: makeColumns({ categoryOption, placeOption }),
+		columns: makeColumns({ categoryOption }),
 		actions: function actionButton(index) {
 			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
 		},

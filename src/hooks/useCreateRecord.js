@@ -1,22 +1,29 @@
+import { useCallback } from 'react';
 import Moment from 'moment';
 
 import { serverUrl } from '../../.env/resources';
 import { httpClient } from '../setting';
 
-function useCreateRecord() {
-	const create = (record) => {
-		const params = {
-			...record,
-			date: Moment(record.date).format('YYYY-MM-DD'),
-			memberId: record.paidBy,
-			categoryId: Number(record.categoryId),
-			createBy: 2,
-			description: 'TEST DESCRIPTION',
-			fixed: false,
-		};
+function useCreateRecord({ me, categories, places, members }) {
+	const create = useCallback(
+		({ title, date, cost, category, place, paidBy }) => {
+			const { id: categoryId } = categories.find(({ name }) => name === category);
+			const { id: placeId } = places.find(({ name }) => name === place);
+			const { id: memberId } = members.find(({ account }) => account === paidBy);
+			const body = {
+				title,
+				date: Moment(date).format('YYYY-MM-DD'),
+				cost,
+				categoryId,
+				placeId,
+				memberId,
+				createBy: me,
+			};
 
-		return httpClient.post(`${serverUrl}/member/records`, params);
-	};
+			return httpClient.post(`${serverUrl}/member/records`, body);
+		},
+		[categories, places, members]
+	);
 	return { create };
 }
 

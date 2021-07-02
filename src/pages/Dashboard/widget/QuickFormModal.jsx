@@ -7,22 +7,23 @@ import QuickForm from './QuickForm';
 
 const { Header, Title, Body, Footer } = Modal;
 const QuickFormModal = (props) => {
-	const { isOpen, template, closeCreateModal } = props;
+	const { categories, places, members, isOpen, template, closeCreateModal } = props;
 	const {
-		myProfile: { id },
+		myProfile: { account, id },
 		updateRecords,
 	} = useContext(DashboardContext);
-	const { create: createRecord } = useCreateRecord();
+	const { create: createRecord } = useCreateRecord({ me: id, categories, places, members });
 	const [formValue, setFormValue] = useState({});
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
-		const { title, categoryId } = template;
+		const { title, category, place } = template;
 		setFormValue({
 			title: title || '',
-			categoryId: Number(categoryId) || '',
+			category,
+			place,
 			date: new Date(),
-			paidBy: id,
+			paidBy: account,
 			cost: '',
 		});
 	}, [template, id]);

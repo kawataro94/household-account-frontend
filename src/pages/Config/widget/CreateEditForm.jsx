@@ -4,12 +4,12 @@ import { Schema, Form, FormGroup, Input, ControlLabel, FormControl, SelectPicker
 import { colorOption } from '../../../looksup';
 import { css } from '@emotion/react';
 
-const { StringType, NumberType } = Schema.Types;
+const { StringType } = Schema.Types;
 const model = Schema.Model({
 	categoryName: StringType().isRequired('This field is required.'),
 	title: StringType().isRequired('This field is required.'),
-	categoryId: NumberType().isRequired('This field is required.'),
-	placeId: NumberType().isRequired('This field is required.'),
+	category: StringType().isRequired('This field is required.'),
+	place: StringType().isRequired('This field is required.'),
 });
 
 const colorStyle = (c) => css`
