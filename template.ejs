@@ -6,23 +6,5 @@
 		<title><%= opt.title %></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 	</head>
-	<body>
-		<script>
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', () => {
-					navigator.serviceWorker
-						.register('service-worker.js')
-						.then((registration) => {
-							console.log('SW registered: ', registration);
-						})
-						.catch((registrationError) => {
-							console.log('registrationError: ', registrationError);
-						});
-				});
-				// window.addEventListener('install', (e) => {
-    			// 	console.log('[Service Worker] Install');
-				// });
-			}
-		</script>
-	</body>
+	<body></body>
 </html>
