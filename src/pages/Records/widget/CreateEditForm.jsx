@@ -7,10 +7,10 @@ import { RecordsContext } from '../context';
 const { StringType, NumberType, DateType } = Schema.Types;
 const model = Schema.Model({
 	title: StringType().isRequired('This field is required.'),
-	categoryId: NumberType().isRequired('This field is required.'),
-	placeId: NumberType().isRequired('This field is required.'),
+	category: StringType().isRequired('This field is required.'),
+	place: StringType().isRequired('This field is required.'),
 	date: DateType().isRequired('This field is required.'),
-	paidBy: NumberType().isRequired('This field is required.'),
+	paidBy: StringType().isRequired('This field is required.'),
 	cost: NumberType().isRequired('This field is required.'),
 });
 
@@ -43,7 +43,7 @@ const CreateEditForm = (props) => {
 		>
 			<CustomField name="title" label="Title" accepter={Input} />
 			<CustomField
-				name="categoryId"
+				name="category"
 				label={`Category ${!isCreate ? '(readOnly)' : ''}`}
 				accepter={SelectPicker}
 				data={categoryOption}
@@ -58,7 +58,7 @@ const CreateEditForm = (props) => {
 				readOnly={!isCreate}
 			/>
 			<CustomField
-				name="placeId"
+				name="place"
 				label={`Place ${!isCreate ? '(readOnly)' : ''}`}
 				accepter={SelectPicker}
 				data={placeOption}
@@ -70,7 +70,6 @@ const CreateEditForm = (props) => {
 				label={`Paid By ${!isCreate ? '(readOnly)' : ''}`}
 				accepter={SelectPicker}
 				data={memberOption}
-				value={(formValue || {}).memberId}
 				block={true}
 				readOnly={!isCreate}
 			/>

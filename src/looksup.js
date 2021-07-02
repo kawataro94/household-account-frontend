@@ -53,9 +53,9 @@ export const summaryColumns = [
 ];
 
 export const makeMemberOption = (members) => {
-	const option = members.map(({ id, account }) => ({
+	const option = members.map(({ account }) => ({
 		label: account,
-		value: id,
+		value: account,
 	}));
 
 	return option;

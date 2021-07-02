@@ -6,13 +6,13 @@ import Divider from '../../../components/Divider';
 import SectionTitle from '../../../components/SectionTitle';
 import Table from '../../../components/Table';
 import { YenUnit } from '../../../components/Units';
-import { makeMemberOption, makeCategoryOption, makePlaceOption } from '../../../looksup';
+import { makeCategoryOption } from '../../../looksup';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
 import { categoryTag, buttonMargin } from '../style';
 
-const Category = ({ categoryId, categoryOption }) => {
-	const { label, color } = categoryOption.find(({ value }) => categoryId === value) || {};
+const Category = ({ category, categoryOption }) => {
+	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
 	return (
 		<div>
 			<span css={categoryTag(color)}>{label}</span>
@@ -27,20 +27,6 @@ const Cost = ({ cost }) => (
 	</span>
 );
 
-const Place = ({ placeId, placeOption }) => {
-	const { label } = placeOption?.find(({ value }) => placeId === value) || {};
-	return (
-		<div>
-			<span>{label}</span>
-		</div>
-	);
-};
-
-const MemberName = ({ memberId, memberOption }) => {
-	const member = (memberOption || []).find(({ value }) => value === memberId);
-	return <span>{member && member.label}</span>;
-};
-
 const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	<>
 		<Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
@@ -52,7 +38,7 @@ const Actions = ({ index, openConfirm, openCreateEditModal }) => (
 	</>
 );
 
-const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
+const makeColumns = ({ categoryOption }) => [
 	{
 		header: '日付',
 		key: 'date',
@@ -63,15 +49,13 @@ const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
 	},
 	{
 		header: 'カテゴリ',
-		cell: function getCategory({ categoryId }) {
-			return <Category {...{ categoryId, categoryOption }} />;
+		cell: function getCategory({ category }) {
+			return <Category {...{ category, categoryOption }} />;
 		},
 	},
 	{
 		header: '購入場所',
-		cell: function getPlace({ placeId }) {
-			return <Place {...{ placeId, placeOption }} />;
-		},
+		key: 'place',
 	},
 	{
 		header: 'コスト',
@@ -81,28 +65,25 @@ const makeColumns = ({ memberOption, categoryOption, placeOption }) => [
 	},
 	{
 		header: '支払った人',
-		cell: function getMemberName({ memberId }) {
-			return <MemberName {...{ memberId, memberOption }} />;
-		},
+		key: 'paidBy',
 	},
 ];
 
 const initialValue = {
 	title: '',
-	categoryId: null,
+	category: '',
+	place: '',
 	date: null,
-	paidBy: null,
-	cost: '',
+	paidBy: '',
+	cost: 0,
 };
 
 const RecordTable = (props) => {
-	const { members, records, categories, places, updateRecords } = props;
-	const memberOption = makeMemberOption(members);
+	const { myProfile, members, records, categories, places, updateRecords } = props;
 	const categoryOption = makeCategoryOption(categories);
-	const placeOption = makePlaceOption(places);
 	const fetchRecord = () => useFetchRecords();
-	const { create: createRecord } = useCreateRecord();
-	const { edit: editRecord } = useEditRecord();
+	const { create: createRecord } = useCreateRecord({ me: myProfile.id, categories, places, members });
+	const { edit: editRecord } = useEditRecord({ categories, places, members });
 	const { remove: deleteRecord } = useDeleteRecord();
 
 	const [modalState, setModalState] = useState({
@@ -175,7 +156,7 @@ const RecordTable = (props) => {
 		data: records,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
-		columns: makeColumns({ memberOption, categoryOption, placeOption }),
+		columns: makeColumns({ categoryOption }),
 		actions: function actionButton(index) {
 			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
 		},

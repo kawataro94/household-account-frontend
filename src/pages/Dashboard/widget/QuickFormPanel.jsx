@@ -7,7 +7,7 @@ import { gridItem } from '../style';
 import { DashboardContext } from '../context';
 
 const QuickFormPanel = () => {
-	const { templates } = useContext(DashboardContext);
+	const { categories, places, members, templates } = useContext(DashboardContext);
 	const [isOpen, setIsOpen] = useState(false);
 	const [template, setTemplate] = useState({});
 
@@ -22,6 +22,9 @@ const QuickFormPanel = () => {
 	};
 
 	const createModalProps = {
+		categories,
+		places,
+		members,
 		isOpen,
 		template,
 		closeCreateModal,

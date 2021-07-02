@@ -5,7 +5,10 @@ import { useResources } from '../../resources';
 export const RecordsContext = React.createContext({});
 
 export const Provider = ({ children }) => {
-	const { resources } = useResources({ keys: ['members', 'records', 'lendingRecords', 'categories', 'places'] });
+	const { resources } = useResources({
+		keys: ['myProfile', 'members', 'records', 'lendingRecords', 'categories', 'places'],
+	});
+	const myProfile = resources?.myProfile?.read() || {};
 	const members = resources?.members?.read() || [];
 	const categories = resources?.categories?.read() || [];
 	const places = resources?.places?.read() || [];
@@ -31,6 +34,7 @@ export const Provider = ({ children }) => {
 	};
 
 	const value = {
+		myProfile,
 		members,
 		categories,
 		places,
