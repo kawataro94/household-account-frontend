@@ -56,7 +56,18 @@ module.exports = {
 					{
 						loader: 'babel-loader',
 						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react', '@emotion/babel-preset-css-prop'],
+							presets: [
+								[
+									'@babel/preset-env',
+									{
+										targets: {
+											node: true,
+										},
+									},
+								],
+								'@babel/preset-react',
+								'@emotion/babel-preset-css-prop',
+							],
 							plugins: ['transform-class-properties'],
 						},
 					},

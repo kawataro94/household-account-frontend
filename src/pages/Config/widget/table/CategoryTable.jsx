@@ -123,7 +123,6 @@ const TemplateTable = (props) => {
 	};
 
 	const tableProps = {
-		height: 520,
 		data: categories,
 		rowHeight: 57,
 		shouldUpdateScroll: false,

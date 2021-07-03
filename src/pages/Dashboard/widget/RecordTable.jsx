@@ -57,10 +57,9 @@ const makeColumns = ({ categoryOption }) => [
 const RecordTable = () => {
 	const { records, categories } = useContext(DashboardContext);
 	const categoryOption = makeCategoryOption(categories);
-	const limited = records?.slice(0, 5) || [];
+	const limited = records?.slice(0, 10) || [];
 
 	const tableProps = {
-		height: 520,
 		data: limited,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
@@ -74,7 +73,7 @@ const RecordTable = () => {
 			</Col>
 			<Divider height="10" />
 			<Panel bordered>
-				<Table height={280} {...tableProps} />
+				<Table height={250} {...tableProps} />
 			</Panel>
 		</Row>
 	);

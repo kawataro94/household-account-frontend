@@ -104,7 +104,6 @@ const PlaceTable = (props) => {
 	};
 
 	const tableProps = {
-		height: 520,
 		data: places,
 		rowHeight: 57,
 		shouldUpdateScroll: false,

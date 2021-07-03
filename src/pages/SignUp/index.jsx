@@ -27,13 +27,11 @@ const SignUp = () => {
 
 		if (groupId) {
 			createMember({ email, password, account, groupId });
-			console.log('既存GroupUser');
 		}
 
 		if (!groupId) {
 			const { data } = await createGroup(groupName);
 			createMember({ email, password, account, groupId: data.id });
-			console.log('新規GroupUser');
 		}
 
 		setIsLogin(false);

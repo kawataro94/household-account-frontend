@@ -14,7 +14,7 @@ const SectionTitle = (props) => {
 	return (
 		<FlexboxGrid justify="space-between" align="middle">
 			<h5 css={lineHeightH5}>{title}</h5>
-			<Button {...buttonProps}>{buttonText}</Button>
+			{buttonText ? <Button {...buttonProps}>{buttonText}</Button> : null}
 		</FlexboxGrid>
 	);
 };
