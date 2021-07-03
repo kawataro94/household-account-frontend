@@ -157,7 +157,6 @@ const LendingRecordTable = (props) => {
 	};
 
 	const tableProps = {
-		height: 520,
 		data: lendingRecords,
 		rowHeight: 57,
 		shouldUpdateScroll: false,

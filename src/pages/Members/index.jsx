@@ -4,8 +4,7 @@ import ErrorBoundary from '../../hoc/error-boundary';
 import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
 import { Provider } from './context';
-import GroupPanel from './widget/GroupPanel';
-import UserPanel from './widget/UserPanel';
+import MemberTable from './widget/MemberTable';
 
 const Members = () => {
 	return (
@@ -15,9 +14,7 @@ const Members = () => {
 				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
 					<Provider>
-						<GroupPanel />
-						<Divider height="20" />
-						<UserPanel />
+						<MemberTable />
 					</Provider>
 				</Suspense>
 			</ErrorBoundary>

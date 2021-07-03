@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Alert } from 'rsuite';
+import { Row, Col, Button, Alert, Panel } from 'rsuite';
 
 import { useFetchRecords, useCreateRecord, useEditRecord, useDeleteRecord } from '../../../hooks';
 import Divider from '../../../components/Divider';
@@ -152,7 +152,6 @@ const RecordTable = (props) => {
 	};
 
 	const tableProps = {
-		height: 520,
 		data: records,
 		rowHeight: 57,
 		shouldUpdateScroll: false,
@@ -168,7 +167,10 @@ const RecordTable = (props) => {
 				<SectionTitle title="" {...createButtonProps} />
 			</Col>
 			<Divider height="10" />
-			<Table {...tableProps} />
+			<Panel>
+				<Table {...tableProps} />
+			</Panel>
+			{/* <Table {...tableProps} /> */}
 			<CreateEditModal {...createEditModalProps} />
 			<ConfirmModal {...confirmProps} />
 		</Row>

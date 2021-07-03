@@ -4,10 +4,10 @@ import { Table as RsuiteTable } from 'rsuite';
 const { Column, HeaderCell, Cell } = RsuiteTable;
 
 const Table = (props) => {
-	const { columns, actions, ...rest } = props;
+	const { columns, actions, height = 400, ...rest } = props;
 	const tableColumns = Array.from(columns || []);
 	return (
-		<RsuiteTable {...rest}>
+		<RsuiteTable {...{ height, ...rest }}>
 			{tableColumns.map((column, idx) => {
 				const { header, key, cell } = column;
 				return (

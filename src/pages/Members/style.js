@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 export const height = css`
-	height: 130px;
+	height: 100px;
 `;
 
 export const lineHeight = css`
