@@ -16,11 +16,11 @@ const model = Schema.Model({
 
 const CustomField = (props) => {
 	const { name, label, accepter, ...rest } = props;
-	const autoFocus = name === 'cost' ? true : false;
+
 	return (
 		<FormGroup>
 			<ControlLabel>{label} </ControlLabel>
-			<FormControl name={name} accepter={accepter} {...rest} autoFocus={autoFocus} />
+			<FormControl name={name} accepter={accepter} {...rest} />
 		</FormGroup>
 	);
 };
@@ -41,11 +41,11 @@ const CreateEditForm = (props) => {
 			checkTrigger="change"
 			fluid={true}
 		>
-			<CustomField name="cost" label="Cost" accepter={Input} />
+			<CustomField name="cost" label="Cost" accepter={Input} autoFocus />
+			<CustomField name="date" label="Date" accepter={DatePicker} block={true} oneTap />
 			<CustomField name="paidBy" label="Paid By" accepter={SelectPicker} data={memberOption} block={true} />
 			<CustomField name="title" label="Title" accepter={Input} />
 			<CustomField name="category" label="Category" accepter={SelectPicker} data={categoryOption} block={true} />
-			<CustomField name="date" label="Date" accepter={DatePicker} block={true} />
 			<CustomField name="place" label="Place" accepter={SelectPicker} data={placeOption} block={true} />
 		</Form>
 	);
