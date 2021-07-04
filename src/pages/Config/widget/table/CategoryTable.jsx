@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Panel, Button, Alert } from 'rsuite';
+import { Row, Col, Panel, Alert } from 'rsuite';
 
 import { useDeleteCategory } from '../../../../hooks/delete';
 import { useCategories } from '../../../../hooks/read';
 import { useCreateCategory } from '../../../../hooks/create';
 import { useUpdateCategory } from '../../../../hooks/update';
-import { SectionTitle, Table } from '../../../../components';
+import { SectionTitle, Table, ActionButtons } from '../../../../components';
 import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
-import { confirmButton, categoryTag } from '../../style';
+import { categoryTag } from '../../style';
 
 const Category = ({ color }) => {
 	return (
@@ -17,17 +17,6 @@ const Category = ({ color }) => {
 		</div>
 	);
 };
-
-const Actions = ({ index, openConfirm, openCreateEditModal }) => (
-	<>
-		<Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
-			編集
-		</Button>
-		<Button color="red" size="sm" onClick={() => openConfirm(index)} css={confirmButton}>
-			削除
-		</Button>
-	</>
-);
 
 const columns = [
 	{
@@ -128,7 +117,7 @@ const TemplateTable = (props) => {
 		shouldUpdateScroll: false,
 		columns,
 		actions: function actionButton(index) {
-			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
+			return <ActionButtons {...{ index, openConfirm, openCreateEditModal }} />;
 		},
 	};
 

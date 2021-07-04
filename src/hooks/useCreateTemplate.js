@@ -5,11 +5,10 @@ import { httpClient } from '../setting';
 
 function useCreateTemplate(categories, places) {
 	const create = useCallback(
-		({ templateName, title, category, place }) => {
+		({ title, category, place }) => {
 			const { id: categoryId } = categories.find(({ name }) => name === category);
 			const { id: placeId } = places.find(({ name }) => name === place);
 			const body = {
-				templateName,
 				title,
 				categoryId,
 				placeId,

@@ -6,7 +6,6 @@ import { css } from '@emotion/react';
 
 const { StringType } = Schema.Types;
 const model = Schema.Model({
-	categoryName: StringType().isRequired('This field is required.'),
 	title: StringType().isRequired('This field is required.'),
 	category: StringType().isRequired('This field is required.'),
 	place: StringType().isRequired('This field is required.'),

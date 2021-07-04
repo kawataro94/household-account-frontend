@@ -37,3 +37,11 @@ export const lineHeightH5 = css`
 export const alignCenter = css`
 	text-align: center;
 `;
+
+export const actions = css`
+	text-align: right;
+`;
+
+export const confirmButton = css`
+	margin-left: 10px;
+`;

@@ -39,11 +39,12 @@ const QuickFormPanel = () => {
 			<Col>
 				<Panel bordered>
 					<FlexboxGrid>
-						{templates.map(({ templateName, ...content }, index) => {
+						{templates.map((template, index) => {
+							const { title } = template;
 							return (
 								<FlexboxGrid.Item key={index} css={gridItem}>
-									<Button onClick={() => openCreateModal(content)} appearance="primary">
-										{templateName}
+									<Button onClick={() => openCreateModal(template)} appearance="primary">
+										{title}
 									</Button>
 								</FlexboxGrid.Item>
 							);

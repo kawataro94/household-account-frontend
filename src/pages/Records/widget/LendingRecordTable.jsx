@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Alert } from 'rsuite';
+import { Row, Col, Alert } from 'rsuite';
 
 import {
 	useFetchLendingRecords,
@@ -7,14 +7,12 @@ import {
 	useEditLendingRecord,
 	useDeleteLendingRecord,
 } from '../../../hooks';
-import Divider from '../../../components/Divider';
-import SectionTitle from '../../../components/SectionTitle';
-import Table from '../../../components/Table';
+import { Divider, SectionTitle, Table, ActionButtons } from '../../../components';
 import { YenUnit } from '../../../components/Units';
 import { makeCategoryOption } from '../../../looksup';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
-import { categoryTag, buttonMargin } from '../style';
+import { categoryTag } from '../style';
 
 const Category = ({ category, categoryOption }) => {
 	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
@@ -30,17 +28,6 @@ const Cost = ({ cost }) => (
 		{cost}
 		<YenUnit />
 	</span>
-);
-
-const Actions = ({ index, openConfirm, openCreateEditModal }) => (
-	<>
-		<Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
-			編集
-		</Button>
-		<Button color="red" size="sm" onClick={() => openConfirm(index)} css={buttonMargin}>
-			削除
-		</Button>
-	</>
 );
 
 const makeColumns = ({ categoryOption }) => [
@@ -162,7 +149,7 @@ const LendingRecordTable = (props) => {
 		shouldUpdateScroll: false,
 		columns: makeColumns({ categoryOption }),
 		actions: function actionButton(index) {
-			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
+			return <ActionButtons {...{ index, openConfirm, openCreateEditModal }} />;
 		},
 	};
 
