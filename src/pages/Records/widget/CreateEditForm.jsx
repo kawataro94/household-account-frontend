@@ -56,6 +56,7 @@ const CreateEditForm = (props) => {
 				accepter={DatePicker}
 				block={true}
 				readOnly={!isCreate}
+				oneTap
 			/>
 			<CustomField
 				name="place"
