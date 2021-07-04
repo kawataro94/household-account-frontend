@@ -5,11 +5,10 @@ import { httpClient } from '../setting';
 
 function useEditTemplate(categories, places) {
 	const edit = useCallback(
-		({ id, templateName, title, category, place }) => {
+		({ id, title, category, place }) => {
 			const { id: categoryId } = categories.find(({ name }) => name === category);
 			const { id: placeId } = places.find(({ name }) => name === place);
 			const body = {
-				templateName,
 				title,
 				categoryId,
 				placeId,

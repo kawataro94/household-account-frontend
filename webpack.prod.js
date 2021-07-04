@@ -17,22 +17,5 @@ module.exports = merge(common, {
 			template: path.resolve(__dirname, 'template.ejs'),
 			hash: true,
 		}),
-		new GenerateSW({
-			clientsClaim: true,
-			skipWaiting: true,
-			maximumFileSizeToCacheInBytes: 1024 * 1024 * 11,
-			runtimeCaching: [
-				{
-					urlPattern: /.+(\/|.html)$/,
-					handler: 'NetworkFirst',
-					options: {
-						cacheName: 'household-accounts' + '-html-cache',
-						expiration: {
-							maxAgeSeconds: 60 * 60 * 24 * 7,
-						},
-					},
-				},
-			],
-		}),
 	],
 });

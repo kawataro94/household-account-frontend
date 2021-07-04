@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Row, Col, Panel, Button, Alert } from 'rsuite';
+import { Row, Col, Panel, Alert } from 'rsuite';
 
 import { useDeleteTemplate, useFetchTemplates, useCreateTemplate, useEditTemplate } from '../../../../hooks';
-import { SectionTitle, Table } from '../../../../components';
+import { SectionTitle, Table, ActionButtons } from '../../../../components';
 import { makeCategoryOption, makePlaceOption } from '../../../../looksup';
 import CreateEditModal from '../CreateEditModal';
 import ConfirmModal from '../ConfirmModal';
-import { categoryTag, confirmButton } from '../../style';
+import { categoryTag } from '../../style';
 
 const Category = ({ category, categoryOption }) => {
 	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
@@ -17,22 +17,7 @@ const Category = ({ category, categoryOption }) => {
 	);
 };
 
-const Actions = ({ index, openConfirm, openCreateEditModal }) => (
-	<>
-		<Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
-			編集
-		</Button>
-		<Button color="red" size="sm" onClick={() => openConfirm(index)} css={confirmButton}>
-			削除
-		</Button>
-	</>
-);
-
 const makeColumns = ({ categoryOption }) => [
-	{
-		header: 'テンプレート名',
-		key: 'templateName',
-	},
 	{
 		header: 'タイトル',
 		key: 'title',
@@ -50,11 +35,6 @@ const makeColumns = ({ categoryOption }) => [
 ];
 
 const makeFieldSchema = ({ categoryOption, placeOption }) => [
-	{
-		name: 'templateName',
-		label: 'Template Name',
-		type: 'input',
-	},
 	{
 		name: 'title',
 		label: 'Title',
@@ -127,7 +107,6 @@ const TemplateTable = (props) => {
 			...template,
 		})),
 		initialValue: {
-			templateName: '',
 			title: '',
 			category: '',
 			place: '',
@@ -158,7 +137,7 @@ const TemplateTable = (props) => {
 		shouldUpdateScroll: false,
 		columns: makeColumns({ categoryOption }),
 		actions: function actionButton(index) {
-			return <Actions {...{ index, openConfirm, openCreateEditModal }} />;
+			return <ActionButtons {...{ index, openConfirm, openCreateEditModal }} />;
 		},
 	};
 

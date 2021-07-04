@@ -15,10 +15,6 @@ export const categoryTag = (color) => css`
 	border-radius: 4px;
 `;
 
-export const buttonMargin = css`
-	margin-left: 10px;
-`;
-
 export const textIndent = css`
 	text-indent: 29px;
 `;
