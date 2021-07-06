@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, FC } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Icon } from 'rsuite';
 
@@ -6,7 +6,7 @@ import { LoginContext } from '../context';
 import { useAuthentication } from '../hooks';
 import { navStyle } from './style';
 
-const Header = () => {
+const Header: FC = () => {
 	const { setIsLogin } = useContext(LoginContext);
 	const history = useHistory();
 	const { pathname } = useLocation();

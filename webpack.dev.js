@@ -5,6 +5,7 @@ const common = require('./webpack.common.js');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = merge(common, {
 	mode: 'development',
@@ -12,14 +13,14 @@ module.exports = merge(common, {
 		new webpack.DefinePlugin({
 			'process.env.RUN_ENV': JSON.stringify('development'),
 		}),
-        new HtmlWebpackPlugin({
+		new HtmlWebpackPlugin({
 			title: 'Household-Accounts DEV',
 			template: path.resolve(__dirname, 'template.ejs'),
-        }),
+		}),
 		new GenerateSW({
 			clientsClaim: true,
 			skipWaiting: true,
-			maximumFileSizeToCacheInBytes: 1024 * 1024 * 11,
+			maximumFileSizeToCacheInBytes: 1024 * 1024 * 15,
 			runtimeCaching: [
 				{
 					urlPattern: /.+(\/|.html)$/,
@@ -33,6 +34,7 @@ module.exports = merge(common, {
 				},
 			],
 		}),
+		new ForkTsCheckerWebpackPlugin(),
 	],
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),

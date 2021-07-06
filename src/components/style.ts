@@ -1,6 +1,14 @@
-import { css } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 
-export const flex = (hasHeader) => css`
+type Flex = {
+	(param: boolean): SerializedStyles;
+};
+
+type Yen = {
+	(param: string): SerializedStyles;
+};
+
+export const flex: Flex = (hasHeader: boolean) => css`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,7 +33,8 @@ export const sideNavWidth = css`
 	width: 250px;
 	height: calc(100vh - 56px);
 `;
-export const yen = (style) => css`
+
+export const yen: Yen = (style: string) => css`
 	margin-left: 6px;
 	${style}
 `;

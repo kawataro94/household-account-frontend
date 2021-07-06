@@ -19,8 +19,28 @@
 		}
 	},
 	"rules": {
-		"react/jsx-uses-react": "warn",
-		"react/jsx-uses-vars": "warn",
 		"react/prop-types": "off"
-	}
+	},
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"parser": "@typescript-eslint/parser",
+			"plugins": ["@typescript-eslint"],
+			"extends": [
+				"eslint:recommended",
+				"plugin:react/recommended",
+				"plugin:@typescript-eslint/recommended",
+				"prettier"
+			],
+			"parserOptions": {
+				"sourceType": "module",
+				"ecmaFeatures": {
+					"jsx": true
+				}
+			},
+			"rules": {
+				"react/prop-types": "off"
+			}
+		}
+	]
 }

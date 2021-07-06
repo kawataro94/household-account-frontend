@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Sidenav, Nav } from 'rsuite';
 
@@ -8,16 +8,16 @@ import { sideNavWidth } from './style';
 const { Body } = Sidenav;
 const { Item } = Nav;
 
-const Sidebar = () => {
+const Sidebar: FC = () => {
 	const history = useHistory();
 	const { pathname } = useLocation();
 	const [activeKey, setActiveKey] = useState(pathname.slice(1) || 'dashboard');
 
-	const handleSelect = (eventKey) => {
+	const handleSelect = (eventKey: string) => {
 		setActiveKey(eventKey);
 	};
 
-	const toLink = (to) => {
+	const toLink = (to: string) => {
 		history.push(to);
 	};
 
