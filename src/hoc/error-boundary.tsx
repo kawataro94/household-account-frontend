@@ -1,18 +1,27 @@
 import React from 'react';
 import { Loader } from 'rsuite';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import Center from '../components/Center';
 import { withAuth } from '../context';
 import { center } from './style';
 
-class ErrorBoundary extends React.Component {
-	constructor(props) {
+type Props = {
+	history: RouteComponentProps['history'];
+	setIsLogin: (param: boolean) => void;
+};
+
+type State = {
+	hasError: boolean;
+};
+
+class ErrorBoundary extends React.Component<Props, State> {
+	constructor(props: any) {
 		super(props);
 		this.state = { hasError: false };
 	}
 
-	static getDerivedStateFromError(error) {
+	static getDerivedStateFromError(error: any) {
 		console.log(error);
 		return { hasError: true };
 	}
