@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
+		"target": "ES6",
+		"module": "ES2015",
+		"allowJs": true,
+		"checkJs": false,
+		"jsx": "preserve",
+		"strict": true,
+		"jsxImportSource": "@emotion/react",
+		"strictNullChecks": true
+	}
+}

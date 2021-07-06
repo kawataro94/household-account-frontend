@@ -4,6 +4,25 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
+const babelLoader = {
+	loader: 'babel-loader',
+	options: {
+		presets: [
+			[
+				'@babel/preset-env',
+				{
+					targets: {
+						node: true,
+					},
+				},
+			],
+			'@babel/preset-react',
+			'@emotion/babel-preset-css-prop',
+		],
+		plugins: ['transform-class-properties'],
+	},
+};
+
 module.exports = {
 	entry: './src/index.js',
 	output: {
@@ -22,19 +41,6 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|mjs|jsx)$/,
-				enforce: 'pre',
-				exclude: /node_modules/,
-				use: [
-					{
-						loader: 'eslint-loader',
-						options: {
-							fix: true,
-						},
-					},
-				],
-			},
-			{
 				test: /\.(scss|sass|less|css)$/i,
 				use: [MiniCssExtractPlugin.loader, 'css-loader'],
 			},
@@ -50,25 +56,19 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(js|mjs|jsx)$/,
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: [babelLoader],
+			},
+			{
+				test: /\.(ts|tsx)$/,
 				exclude: /node_modules/,
 				use: [
+					babelLoader,
 					{
-						loader: 'babel-loader',
+						loader: 'ts-loader',
 						options: {
-							presets: [
-								[
-									'@babel/preset-env',
-									{
-										targets: {
-											node: true,
-										},
-									},
-								],
-								'@babel/preset-react',
-								'@emotion/babel-preset-css-prop',
-							],
-							plugins: ['transform-class-properties'],
+							transpileOnly: true,
 						},
 					},
 				],
@@ -76,6 +76,6 @@ module.exports = {
 		],
 	},
 	resolve: {
-		extensions: ['.js', '.jsx'],
+		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 	},
 };

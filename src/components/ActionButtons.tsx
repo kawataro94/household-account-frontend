@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button } from 'rsuite';
 
 import { confirmButton, actions } from './style';
 
-const Actions = ({ index, openConfirm, openCreateEditModal }) => (
+type Props = {
+	index: number;
+	openConfirm: (index: number) => void;
+	openCreateEditModal: (index: number) => void;
+};
+
+const Actions: FC<Props> = ({ index, openConfirm, openCreateEditModal }) => (
 	<div css={actions}>
 		<Button appearance="primary" size="sm" onClick={() => openCreateEditModal(index)}>
 			編集

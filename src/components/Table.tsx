@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Table as RsuiteTable } from 'rsuite';
+
+type Props = {
+	columns: [];
+	actions: (index: number) => ReactNode;
+	height: number;
+};
 
 const { Column, HeaderCell, Cell } = RsuiteTable;
 
-const Table = (props) => {
+const Table: FC<Props> = (props) => {
 	const { columns, actions, height = 400, ...rest } = props;
 	const tableColumns = Array.from(columns || []);
 	return (
@@ -20,7 +26,7 @@ const Table = (props) => {
 			{actions ? (
 				<Column flexGrow={1} minWidth={130} key={'action'}>
 					<HeaderCell></HeaderCell>
-					<Cell>{(_, index) => actions(index)}</Cell>
+					<Cell>{(_: unknown, index: number) => actions(index)}</Cell>
 				</Column>
 			) : null}
 		</RsuiteTable>
