@@ -1,7 +1,7 @@
 const path = require('path');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const babelLoader = {
@@ -36,7 +36,7 @@ module.exports = {
 		}),
 	],
 	optimization: {
-		minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+		minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
 	},
 	module: {
 		rules: [
