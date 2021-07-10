@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { Row, Col, Alert, Panel } from 'rsuite';
+import React, { useState, useCallback, useContext } from 'react';
+import { FlexboxGrid, Panel, Alert } from 'rsuite';
 
 import { useFetchRecords, useCreateRecord, useEditRecord, useDeleteRecord } from '../../../hooks';
-import { Divider, SectionTitle, Table, ActionButtons } from '../../../components';
+import { Divider, Button, Table, ActionButtons } from '../../../components';
 import { YenUnit } from '../../../components/Units';
 import { makeCategoryOption } from '../../../looksup';
+import { categoryTag } from '../style';
+import { actions } from '../reducer';
+import { RecordsContext } from '../context';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
-import { categoryTag } from '../style';
+
+Alert.config({ top: 80 });
 
 const Category = ({ category, categoryOption }) => {
 	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
@@ -60,18 +64,19 @@ const initialValue = {
 	title: '',
 	category: '',
 	place: '',
-	date: null,
+	date: undefined,
 	paidBy: '',
-	cost: 0,
+	cost: undefined,
 };
 
 const RecordTable = (props) => {
-	const { myProfile, members, records, categories, places, updateRecords } = props;
+	const { myProfile, members, categories, places, records, dispatch } = useContext(RecordsContext);
 	const categoryOption = makeCategoryOption(categories);
-	const fetchRecord = () => useFetchRecords();
-	const { create: createRecord } = useCreateRecord({ me: myProfile.id, categories, places, members });
-	const { edit: editRecord } = useEditRecord({ categories, places, members });
-	const { remove: deleteRecord } = useDeleteRecord();
+	const fetchRecord = useCallback(() => useFetchRecords(), []);
+
+	const { create } = useCreateRecord({ me: myProfile.id, categories, places, members });
+	const { edit } = useEditRecord({ categories, places, members });
+	const { remove } = useDeleteRecord();
 
 	const [modalState, setModalState] = useState({
 		show: false,
@@ -99,16 +104,58 @@ const RecordTable = (props) => {
 		setSelected(index);
 	};
 
-	const createButtonProps = {
-		buttonText: '追加する',
-		onClick: () => openCreateEditModal(),
+	const createRecord = useCallback(
+		(formValue) => {
+			create(formValue)
+				.then(() => {
+					Alert.success('レコードを作成しました');
+					fetchRecord().then(({ data }) => dispatch(actions.updateRecords(data)));
+				})
+				.catch((e) => {
+					console.log(e, 'create error');
+				});
+			closeCreateEditModal();
+		},
+		[create]
+	);
+
+	const editRecord = useCallback(
+		(formValue) => {
+			edit(formValue, selected)
+				.then(() => {
+					Alert.success('レコードを編集しました');
+					fetchRecord().then(({ data }) => dispatch(actions.updateRecords(data)));
+				})
+				.catch((e) => {
+					console.log(e, 'edit error');
+				});
+			closeCreateEditModal();
+		},
+		[selected, edit]
+	);
+
+	const deleteRecord = useCallback(() => {
+		remove(records[selected].id)
+			.then(() => {
+				Alert.success('レコードを削除しました');
+				fetchRecord().then(({ data }) => dispatch(actions.updateRecords(data)));
+			})
+			.catch((e) => {
+				console.log(e, 'delete error');
+			});
+		setIsConfirm(false);
+	}, [records, selected]);
+
+	const confirmProps = {
+		show: isConfirm,
+		selected,
+		onOk: deleteRecord,
+		onCancel: () => setIsConfirm(false),
 	};
 
 	const recordProps = {
 		initialValue,
 		records,
-		fetchRecord,
-		updateRecords,
 		createRecord,
 		editRecord,
 	};
@@ -118,24 +165,6 @@ const RecordTable = (props) => {
 		closeCreateEditModal,
 		recordProps,
 		...props,
-	};
-
-	const confirmProps = {
-		show: isConfirm,
-		selected,
-		onOk: () => {
-			deleteRecord(records[selected].id)
-				.then(() => {
-					Alert.config({ top: 80 });
-					Alert.success('レコードを削除しました');
-					fetchRecord().then(({ data }) => updateRecords(data));
-				})
-				.catch((e) => {
-					console.log(e, 'delete error');
-				});
-			setIsConfirm(false);
-		},
-		onCancel: () => setIsConfirm(false),
 	};
 
 	const tableProps = {
@@ -149,18 +178,17 @@ const RecordTable = (props) => {
 	};
 
 	return (
-		<Row>
-			<Col>
-				<SectionTitle title="" {...createButtonProps} />
-			</Col>
+		<>
+			<FlexboxGrid justify="end" align="middle">
+				<Button onClick={openCreateEditModal}>追加する</Button>
+			</FlexboxGrid>
 			<Divider height="10" />
 			<Panel>
 				<Table {...tableProps} />
 			</Panel>
-			{/* <Table {...tableProps} /> */}
 			<CreateEditModal {...createEditModalProps} />
 			<ConfirmModal {...confirmProps} />
-		</Row>
+		</>
 	);
 };
 

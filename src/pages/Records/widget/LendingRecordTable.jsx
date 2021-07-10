@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Row, Col, Alert } from 'rsuite';
+import React, { useState, useContext, useCallback } from 'react';
+import { FlexboxGrid, Alert } from 'rsuite';
 
 import {
 	useFetchLendingRecords,
@@ -7,12 +7,14 @@ import {
 	useEditLendingRecord,
 	useDeleteLendingRecord,
 } from '../../../hooks';
-import { Divider, SectionTitle, Table, ActionButtons } from '../../../components';
+import { Button, Divider, Table, ActionButtons } from '../../../components';
 import { YenUnit } from '../../../components/Units';
 import { makeCategoryOption } from '../../../looksup';
+import { categoryTag } from '../style';
+import { RecordsContext } from '../context';
+import { actions } from '../reducer';
 import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
-import { categoryTag } from '../style';
 
 const Category = ({ category, categoryOption }) => {
 	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
@@ -65,18 +67,19 @@ const initialValue = {
 	title: '',
 	category: '',
 	place: '',
-	date: null,
+	date: undefined,
 	paidBy: '',
-	cost: 0,
+	cost: undefined,
 };
 
 const LendingRecordTable = (props) => {
-	const { myProfile, members, categories, places, lendingRecords, updateLendingRecords } = props;
+	const { myProfile, members, categories, places, lendingRecords, dispatch, updateLendingRecords } =
+		useContext(RecordsContext);
 	const categoryOption = makeCategoryOption(categories);
 	const fetchRecord = () => useFetchLendingRecords();
-	const { create: createRecord } = useCreateLendingRecord({ me: myProfile?.id, members, categories, places });
-	const { edit: editRecord } = useEditLendingRecord({ members, categories, places });
-	const { remove: deleteRecord } = useDeleteLendingRecord();
+	const { create } = useCreateLendingRecord({ me: myProfile?.id, members, categories, places });
+	const { edit } = useEditLendingRecord({ members, categories, places });
+	const { remove } = useDeleteLendingRecord();
 
 	const [modalState, setModalState] = useState({
 		show: false,
@@ -104,9 +107,53 @@ const LendingRecordTable = (props) => {
 		setSelected(index);
 	};
 
-	const createButtonProps = {
-		buttonText: '追加する',
-		onClick: () => openCreateEditModal(),
+	const createRecord = useCallback(
+		(formValue) => {
+			create(formValue)
+				.then(() => {
+					Alert.success('レコードを作成しました');
+					fetchRecord().then(({ data }) => dispatch(actions.updateLendingRecords(data)));
+				})
+				.catch((e) => {
+					console.log(e, 'create error');
+				});
+			closeCreateEditModal();
+		},
+		[create]
+	);
+
+	const editRecord = useCallback(
+		(formValue) => {
+			edit(formValue, selected)
+				.then(() => {
+					Alert.success('レコードを編集しました');
+					fetchRecord().then(({ data }) => dispatch(actions.updateLendingRecords(data)));
+				})
+				.catch((e) => {
+					console.log(e, 'edit error');
+				});
+			closeCreateEditModal();
+		},
+		[selected, edit]
+	);
+
+	const deleteRecord = useCallback(() => {
+		remove(lendingRecords[selected].id)
+			.then(() => {
+				Alert.success('レコードを削除しました');
+				fetchRecord().then(({ data }) => dispatch(actions.updateLendingRecords(data)));
+			})
+			.catch((e) => {
+				console.log(e, 'delete error');
+			});
+		setIsConfirm(false);
+	}, [lendingRecords, selected]);
+
+	const confirmProps = {
+		show: isConfirm,
+		selected: deleteRecord,
+		onOk: remove,
+		onCancel: () => setIsConfirm(false),
 	};
 
 	const recordProps = {
@@ -125,24 +172,6 @@ const LendingRecordTable = (props) => {
 		...props,
 	};
 
-	const confirmProps = {
-		show: isConfirm,
-		selected,
-		onOk: () => {
-			deleteRecord(lendingRecords[selected].id)
-				.then(() => {
-					Alert.config({ top: 80 });
-					Alert.success('レコードを削除しました');
-					fetchRecord().then(({ data }) => updateLendingRecords(data));
-				})
-				.catch((e) => {
-					console.log(e, 'delete error');
-				});
-			setIsConfirm(false);
-		},
-		onCancel: () => setIsConfirm(false),
-	};
-
 	const tableProps = {
 		data: lendingRecords,
 		rowHeight: 57,
@@ -154,15 +183,15 @@ const LendingRecordTable = (props) => {
 	};
 
 	return (
-		<Row>
-			<Col>
-				<SectionTitle title="" {...createButtonProps} />
-			</Col>
+		<>
+			<FlexboxGrid justify="end" align="middle">
+				<Button onClick={openCreateEditModal}>追加する</Button>
+			</FlexboxGrid>
 			<Divider height="10" />
 			<Table {...tableProps} />
 			<CreateEditModal {...createEditModalProps} />
 			<ConfirmModal {...confirmProps} />
-		</Row>
+		</>
 	);
 };
 
