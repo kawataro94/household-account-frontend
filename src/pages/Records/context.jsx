@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
 import { useResources } from '../../resources';
+import { initalState, actions, reducer } from './reducer';
 
 export const RecordsContext = React.createContext({});
 
@@ -14,24 +15,16 @@ export const Provider = ({ children }) => {
 	const places = resources?.places?.read() || [];
 	const r = resources?.records?.read();
 	const l = resources?.lendingRecords?.read();
-	const [records, setRecords] = useState([]);
-	const [lendingRecords, setLendingRecords] = useState([]);
+	const [state, dispatch] = useReducer(reducer, initalState);
+	const { records, lendingRecords } = state;
 
 	useEffect(() => {
-		setRecords(r);
+		dispatch(actions.updateRecords(r));
 	}, [r]);
 
 	useEffect(() => {
-		setLendingRecords(l);
+		dispatch(actions.updateLendingRecords(l));
 	}, [l]);
-
-	const updateRecords = (data) => {
-		setRecords(data);
-	};
-
-	const updateLendingRecords = (data) => {
-		setLendingRecords(data);
-	};
 
 	const value = {
 		myProfile,
@@ -40,8 +33,7 @@ export const Provider = ({ children }) => {
 		places,
 		records,
 		lendingRecords,
-		updateRecords,
-		updateLendingRecords,
+		dispatch,
 	};
 
 	return <RecordsContext.Provider value={value}>{children}</RecordsContext.Provider>;

@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Row, Panel, Nav } from 'rsuite';
 
 import Divider from '../../../components/Divider';
-import { RecordsContext } from '../context';
 import RecordTable from './RecordTable';
 import LendingRecordTable from './LendingRecordTable';
 
@@ -16,39 +15,21 @@ const CustomNav = ({ active, onSelect, ...props }) => {
 };
 
 const CustomTable = ({ active }) => {
-	const {
-		myProfile,
-		members,
-		categories,
-		places,
-		records,
-		lendingRecords,
-		updateRecords,
-		updateLendingRecords,
-	} = useContext(RecordsContext);
-
 	return (
 		<>
-			{active === 'default' ? (
-				<RecordTable {...{ myProfile, members, categories, places, records, updateRecords }} />
-			) : null}
-			{active === 'irregular' ? (
-				<LendingRecordTable
-					{...{ myProfile, members, categories, places, lendingRecords, updateLendingRecords }}
-				/>
-			) : null}
+			{active === 'default' ? <RecordTable /> : null}
+			{active === 'irregular' ? <LendingRecordTable /> : null}
 		</>
 	);
 };
 
-const RecordsTables = () => {
+const RecordTables = () => {
 	const [active, setActive] = useState('default');
-	const handleSelect = (activeKey) => {
-		setActive(activeKey);
-	};
+	const onSelect = useCallback((activeKey) => setActive(activeKey), []);
+
 	return (
 		<Row>
-			<CustomNav appearance="subtle" active={active} onSelect={handleSelect} />
+			<CustomNav appearance="subtle" active={active} onSelect={onSelect} />
 			<Divider height="20" />
 			<Panel bordered>
 				<CustomTable active={active} />
@@ -57,4 +38,4 @@ const RecordsTables = () => {
 	);
 };
 
-export default RecordsTables;
+export default RecordTables;
