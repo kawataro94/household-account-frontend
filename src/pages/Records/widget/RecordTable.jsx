@@ -1,15 +1,17 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { FlexboxGrid, Panel, Alert } from 'rsuite';
+import { Alert } from 'rsuite';
 
-import { useFetchRecords, useCreateRecord, useEditRecord, useDeleteRecord } from '../../../hooks';
-import { Divider, Button, Table, ActionButtons } from '../../../components';
+import { useFetchRecords, useDeleteRecord } from '../../../hooks';
+import { Table, ActionButtons } from '../../../components';
 import { YenUnit } from '../../../components/Units';
 import { makeCategoryOption } from '../../../looksup';
 import { categoryTag } from '../style';
 import { actions } from '../reducer';
 import { RecordsContext } from '../context';
-import CreateEditModal from './CreateEditModal';
 import ConfirmModal from './ConfirmModal';
+
+import { actions as modalActions } from '../../../components/Modal/reducer';
+import { ModalContext } from '../../../components/Modal/context';
 
 Alert.config({ top: 80 });
 
@@ -60,79 +62,26 @@ const makeColumns = ({ categoryOption }) => [
 	},
 ];
 
-const initialValue = {
-	title: '',
-	category: '',
-	place: '',
-	date: undefined,
-	paidBy: '',
-	cost: undefined,
-};
-
 const RecordTable = (props) => {
-	const { myProfile, members, categories, places, records, dispatch } = useContext(RecordsContext);
+	const { children } = props;
+	const { dispatch: modalDispatch } = useContext(ModalContext);
+	const { categories, records, dispatch } = useContext(RecordsContext);
 	const categoryOption = makeCategoryOption(categories);
 	const fetchRecord = useCallback(() => useFetchRecords(), []);
 
-	const { create } = useCreateRecord({ me: myProfile.id, categories, places, members });
-	const { edit } = useEditRecord({ categories, places, members });
 	const { remove } = useDeleteRecord();
 
-	const [modalState, setModalState] = useState({
-		show: false,
-		selected: null,
-	});
 	const [isConfirm, setIsConfirm] = useState(false);
 	const [selected, setSelected] = useState(null);
 
 	const openCreateEditModal = (index) => {
-		setModalState({
-			show: true,
-			selected: index,
-		});
-	};
-
-	const closeCreateEditModal = () => {
-		setModalState({
-			show: false,
-			selected: null,
-		});
+		modalDispatch(modalActions.openEditModal(index));
 	};
 
 	const openConfirm = (index) => {
 		setIsConfirm(true);
 		setSelected(index);
 	};
-
-	const createRecord = useCallback(
-		(formValue) => {
-			create(formValue)
-				.then(() => {
-					Alert.success('レコードを作成しました');
-					fetchRecord().then(({ data }) => dispatch(actions.updateRecords(data)));
-				})
-				.catch((e) => {
-					console.log(e, 'create error');
-				});
-			closeCreateEditModal();
-		},
-		[create]
-	);
-
-	const editRecord = useCallback(
-		(formValue) => {
-			edit(formValue, selected)
-				.then(() => {
-					Alert.success('レコードを編集しました');
-					fetchRecord().then(({ data }) => dispatch(actions.updateRecords(data)));
-				})
-				.catch((e) => {
-					console.log(e, 'edit error');
-				});
-			closeCreateEditModal();
-		},
-		[selected, edit]
-	);
 
 	const deleteRecord = useCallback(() => {
 		remove(records[selected].id)
@@ -153,20 +102,6 @@ const RecordTable = (props) => {
 		onCancel: () => setIsConfirm(false),
 	};
 
-	const recordProps = {
-		initialValue,
-		records,
-		createRecord,
-		editRecord,
-	};
-
-	const createEditModalProps = {
-		modalState,
-		closeCreateEditModal,
-		recordProps,
-		...props,
-	};
-
 	const tableProps = {
 		data: records,
 		rowHeight: 57,
@@ -179,14 +114,8 @@ const RecordTable = (props) => {
 
 	return (
 		<>
-			<FlexboxGrid justify="end" align="middle">
-				<Button onClick={openCreateEditModal}>追加する</Button>
-			</FlexboxGrid>
-			<Divider height="10" />
-			<Panel>
-				<Table {...tableProps} />
-			</Panel>
-			<CreateEditModal {...createEditModalProps} />
+			{children}
+			<Table {...tableProps} />
 			<ConfirmModal {...confirmProps} />
 		</>
 	);
