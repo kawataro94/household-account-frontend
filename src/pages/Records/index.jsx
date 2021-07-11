@@ -5,6 +5,8 @@ import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
 import RecordTables from './widget/RecordTables';
 import { Provider } from './context';
+import { ModalProvider } from '../../components/Modal/context';
+import { FormProvider } from '../../components/Form/context';
 
 const Records = () => {
 	return (
@@ -14,7 +16,11 @@ const Records = () => {
 				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
 					<Provider>
-						<RecordTables />
+						<ModalProvider>
+							<FormProvider>
+								<RecordTables />
+							</FormProvider>
+						</ModalProvider>
 					</Provider>
 				</Suspense>
 			</ErrorBoundary>
