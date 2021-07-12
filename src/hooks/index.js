@@ -18,3 +18,6 @@ export { default as useFetchLendingByMembers } from './useFetchLendingByMembers'
 export { default as useFetchMyProfile } from './useFetchMyProfile';
 export { default as useFetchRecords } from './useFetchRecords';
 export { default as useFetchTemplates } from './useFetchTemplates';
+export { default as useTemplates } from './useTemplates';
+export { default as useCategories } from './useCategories';
+export { default as usePlaces } from './usePlaces';

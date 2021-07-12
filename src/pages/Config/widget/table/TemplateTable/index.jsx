@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Panel, Alert } from 'rsuite';
+import { Alert } from 'rsuite';
+import { useQueryClient } from 'react-query';
 
-import { useDeleteTemplate, useFetchTemplates, useCreateTemplate, useEditTemplate } from '../../../../hooks';
-import { SectionTitle, Table, ActionButtons } from '../../../../components';
-import { makeCategoryOption, makePlaceOption } from '../../../../looksup';
-import CreateEditModal from '../CreateEditModal';
-import ConfirmModal from '../ConfirmModal';
-import { categoryTag } from '../../style';
+import { useDeleteTemplate, useCreateTemplate, useEditTemplate } from '../../../../../hooks';
+import { ActionButtons } from '../../../../../components';
+import { makeCategoryOption, makePlaceOption } from '../../../../../looksup';
+import { categoryTag } from '../../../style';
+
+import Component from './component';
+import { useResources2 } from '../../../../../resources';
 
 const Category = ({ category, categoryOption }) => {
 	const { label, color } = categoryOption.find(({ value }) => category === value) || {};
@@ -56,8 +58,11 @@ const makeFieldSchema = ({ categoryOption, placeOption }) => [
 	},
 ];
 
-const TemplateTable = (props) => {
-	const { templates, updateTemplates, categories, places } = props;
+const TemplateTable = () => {
+	const { templates, categories, places } = useResources2();
+	const queryClient = useQueryClient();
+	const update = () => queryClient.invalidateQueries('templates');
+
 	const categoryOption = makeCategoryOption(categories);
 	const placeOption = makePlaceOption(places);
 	const { remove: deleteTemplate } = useDeleteTemplate();
@@ -98,10 +103,9 @@ const TemplateTable = (props) => {
 		closeCreateEditModal,
 		fieldSchema: makeFieldSchema({ categoryOption, placeOption }),
 		methods: {
-			fetch: useFetchTemplates,
 			create: useCreateTemplate(categories, places).create,
 			edit: useEditTemplate(categories, places).edit,
-			update: (data) => updateTemplates(data),
+			update,
 		},
 		data: templates?.map((template) => ({
 			...template,
@@ -120,8 +124,8 @@ const TemplateTable = (props) => {
 			deleteTemplate(templates[index].id)
 				.then(() => {
 					Alert.config({ top: 80 });
-					Alert.success('レコードを削除しました');
-					useFetchTemplates().then(({ data }) => updateTemplates(data));
+					Alert.success('テンプレートを削除しました');
+					update();
 				})
 				.catch((e) => {
 					console.log(e, 'delete error');
@@ -141,18 +145,7 @@ const TemplateTable = (props) => {
 		},
 	};
 
-	return (
-		<Row>
-			<Col>
-				<SectionTitle {...createButtonProps} />
-			</Col>
-			<Panel>
-				<Table {...tableProps} />
-			</Panel>
-			<CreateEditModal {...createEditModalProps} />
-			<ConfirmModal {...confirmProps} />
-		</Row>
-	);
+	return <Component {...{ createButtonProps, tableProps, createEditModalProps, confirmProps }} />;
 };
 
 export default TemplateTable;

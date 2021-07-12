@@ -10,6 +10,9 @@ import {
 	useFetchMyProfile,
 	useFetchRecords,
 	useFetchTemplates,
+	useTemplates as useTemplates2,
+	useCategories as useCategories2,
+	usePlaces as usePlaces2,
 } from '../hooks';
 import { useCategories, usePlaces } from '../hooks/read';
 import wrapPromise from './wrap-promise';
@@ -48,4 +51,22 @@ export const useResources = ({ keys }) => {
 	}, []);
 
 	return { resources };
+};
+
+export const useResources2 = () => {
+	const {
+		resource: { data: templates },
+	} = useTemplates2();
+	const {
+		resource: { data: categories },
+	} = useCategories2();
+	const {
+		resource: { data: places },
+	} = usePlaces2();
+
+	return {
+		templates,
+		categories,
+		places,
+	};
 };

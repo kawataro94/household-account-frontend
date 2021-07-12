@@ -6,7 +6,7 @@ import CreateEditForm from './CreateEditForm';
 const { Header, Title, Body, Footer } = Modal;
 const CreateEditModal = (props) => {
 	const { modalState, closeCreateEditModal, fieldSchema, methods, data, initialValue } = props;
-	const { fetch, create, edit, update } = methods;
+	const { create, edit, update } = methods;
 
 	const { show, selected } = modalState;
 	const [formValue, setFormValue] = useState();
@@ -31,8 +31,8 @@ const CreateEditModal = (props) => {
 			create(formValue)
 				.then(() => {
 					Alert.config({ top: 80 });
-					Alert.success('新しいテンプレートを追加しました');
-					fetch().then(({ data }) => update(data));
+					Alert.success('追加しました');
+					update();
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
@@ -42,8 +42,8 @@ const CreateEditModal = (props) => {
 			edit(formValue, selected)
 				.then(() => {
 					Alert.config({ top: 80 });
-					Alert.success('テンプレートを編集しました');
-					fetch().then(({ data }) => update(data));
+					Alert.success('編集しました');
+					update();
 				})
 				.catch((e) => {
 					console.log(e, 'patch error');

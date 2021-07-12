@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Row, Col, Panel, Alert } from 'rsuite';
+import { Alert } from 'rsuite';
 
-import { useDeleteCategory } from '../../../../hooks/delete';
-import { useCategories } from '../../../../hooks/read';
-import { useCreateCategory } from '../../../../hooks/create';
-import { useUpdateCategory } from '../../../../hooks/update';
-import { SectionTitle, Table, ActionButtons } from '../../../../components';
-import CreateEditModal from '../CreateEditModal';
-import ConfirmModal from '../ConfirmModal';
-import { categoryTag } from '../../style';
+import { useDeleteCategory } from '../../../../../hooks/delete';
+import { useCategories } from '../../../../../hooks/read';
+import { useCreateCategory } from '../../../../../hooks/create';
+import { useUpdateCategory } from '../../../../../hooks/update';
+import { ActionButtons } from '../../../../../components';
+import { categoryTag } from '../../../style';
+
+import { useResources2 } from '../../../../../resources';
+import Component from './component';
 
 const Category = ({ color }) => {
 	return (
@@ -45,8 +46,10 @@ const fieldSchema = [
 ];
 
 const TemplateTable = (props) => {
-	const { categories, updateCategories } = props;
+	const { updateCategories } = props;
 	const { remove: deleteCategory } = useDeleteCategory();
+
+	const { categories } = useResources2();
 
 	const [modalState, setModalState] = useState({
 		show: false,
@@ -121,18 +124,7 @@ const TemplateTable = (props) => {
 		},
 	};
 
-	return (
-		<Row>
-			<Col>
-				<SectionTitle {...createButtonProps} />
-			</Col>
-			<Panel>
-				<Table {...tableProps} />
-			</Panel>
-			<CreateEditModal {...createEditModalProps} />
-			<ConfirmModal {...confirmProps} />
-		</Row>
-	);
+	return <Component {...{ createButtonProps, tableProps, createEditModalProps, confirmProps }} />;
 };
 
 export default TemplateTable;
