@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Panel, Alert } from 'rsuite';
+import { Alert } from 'rsuite';
 
-import { useDeletePlace } from '../../../../hooks/delete';
-import { usePlaces } from '../../../../hooks/read';
-import { useCreatePlace } from '../../../../hooks/create';
-import { useUpdatePlace } from '../../../../hooks/update';
-import { SectionTitle, Table, ActionButtons } from '../../../../components';
-import CreateEditModal from '../CreateEditModal';
-import ConfirmModal from '../ConfirmModal';
+import { useDeletePlace } from '../../../../../hooks/delete';
+import { usePlaces } from '../../../../../hooks/read';
+import { useCreatePlace } from '../../../../../hooks/create';
+import { useUpdatePlace } from '../../../../../hooks/update';
+import { ActionButtons } from '../../../../../components';
+import { useResources2 } from '../../../../../resources';
+
+import Component from './component';
 
 const columns = [
 	{
@@ -25,8 +26,9 @@ const fieldSchema = [
 ];
 
 const PlaceTable = (props) => {
-	const { places, updatePlaces } = props;
+	const { updatePlaces } = props;
 	const { remove: deletePlace } = useDeletePlace();
+	const { places } = useResources2();
 
 	const [modalState, setModalState] = useState({
 		show: false,
@@ -101,18 +103,7 @@ const PlaceTable = (props) => {
 		},
 	};
 
-	return (
-		<Row>
-			<Col>
-				<SectionTitle {...createButtonProps} />
-			</Col>
-			<Panel>
-				<Table {...tableProps} />
-			</Panel>
-			<CreateEditModal {...createEditModalProps} />
-			<ConfirmModal {...confirmProps} />
-		</Row>
-	);
+	return <Component {...{ createButtonProps, tableProps, createEditModalProps, confirmProps }} />;
 };
 
 export default PlaceTable;

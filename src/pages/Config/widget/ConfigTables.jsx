@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Row, Panel, Nav } from 'rsuite';
 
-import Divider from '../../../components/Divider';
-import { ConfigContext } from '../context';
+import { Divider } from '../../../components';
 import { CategoryTable, PlaceTable, TemplateTable } from './table';
 
 const CustomNav = ({ active, onSelect, ...props }) => {
@@ -16,13 +15,11 @@ const CustomNav = ({ active, onSelect, ...props }) => {
 };
 
 const CustomTable = ({ active }) => {
-	const { templateProps, categoryProps, placeProps } = useContext(ConfigContext);
-
 	return (
 		<>
-			{active === 'template' ? <TemplateTable {...templateProps} /> : null}
-			{active === 'category' ? <CategoryTable {...categoryProps} /> : null}
-			{active === 'place' ? <PlaceTable {...placeProps} /> : null}
+			{active === 'template' ? <TemplateTable /> : null}
+			{active === 'category' ? <CategoryTable /> : null}
+			{active === 'place' ? <PlaceTable /> : null}
 		</>
 	);
 };

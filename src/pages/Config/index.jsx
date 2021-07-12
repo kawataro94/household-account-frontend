@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import ErrorBoundary from '../../hoc/error-boundary';
 import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
-import { Provider } from './context';
 import ConfigTables from './widget/ConfigTables';
+
+const queryClient = new QueryClient();
 
 const Config = () => {
 	return (
@@ -13,9 +15,9 @@ const Config = () => {
 				<h2>Config</h2>
 				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
-					<Provider>
+					<QueryClientProvider client={queryClient}>
 						<ConfigTables />
-					</Provider>
+					</QueryClientProvider>
 				</Suspense>
 			</ErrorBoundary>
 		</div>
