@@ -1,22 +1,15 @@
 import React from 'react';
-import { Row, Col, Panel } from 'rsuite';
 
-import { SectionTitle, Table } from '../../../../../components';
-import CreateEditModal from '../../CreateEditModal';
+import { Table } from '../../../../../components';
 import ConfirmModal from '../../ConfirmModal';
 
-const Component = ({ createButtonProps, tableProps, createEditModalProps, confirmProps }) => {
+const Component = ({ tableProps, confirmProps, children }) => {
 	return (
-		<Row>
-			<Col>
-				<SectionTitle {...createButtonProps} />
-			</Col>
-			<Panel>
-				<Table {...tableProps} />
-			</Panel>
-			<CreateEditModal {...createEditModalProps} />
+		<>
+			{children}
+			<Table {...tableProps} />
 			<ConfirmModal {...confirmProps} />
-		</Row>
+		</>
 	);
 };
 

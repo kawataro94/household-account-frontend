@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Alert } from 'rsuite';
+import React, { useState, useContext } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { useDeleteCategory } from '../../../../../hooks/delete';
-import { useCategories } from '../../../../../hooks/read';
-import { useCreateCategory } from '../../../../../hooks/create';
-import { useUpdateCategory } from '../../../../../hooks/update';
-import { ActionButtons } from '../../../../../components';
-import { categoryTag } from '../../../style';
-
 import { useResources2 } from '../../../../../resources';
+import { ActionButtons, Alert } from '../../../../../components';
+import { actions as modalActions } from '../../../../../components/Modal/reducer';
+import { ModalContext } from '../../../../../components/Modal/context';
+import { categoryTag } from '../../../style';
 import Component from './component';
 
 const Category = ({ color }) => {
@@ -32,68 +30,25 @@ const columns = [
 	},
 ];
 
-const fieldSchema = [
-	{
-		name: 'name',
-		label: 'カテゴリ名',
-		type: 'input',
-	},
-	{
-		name: 'color',
-		label: 'カラー',
-		type: 'colorPicker',
-	},
-];
-
-const TemplateTable = (props) => {
-	const { updateCategories } = props;
-	const { remove: deleteCategory } = useDeleteCategory();
-
+const CategoryTable = ({ children }) => {
 	const { categories } = useResources2();
+	const queryClient = useQueryClient();
+	const update = () => queryClient.invalidateQueries('categories');
 
-	const [modalState, setModalState] = useState({
-		show: false,
-		selected: null,
-	});
+	const { dispatch: modalDispatch } = useContext(ModalContext);
+
 	const [isConfirm, setIsConfirm] = useState(false);
 	const [selected, setSelected] = useState(null);
 
 	const openCreateEditModal = (index) => {
-		setModalState({
-			show: true,
-			selected: index,
-		});
+		modalDispatch(modalActions.openEditModal(index));
 	};
 
-	const closeCreateEditModal = () => {
-		setModalState({
-			show: false,
-			selected: null,
-		});
-	};
+	const { remove: deleteCategory } = useDeleteCategory();
 
 	const openConfirm = (index) => {
 		setIsConfirm(true);
 		setSelected(index);
-	};
-
-	const createButtonProps = {
-		buttonText: '追加する',
-		onClick: () => openCreateEditModal(),
-	};
-
-	const createEditModalProps = {
-		modalState,
-		closeCreateEditModal,
-		fieldSchema,
-		methods: {
-			fetch: useCategories,
-			create: useCreateCategory().create,
-			edit: useUpdateCategory().edit,
-			update: (data) => updateCategories(data),
-		},
-		data: categories,
-		initialValue: { name: null, color: '#fddede' },
 	};
 
 	const confirmProps = {
@@ -102,9 +57,8 @@ const TemplateTable = (props) => {
 		onOk: (index) => {
 			deleteCategory(categories[index].id)
 				.then(() => {
-					Alert.config({ top: 80 });
-					Alert.success('レコードを削除しました');
-					useCategories().then(({ data }) => updateCategories(data));
+					Alert.success('カテゴリを削除しました');
+					update();
 				})
 				.catch((e) => {
 					console.log(e, 'delete error');
@@ -124,7 +78,7 @@ const TemplateTable = (props) => {
 		},
 	};
 
-	return <Component {...{ createButtonProps, tableProps, createEditModalProps, confirmProps }} />;
+	return <Component {...{ tableProps, confirmProps, children }} />;
 };
 
-export default TemplateTable;
+export default CategoryTable;

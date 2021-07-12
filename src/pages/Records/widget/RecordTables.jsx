@@ -2,13 +2,12 @@ import React, { useState, useCallback, useContext } from 'react';
 import { Row, Panel, Nav, FlexboxGrid } from 'rsuite';
 
 import { Button, Divider } from '../../../components';
+import { ModalContext } from '../../../components/Modal/context';
+import { actions } from '../../../components/Modal/reducer';
 import RecordTable from './RecordTable';
 import LendingRecordTable from './LendingRecordTable';
 import RecordForm from './RecordForm';
 import LendingRecordForm from './LendingRecordForm';
-
-import { ModalContext } from '../../../components/Modal/context';
-import { actions } from '../../../components/Modal/reducer';
 
 const CustomNav = ({ active, onSelect, ...props }) => {
 	return (
@@ -42,7 +41,6 @@ const RecordTables = () => {
 	const onSelect = useCallback((activeKey) => setActive(activeKey), []);
 
 	const { dispatch } = useContext(ModalContext);
-
 	const openModal = () => {
 		dispatch(actions.openCreateModal());
 	};
