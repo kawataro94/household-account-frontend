@@ -1,10 +1,9 @@
 import React, { useMemo, useContext, useCallback } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { Alert } from '../../../../../components';
 import { useCreateCategory } from '../../../../../hooks/create';
 import { useUpdateCategory } from '../../../../../hooks/update';
-import { useResources2 } from '../../../../../resources';
+import { useReactQuery, useQueryData } from '../../../../../hooks';
 import { ModalContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { defaultValue, model, fieldSchema } from './constants';
@@ -15,19 +14,18 @@ const CategoryForm = () => {
 	const { formState } = useContext(FormStateContext);
 	const { selected } = modalState;
 
-	const { categories } = useResources2();
+	const { categories } = useQueryData(['categories']);
 	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
 	const { create } = useCreateCategory();
 	const { edit } = useUpdateCategory();
-	const queryClient = useQueryClient();
-	const update = () => queryClient.invalidateQueries('categories');
+	const { update } = useReactQuery();
 
 	const createCategory = useCallback(
 		(formValue) => {
 			create(formValue)
 				.then(() => {
 					Alert.success('カテゴリを追加しました');
-					update();
+					update('categories');
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
@@ -41,7 +39,7 @@ const CategoryForm = () => {
 			edit(formValue, selected)
 				.then(() => {
 					Alert.success('カテゴリを編集しました');
-					update();
+					update('categories');
 				})
 				.catch((e) => {
 					console.log(e, 'patch error');

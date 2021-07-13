@@ -1,10 +1,9 @@
 import React, { useMemo, useContext, useCallback } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { Alert } from '../../../../../components';
 import { useCreatePlace } from '../../../../../hooks/create';
 import { useUpdatePlace } from '../../../../../hooks/update';
-import { useResources2 } from '../../../../../resources';
+import { useReactQuery, useQueryData } from '../../../../../hooks';
 import { ModalContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { defaultValue, model, fieldSchema } from './constants';
@@ -15,19 +14,18 @@ const PlaceForm = () => {
 	const { formState } = useContext(FormStateContext);
 	const { selected } = modalState;
 
-	const { places } = useResources2();
+	const { places } = useQueryData(['places']);
 	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
 	const { create } = useCreatePlace();
 	const { edit } = useUpdatePlace();
-	const queryClient = useQueryClient();
-	const update = () => queryClient.invalidateQueries('places');
+	const { update } = useReactQuery();
 
 	const createPlace = useCallback(
 		(formValue) => {
 			create(formValue)
 				.then(() => {
 					Alert.success('購入場所を追加しました');
-					update();
+					update('places');
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
@@ -41,7 +39,7 @@ const PlaceForm = () => {
 			edit(formValue, selected)
 				.then(() => {
 					Alert.success('購入場所を編集しました');
-					update();
+					update('places');
 				})
 				.catch((e) => {
 					console.log(e, 'patch error');

@@ -5,7 +5,7 @@ import ErrorBoundary from '../../hoc/error-boundary';
 import { Divider, Loader } from '../../components';
 import { ModalProvider } from '../../components/Modal/context';
 import { FormProvider } from '../../components/Form/context';
-import ConfigTables from './widget/ConfigTables';
+import Container from './container';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ const Config = () => {
 					<QueryClientProvider client={queryClient}>
 						<ModalProvider>
 							<FormProvider>
-								<ConfigTables />
+								<Container />
 							</FormProvider>
 						</ModalProvider>
 					</QueryClientProvider>

@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { useDeletePlace } from '../../../../../hooks/delete';
-import { useResources2 } from '../../../../../resources';
+import { useQueryData, useReactQuery } from '../../../../../hooks';
 import { ActionButtons, Alert } from '../../../../../components';
 import { actions as modalActions } from '../../../../../components/Modal/reducer';
 import { ModalContext } from '../../../../../components/Modal/context';
@@ -16,16 +15,18 @@ const columns = [
 ];
 
 const PlaceTable = ({ children }) => {
-	const { places } = useResources2();
-	const queryClient = useQueryClient();
-	const update = () => queryClient.invalidateQueries('places');
-
+	const { places } = useQueryData(['places']);
+	const { update } = useReactQuery();
 	const { dispatch: modalDispatch } = useContext(ModalContext);
 
 	const [isConfirm, setIsConfirm] = useState(false);
 	const [selected, setSelected] = useState(null);
 
-	const openCreateEditModal = (index) => {
+	const openCreateModal = () => {
+		modalDispatch(modalActions.openCreateModal());
+	};
+
+	const openEditModal = (index) => {
 		modalDispatch(modalActions.openEditModal(index));
 	};
 
@@ -43,7 +44,7 @@ const PlaceTable = ({ children }) => {
 			deletePlace(places[index].id)
 				.then(() => {
 					Alert.success('購入場所を削除しました');
-					update();
+					update('places');
 				})
 				.catch((e) => {
 					console.log(e, 'delete error');
@@ -59,11 +60,11 @@ const PlaceTable = ({ children }) => {
 		shouldUpdateScroll: false,
 		columns,
 		actions: function actionButton(index) {
-			return <ActionButtons {...{ index, openConfirm, openCreateEditModal }} />;
+			return <ActionButtons {...{ index, openConfirm, openEditModal }} />;
 		},
 	};
 
-	return <Component {...{ tableProps, confirmProps, children }} />;
+	return <Component {...{ tableProps, confirmProps, openCreateModal, children }} />;
 };
 
 export default PlaceTable;

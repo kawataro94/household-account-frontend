@@ -1,11 +1,9 @@
 import React, { useMemo, useContext, useCallback } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { Alert } from '../../../../../components';
-import { useCreateTemplate, useEditTemplate } from '../../../../../hooks';
+import { useCreateTemplate, useEditTemplate, useQueryData, useReactQuery } from '../../../../../hooks';
 import { ModalContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
-import { useResources2 } from '../../../../../resources';
 import { makeCategoryOption, makePlaceOption } from '../../../../../looksup';
 import { defaultValue, model, makeFieldSchema } from './constants';
 import Component from './component';
@@ -15,12 +13,11 @@ const TemplateForm = () => {
 	const { formState } = useContext(FormStateContext);
 	const { selected } = modalState;
 
-	const { templates, categories, places } = useResources2();
+	const { templates, categories, places } = useQueryData(['templates', 'categories', 'places']);
 	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
 	const { create } = useCreateTemplate(categories, places);
 	const { edit } = useEditTemplate(categories, places);
-	const queryClient = useQueryClient();
-	const update = () => queryClient.invalidateQueries('templates');
+	const { update } = useReactQuery();
 
 	const fieldSchema = useMemo(() => {
 		const categoryOption = makeCategoryOption(categories);
@@ -33,7 +30,7 @@ const TemplateForm = () => {
 			create(formValue)
 				.then(() => {
 					Alert.success('テンプレートを追加しました');
-					update();
+					update('templates');
 				})
 				.catch((e) => {
 					console.log(e, 'post error');
@@ -47,7 +44,7 @@ const TemplateForm = () => {
 			edit(formValue, selected)
 				.then(() => {
 					Alert.success('テンプレートを編集しました');
-					update();
+					update('templates');
 				})
 				.catch((e) => {
 					console.log(e, 'patch error');

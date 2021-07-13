@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { useQueryClient } from 'react-query';
 
-import { useDeleteTemplate } from '../../../../../hooks';
-import { useResources2 } from '../../../../../resources';
+import { useDeleteTemplate, useReactQuery, useQueryData } from '../../../../../hooks';
 import { ActionButtons, Alert } from '../../../../../components';
 import { makeCategoryOption } from '../../../../../looksup';
 import { actions as modalActions } from '../../../../../components/Modal/reducer';
@@ -37,16 +35,18 @@ const makeColumns = ({ categoryOption }) => [
 ];
 
 const TemplateTable = ({ children }) => {
-	const { templates, categories } = useResources2();
-	const queryClient = useQueryClient();
-	const update = () => queryClient.invalidateQueries('templates');
-
+	const { templates, categories } = useQueryData(['templates', 'categories']);
+	const { update } = useReactQuery();
 	const { dispatch: modalDispatch } = useContext(ModalContext);
 
 	const [isConfirm, setIsConfirm] = useState(false);
 	const [selected, setSelected] = useState(null);
 
-	const openCreateEditModal = (index) => {
+	const openCreateModal = () => {
+		modalDispatch(modalActions.openCreateModal());
+	};
+
+	const openEditModal = (index) => {
 		modalDispatch(modalActions.openEditModal(index));
 	};
 
@@ -65,7 +65,7 @@ const TemplateTable = ({ children }) => {
 			deleteTemplate(templates[index].id)
 				.then(() => {
 					Alert.success('テンプレートを削除しました');
-					update();
+					update('templates');
 				})
 				.catch((e) => {
 					console.log(e, 'delete error');
@@ -81,11 +81,11 @@ const TemplateTable = ({ children }) => {
 		shouldUpdateScroll: false,
 		columns: makeColumns({ categoryOption }),
 		actions: function actionButton(index) {
-			return <ActionButtons {...{ index, openConfirm, openCreateEditModal }} />;
+			return <ActionButtons {...{ index, openConfirm, openEditModal }} />;
 		},
 	};
 
-	return <Component {...{ tableProps, confirmProps, children }} />;
+	return <Component {...{ tableProps, confirmProps, openCreateModal, children }} />;
 };
 
 export default TemplateTable;
