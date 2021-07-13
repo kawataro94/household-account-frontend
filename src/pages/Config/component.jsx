@@ -1,60 +1,59 @@
-import React, { useState } from 'react';
-import { Panel, Nav } from 'rsuite';
+import React, { useMemo } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Nav } from 'rsuite';
 
 import { Divider } from '../../components';
 import { CategoryTable, PlaceTable, TemplateTable } from './widget/table';
 import { CategoryForm, PlaceForm, TemplateForm } from './widget/form';
+import Confirmation from '../../components/ConfirmationModal';
 
 const CustomNav = ({ active, onSelect, ...props }) => {
 	return (
 		<Nav {...props} activeKey={active} onSelect={onSelect}>
-			<Nav.Item eventKey="template">テンプレート一覧</Nav.Item>
-			<Nav.Item eventKey="category">カテゴリ一覧</Nav.Item>
-			<Nav.Item eventKey="place">購入場所一覧</Nav.Item>
+			<Nav.Item eventKey="templates">テンプレート一覧</Nav.Item>
+			<Nav.Item eventKey="categories">カテゴリ一覧</Nav.Item>
+			<Nav.Item eventKey="places">購入場所一覧</Nav.Item>
 		</Nav>
 	);
 };
 
-const CustomTable = ({ active, ...rest }) => {
-	return (
-		<Panel bordered>
-			{active === 'template' ? <TemplateTable {...rest} /> : null}
-			{active === 'category' ? <CategoryTable {...rest} /> : null}
-			{active === 'place' ? <PlaceTable {...rest} /> : null}
-		</Panel>
-	);
-};
-
-const CustomForm = ({ active }) => {
+const Content = ({ active, ...rest }) => {
 	return (
 		<>
-			{active === 'template' ? <TemplateForm /> : null}
-			{active === 'category' ? <CategoryForm /> : null}
-			{active === 'place' ? <PlaceForm /> : null}
-		</>
-	);
-};
-
-const Content = ({ active }) => {
-	return (
-		<>
-			<CustomTable active={active} />
-			<CustomForm active={active} />
+			{active === 'templates' ? (
+				<>
+					<TemplateTable {...rest} />
+					<TemplateForm />
+				</>
+			) : active === 'categories' ? (
+				<>
+					<CategoryTable {...rest} />
+					<CategoryForm />
+				</>
+			) : (
+				<>
+					<PlaceTable {...rest} />
+					<PlaceForm />
+				</>
+			)}
+			<Confirmation active={active} />
 		</>
 	);
 };
 
 const PageComponent = () => {
-	const [active, setActive] = useState('template');
+	const { search } = useLocation();
+	const history = useHistory();
+	const params = useMemo(() => search?.replace('?tab=', '') || 'templates', [search]);
 	const handleSelect = (activeKey) => {
-		setActive(activeKey);
+		history.replace(`/config?tab=${activeKey}`);
 	};
 
 	return (
 		<>
-			<CustomNav appearance="subtle" active={active} onSelect={handleSelect} />
+			<CustomNav appearance="subtle" active={params} onSelect={handleSelect} />
 			<Divider height="20" />
-			<Content active={active} />
+			<Content active={params} />
 		</>
 	);
 };

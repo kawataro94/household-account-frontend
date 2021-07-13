@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
+import { useQueries } from 'react-query';
 
-import { useDeleteCategory } from '../../../../../hooks/delete';
-import { useQueryData, useReactQuery } from '../../../../../hooks';
-import { ActionButtons, Alert } from '../../../../../components';
-import { actions as modalActions } from '../../../../../components/Modal/reducer';
-import { ModalContext } from '../../../../../components/Modal/context';
+import { useFetchData } from '../../../../../hooks';
 import { categoryTag } from '../../../style';
-import Component from './component';
+import Container from '../container';
 
 const Category = ({ color }) => {
 	return (
@@ -29,58 +26,11 @@ const columns = [
 	},
 ];
 
-const CategoryTable = ({ children }) => {
-	const { categories } = useQueryData(['categories']);
-	const { update } = useReactQuery();
+const CategoryTable = () => {
+	const { fetchCategories } = useFetchData();
+	const [{ data: categories }] = useQueries([{ queryKey: 'categories', queryFn: fetchCategories, suspense: true }]);
 
-	const { dispatch: modalDispatch } = useContext(ModalContext);
-
-	const [isConfirm, setIsConfirm] = useState(false);
-	const [selected, setSelected] = useState(null);
-
-	const openCreateModal = () => {
-		modalDispatch(modalActions.openCreateModal());
-	};
-
-	const openEditModal = (index) => {
-		modalDispatch(modalActions.openEditModal(index));
-	};
-
-	const { remove: deleteCategory } = useDeleteCategory();
-
-	const openConfirm = (index) => {
-		setIsConfirm(true);
-		setSelected(index);
-	};
-
-	const confirmProps = {
-		show: isConfirm,
-		selected,
-		onOk: (index) => {
-			deleteCategory(categories[index].id)
-				.then(() => {
-					Alert.success('カテゴリを削除しました');
-					update('categories');
-				})
-				.catch((e) => {
-					console.log(e, 'delete error');
-				});
-			setIsConfirm(false);
-		},
-		onCancel: () => setIsConfirm(false),
-	};
-
-	const tableProps = {
-		data: categories,
-		rowHeight: 57,
-		shouldUpdateScroll: false,
-		columns,
-		actions: function actionButton(index) {
-			return <ActionButtons {...{ index, openConfirm, openEditModal }} />;
-		},
-	};
-
-	return <Component {...{ tableProps, confirmProps, openCreateModal, children }} />;
+	return <Container {...{ data: categories, columns }} />;
 };
 
 export default CategoryTable;

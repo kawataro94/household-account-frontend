@@ -5,7 +5,8 @@ import ErrorBoundary from '../../hoc/error-boundary';
 import { Divider, Loader } from '../../components';
 import { ModalProvider } from '../../components/Modal/context';
 import { FormProvider } from '../../components/Form/context';
-import Container from './container';
+import { ConfirmProvider } from '../../components/ConfirmationModal/context';
+import Component from './component';
 
 const queryClient = new QueryClient();
 
@@ -17,11 +18,13 @@ const Config = () => {
 				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
 					<QueryClientProvider client={queryClient}>
-						<ModalProvider>
-							<FormProvider>
-								<Container />
-							</FormProvider>
-						</ModalProvider>
+						<ConfirmProvider>
+							<ModalProvider>
+								<FormProvider>
+									<Component />
+								</FormProvider>
+							</ModalProvider>
+						</ConfirmProvider>
 					</QueryClientProvider>
 				</Suspense>
 			</ErrorBoundary>
