@@ -1,22 +1,19 @@
 import React from 'react';
-import { Row, Col, Panel } from 'rsuite';
+import { FlexboxGrid } from 'rsuite';
 
-import { SectionTitle, Table } from '../../../../../components';
-import CreateEditModal from '../../CreateEditModal';
+import { Button, Divider, Table } from '../../../../../components';
 import ConfirmModal from '../../ConfirmModal';
 
-const Component = ({ createButtonProps, tableProps, createEditModalProps, confirmProps }) => {
+const Component = ({ tableProps, confirmProps, openCreateModal }) => {
 	return (
-		<Row>
-			<Col>
-				<SectionTitle {...createButtonProps} />
-			</Col>
-			<Panel>
-				<Table {...tableProps} />
-			</Panel>
-			<CreateEditModal {...createEditModalProps} />
+		<>
+			<FlexboxGrid justify="end" align="middle">
+				<Button onClick={openCreateModal}>追加する</Button>
+			</FlexboxGrid>
+			<Divider height="10" />
+			<Table {...tableProps} />
 			<ConfirmModal {...confirmProps} />
-		</Row>
+		</>
 	);
 };
 

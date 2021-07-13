@@ -122,7 +122,6 @@ const RecordFormModal = () => {
 	);
 
 	const createEditFormProps = {
-		isCreate,
 		fieldSchema,
 		model,
 		initialValue: !isCreate ? records[selected] : defaultValue,

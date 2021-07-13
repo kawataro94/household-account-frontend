@@ -27,23 +27,15 @@ class ErrorBoundary extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { history, setIsLogin } = this.props;
-		const jumpToSignIn = () => history.push('/signin');
 		const { hasError } = this.state;
 
 		const redirectMsg = (
 			<div>
 				<div>エラーが発生しました。</div>
-				<div>数秒後にサインインページに移動します。</div>
 			</div>
 		);
 
 		if (hasError) {
-			setTimeout(() => {
-				jumpToSignIn();
-				setIsLogin(false);
-			}, 10000);
-
 			return (
 				<Center hasHeader={true}>
 					<div css={center}>
