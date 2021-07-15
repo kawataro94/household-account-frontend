@@ -10,4 +10,4 @@ const Component = ({ onSubmit, createEditFormProps }) => {
 	);
 };
 
-export default Component;
+export default React.memo(Component);

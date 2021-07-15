@@ -8,7 +8,15 @@ import { FormProvider } from '../../components/Form/context';
 import { ConfirmProvider } from '../../components/ConfirmationModal/context';
 import Component from './component';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 1000 * 10,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
+		},
+	},
+});
 
 const Config = () => {
 	return (

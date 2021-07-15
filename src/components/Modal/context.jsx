@@ -6,11 +6,11 @@ export const ModalContext = React.createContext({});
 
 export const ModalProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { show, modalState } = state;
+	const { show, selected } = state;
 
 	const value = {
 		show,
-		modalState,
+		selected,
 		dispatch,
 	};
 

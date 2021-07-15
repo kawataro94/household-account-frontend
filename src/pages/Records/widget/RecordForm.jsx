@@ -78,9 +78,8 @@ const makeFieldSchema = ({ categoryOption, placeOption, memberOption, isCreate }
 
 const RecordFormModal = () => {
 	const { myProfile, members, categories, places, records, dispatch } = useContext(RecordsContext);
-	const { modalState } = useContext(ModalContext);
+	const { selected } = useContext(ModalContext);
 	const { formState } = useContext(FormStateContext);
-	const { selected } = modalState;
 	const fetchRecord = () => useFetchRecords();
 	const { create } = useCreateRecord({ me: myProfile.id, categories, places, members });
 	const { edit } = useEditRecord({ categories, places, members });

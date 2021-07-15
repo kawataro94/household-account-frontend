@@ -1,6 +1,6 @@
 export const initialState = {
 	show: false,
-	modalState: {},
+	selected: null,
 };
 
 const OPEN_CONFIRM_MODAL = 'OPEN_CONFIRM_MODAL';
@@ -24,12 +24,12 @@ export const reducer = (state, action) => {
 		case OPEN_CONFIRM_MODAL:
 			return {
 				show: true,
-				modalState: { selected: action.selected },
+				selected: action.selected,
 			};
 		case CLOSE_CONFIRM_MODAL:
 			return {
 				show: false,
-				modalState: {},
+				selected: null,
 			};
 		default:
 			return state;
