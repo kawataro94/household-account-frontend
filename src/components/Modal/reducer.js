@@ -1,7 +1,6 @@
 export const initialState = {
 	show: false,
-	type: null,
-	modalState: {},
+	selected: null,
 };
 
 const OPEN_CREATE_MODAL = 'OPEN_CREATE_MODAL';
@@ -31,20 +30,17 @@ export const reducer = (state, action) => {
 		case OPEN_CREATE_MODAL:
 			return {
 				show: true,
-				type: 'form',
-				modalState: {},
+				selected: null,
 			};
 		case OPEN_EDIT_MODAL:
 			return {
 				show: true,
-				type: 'form',
-				modalState: { selected: action.selected },
+				selected: action.selected,
 			};
 		case CLOSE_MODAL:
 			return {
 				show: false,
-				type: null,
-				modalState: {},
+				selected: null,
 			};
 		default:
 			return state;

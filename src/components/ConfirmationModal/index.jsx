@@ -10,8 +10,7 @@ import { ConfirmContext } from './context';
 
 const { Body, Footer } = Modal;
 const ConfirmModal = ({ active: key }) => {
-	const { show, modalState, dispatch } = useContext(ConfirmContext);
-	const { selected } = modalState;
+	const { show, selected, dispatch } = useContext(ConfirmContext);
 
 	const { remove } = useDeleteAPI(key);
 	const { update } = useReactQuery();
