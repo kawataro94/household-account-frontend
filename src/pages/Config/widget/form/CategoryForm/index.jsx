@@ -15,9 +15,7 @@ const CategoryForm = () => {
 	const { formState } = useContext(FormStateContext);
 
 	const { fetchCategories } = useFetchData();
-	const [{ data: categories }] = useQueries([
-		{ queryKey: 'categories', queryFn: fetchCategories, staleTime: 1000 * 10 },
-	]);
+	const [{ data: categories }] = useQueries([{ queryKey: 'categories', queryFn: fetchCategories }]);
 
 	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
 	const { create } = useCreateCategory();

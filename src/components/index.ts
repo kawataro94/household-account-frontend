@@ -10,3 +10,4 @@ export { default as Navbar } from './Navbar';
 export { default as SectionTitle } from './SectionTitle';
 export { default as Sidebar } from './Sidebar';
 export { default as Table } from './Table';
+export { default as SummaryTable } from './SummaryTable';

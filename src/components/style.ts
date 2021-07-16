@@ -8,6 +8,10 @@ type Yen = {
 	(param: string): SerializedStyles;
 };
 
+type categoryTag = {
+	(param: string): SerializedStyles;
+};
+
 export const flex: Flex = (hasHeader: boolean) => css`
 	display: flex;
 	justify-content: center;
@@ -53,4 +57,14 @@ export const actions = css`
 
 export const confirmButton = css`
 	margin-left: 10px;
+`;
+
+export const categoryTag: categoryTag = (color: string) => css`
+	background-color: ${color};
+	padding: 4px 10px;
+	border-radius: 4px;
+`;
+
+export const costFont = css`
+	font-size: 16px;
 `;
