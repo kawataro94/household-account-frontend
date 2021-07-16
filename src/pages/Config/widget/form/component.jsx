@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal as FormModal, Form as Content } from '../../../../../components';
+import { Modal as FormModal, Form as Content } from '../../../../components';
 
 const Component = ({ onSubmit, createEditFormProps }) => {
 	return (
