@@ -1,21 +1,28 @@
 import React, { Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import ErrorBoundary from '../../hoc/error-boundary';
-import Divider from '../../components/Divider';
 import Loader from '../../components/Loader';
-import { Provider } from './context';
-import MemberTable from './widget/MemberTable';
+import Component from './component';
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 1000 * 10,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
+		},
+	},
+});
 
 const Members = () => {
 	return (
 		<div className="wrap">
 			<ErrorBoundary>
-				<h2>Members</h2>
-				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
-					<Provider>
-						<MemberTable />
-					</Provider>
+					<QueryClientProvider client={queryClient}>
+						<Component />
+					</QueryClientProvider>
 				</Suspense>
 			</ErrorBoundary>
 		</div>

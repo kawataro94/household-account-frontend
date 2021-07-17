@@ -7,7 +7,7 @@ import { ModalContext } from '../../../../components/Modal/context';
 import { ConfirmContext } from '../../../../components/ConfirmationModal/context';
 import Component from './component';
 
-const TemplateTable = ({ data, columns }) => {
+const Container = ({ data, columns }) => {
 	const { dispatch: modalDispatch } = useContext(ModalContext);
 	const { dispatch: confirmDispatch } = useContext(ConfirmContext);
 
@@ -36,4 +36,4 @@ const TemplateTable = ({ data, columns }) => {
 	return <Component {...{ tableProps, openCreateModal }} />;
 };
 
-export default TemplateTable;
+export default Container;
