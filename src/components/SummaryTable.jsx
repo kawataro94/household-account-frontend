@@ -2,35 +2,40 @@ import React from 'react';
 import { Table } from 'rsuite';
 
 import { YenUnit } from './Units';
-import { summaryColumns } from '../looksup';
 import { categoryTag, costFont } from './style';
 
 const { Column, HeaderCell, Cell } = Table;
 
-const Month = ({ month, year }) => (
-	<div>
-		{year}-{month < 10 && 0}
-		{month}
-	</div>
-);
-
-const Title = ({ name }) => {
-	const { label, color } = summaryColumns.find(({ value }) => name === value) || {};
+// eslint-disable-next-line react/display-name
+const Month = React.memo(({ month, year }) => {
 	return (
 		<div>
-			<span css={categoryTag(color)}>{label}</span>
+			{year}-{month < 10 && 0}
+			{month}
 		</div>
 	);
-};
+});
 
-const Cost = ({ value }) => {
+// eslint-disable-next-line react/display-name
+const Title = React.memo(({ name, color }) => {
+	if (!color) return name;
+
+	return (
+		<div>
+			<span css={categoryTag(color)}>{name}</span>
+		</div>
+	);
+});
+
+// eslint-disable-next-line react/display-name
+const Cost = React.memo(({ value }) => {
 	return (
 		<>
 			<span css={costFont}>{value}</span>
 			<YenUnit style="font-size: 12px;" />
 		</>
 	);
-};
+});
 
 const SummaryTable = ({ data, columns = [] }) => {
 	return (
@@ -49,7 +54,7 @@ const SummaryTable = ({ data, columns = [] }) => {
 			</Column>
 			<Column width={100} align="center" fixed="left">
 				<HeaderCell>
-					<Title name="total" />
+					<Title name="total" color="#e9d5cf" />
 				</HeaderCell>
 				<Cell>
 					{({ total }) => (
@@ -61,7 +66,9 @@ const SummaryTable = ({ data, columns = [] }) => {
 			</Column>
 			{columns.map((column) => (
 				<Column width={100} align="center" fixed="left" key={column.id}>
-					<HeaderCell>{column.name}</HeaderCell>
+					<HeaderCell>
+						<Title name={column.name} color={column.color} />
+					</HeaderCell>
 					<Cell>{({ dividedTotal }) => <Cost value={dividedTotal[column.id] || 0} />}</Cell>
 				</Column>
 			))}
