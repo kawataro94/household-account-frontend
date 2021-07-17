@@ -7,7 +7,7 @@ import { ModalContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { makeCategoryOption, makePlaceOption } from '../../../../../looksup';
 import { defaultValue, model, makeFieldSchema } from './constants';
-import Component from './component';
+import Component from '../component';
 
 const TemplateForm = () => {
 	const { selected } = useContext(ModalContext);

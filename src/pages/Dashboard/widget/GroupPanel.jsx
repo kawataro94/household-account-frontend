@@ -1,21 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
-import Moment from 'moment';
+// import Moment from 'moment';
 
 import Divider from '../../../components/Divider';
 import { YenUnit } from '../../../components/Units';
 import { lineHeight, lineHeight2 } from '../style';
-import { DashboardContext } from '../context';
+// import { DashboardContext } from '../context';
 
 const GroupPanel = () => {
-	const { monthlyExpenses } = useContext(DashboardContext);
-	const thisYear = Moment().year();
-	const thisMonth = Moment().month();
-	const monthlyTotal = monthlyExpenses
-		.filter(({ year, month }) => {
-			return thisYear === Number(year) && thisMonth + 1 === Number(month);
-		})
-		.reduce((acc, cur) => acc + cur.total, 0);
+	// const { monthlyExpenses } = useContext(DashboardContext);
+	// const thisYear = Moment().year();
+	// const thisMonth = Moment().month();
+	// const monthlyTotal = monthlyExpenses
+	// 	.filter(({ year, month }) => {
+	// 		return thisYear === Number(year) && thisMonth + 1 === Number(month);
+	// 	})
+	// 	.reduce((acc, cur) => acc + cur.total, 0);
 
 	return (
 		<Row>
@@ -44,7 +44,7 @@ const GroupPanel = () => {
 							</div>
 							<div css={lineHeight2}>
 								<div>
-									{monthlyTotal}
+									{/* {monthlyTotal} */}
 									<YenUnit style="font-size: 20px;" />
 								</div>
 							</div>

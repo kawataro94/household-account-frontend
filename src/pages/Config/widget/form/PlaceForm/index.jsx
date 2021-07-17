@@ -8,7 +8,7 @@ import { useReactQuery, useFetchData } from '../../../../../hooks';
 import { ModalContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { defaultValue, model, fieldSchema } from './constants';
-import Component from './component';
+import Component from '../component';
 
 const PlaceForm = () => {
 	const { selected } = useContext(ModalContext);

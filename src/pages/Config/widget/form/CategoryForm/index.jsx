@@ -8,16 +8,14 @@ import { useReactQuery, useFetchData } from '../../../../../hooks';
 import { ModalContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { defaultValue, model, fieldSchema } from './constants';
-import Component from './component';
+import Component from '../component';
 
 const CategoryForm = () => {
 	const { selected } = useContext(ModalContext);
 	const { formState } = useContext(FormStateContext);
 
 	const { fetchCategories } = useFetchData();
-	const [{ data: categories }] = useQueries([
-		{ queryKey: 'categories', queryFn: fetchCategories, staleTime: 1000 * 10 },
-	]);
+	const [{ data: categories }] = useQueries([{ queryKey: 'categories', queryFn: fetchCategories }]);
 
 	const isCreate = useMemo(() => !Number.isFinite(selected), [selected]);
 	const { create } = useCreateCategory();
