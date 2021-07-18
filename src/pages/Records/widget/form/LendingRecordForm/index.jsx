@@ -3,14 +3,14 @@ import { useQueries } from 'react-query';
 
 import { Alert } from '../../../../../components';
 import { useCreateLendingRecord, useEditLendingRecord, useReactQuery, useFetchData } from '../../../../../hooks';
-import { ModalContext } from '../../../../../components/Modal/context';
+import { ModalStateContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { makeCategoryOption, makePlaceOption, makeMemberOption } from '../../../../../looksup';
 import { defaultValue, model, makeFieldSchema } from './constants';
 import Component from '../component';
 
 const LendingRecordForm = () => {
-	const { selected } = useContext(ModalContext);
+	const { selected } = useContext(ModalStateContext);
 	const { formState } = useContext(FormStateContext);
 
 	const { fetchLendingRecords, fetchMyProfile, fetchMembers, fetchCategories, fetchPlaces } = useFetchData();

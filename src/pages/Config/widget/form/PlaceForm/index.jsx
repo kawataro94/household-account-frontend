@@ -5,13 +5,13 @@ import { Alert } from '../../../../../components';
 import { useCreatePlace } from '../../../../../hooks/create';
 import { useUpdatePlace } from '../../../../../hooks/update';
 import { useReactQuery, useFetchData } from '../../../../../hooks';
-import { ModalContext } from '../../../../../components/Modal/context';
+import { ModalStateContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { defaultValue, model, fieldSchema } from './constants';
 import Component from '../component';
 
 const PlaceForm = () => {
-	const { selected } = useContext(ModalContext);
+	const { selected } = useContext(ModalStateContext);
 	const { formState } = useContext(FormStateContext);
 
 	const { fetchPlaces } = useFetchData();

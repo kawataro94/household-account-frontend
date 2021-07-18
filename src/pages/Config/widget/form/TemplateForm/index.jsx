@@ -3,14 +3,14 @@ import { useQueries } from 'react-query';
 
 import { Alert } from '../../../../../components';
 import { useCreateTemplate, useEditTemplate, useReactQuery, useFetchData } from '../../../../../hooks';
-import { ModalContext } from '../../../../../components/Modal/context';
+import { ModalStateContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { makeCategoryOption, makePlaceOption } from '../../../../../looksup';
 import { defaultValue, model, makeFieldSchema } from './constants';
 import Component from '../component';
 
 const TemplateForm = () => {
-	const { selected } = useContext(ModalContext);
+	const { selected } = useContext(ModalStateContext);
 	const { formState } = useContext(FormStateContext);
 
 	const { fetchCategories, fetchPlaces, fetchTemplates } = useFetchData();
