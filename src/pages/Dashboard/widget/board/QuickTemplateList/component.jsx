@@ -1,10 +1,10 @@
 import React from 'react';
-import { Row, Col, Panel, Button, FlexboxGrid } from 'rsuite';
+import { Row, Col, Panel, FlexboxGrid } from 'rsuite';
 
-import { Divider } from '../../../../../components';
+import { Divider, Button } from '../../../../../components';
 import { gridItem } from '../../../style';
 
-const Component = ({ templates, openCreateModal }) => (
+const Component = ({ templates, openCreateForm }) => (
 	<Row>
 		<Col>
 			<h5>クイック入力</h5>
@@ -15,9 +15,7 @@ const Component = ({ templates, openCreateModal }) => (
 				<FlexboxGrid>
 					{templates.map((template) => (
 						<FlexboxGrid.Item key={`template_${template.id}`} css={gridItem}>
-							<Button onClick={() => openCreateModal(template.id)} appearance="primary">
-								{template.title}
-							</Button>
+							<Button onClick={() => openCreateForm(template.id)}>{template.title}</Button>
 						</FlexboxGrid.Item>
 					))}
 				</FlexboxGrid>

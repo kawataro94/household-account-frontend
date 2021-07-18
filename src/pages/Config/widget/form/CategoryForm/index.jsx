@@ -5,13 +5,13 @@ import { Alert } from '../../../../../components';
 import { useCreateCategory } from '../../../../../hooks/create';
 import { useUpdateCategory } from '../../../../../hooks/update';
 import { useReactQuery, useFetchData } from '../../../../../hooks';
-import { ModalContext } from '../../../../../components/Modal/context';
+import { ModalStateContext } from '../../../../../components/Modal/context';
 import { FormStateContext } from '../../../../../components/Form/context';
 import { defaultValue, model, fieldSchema } from './constants';
 import Component from '../component';
 
 const CategoryForm = () => {
-	const { selected } = useContext(ModalContext);
+	const { selected } = useContext(ModalStateContext);
 	const { formState } = useContext(FormStateContext);
 
 	const { fetchCategories } = useFetchData();

@@ -6,12 +6,12 @@ import { confirmButton, actions } from './style';
 type Props = {
 	index: number;
 	openConfirm: (index: number) => void;
-	openEditModal: (index: number) => void;
+	openEditForm: (index: number) => void;
 };
 
-const Actions: FC<Props> = ({ index, openConfirm, openEditModal }) => (
+const Actions: FC<Props> = ({ index, openConfirm, openEditForm }) => (
 	<div css={actions}>
-		<Button appearance="primary" size="sm" onClick={() => openEditModal(index)}>
+		<Button appearance="primary" size="sm" onClick={() => openEditForm(index)}>
 			編集
 		</Button>
 		<Button color="red" size="sm" onClick={() => openConfirm(index)} css={confirmButton}>

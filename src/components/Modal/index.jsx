@@ -2,21 +2,22 @@ import React, { useContext } from 'react';
 import { Button, Modal } from 'rsuite';
 
 import { actions } from './reducer';
-import { ModalContext } from './context';
+import { ModalDispatchContext, ModalStateContext } from './context';
 
 const { Header, Title, Body, Footer } = Modal;
 
 const FormModal = (props) => {
 	const { children, onSubmit: submitHundler } = props;
-	const { show, dispatch } = useContext(ModalContext);
+	const { show } = useContext(ModalStateContext);
+	const { dispatch: modalDispatch } = useContext(ModalDispatchContext);
 
 	const onSubmit = () => {
 		submitHundler();
-		dispatch(actions.closeModal());
+		modalDispatch(actions.closeModal());
 	};
 
 	const onCancel = () => {
-		dispatch(actions.closeModal());
+		modalDispatch(actions.closeModal());
 	};
 
 	const okProps = {
