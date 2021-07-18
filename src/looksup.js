@@ -42,7 +42,7 @@ export const colorOption = [
 ];
 
 export const makeMemberOption = (members) => {
-	const option = members.map(({ account }) => ({
+	const option = members?.map(({ account }) => ({
 		label: account,
 		value: account,
 	}));

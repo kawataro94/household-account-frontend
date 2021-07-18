@@ -31,16 +31,19 @@ const TemplateForm = () => {
 		return makeFieldSchema({ categoryOption, placeOption, isCreate });
 	}, [categories, places, isCreate]);
 
-	const createTemplate = useCallback((formValue) => {
-		create(formValue)
-			.then(() => {
-				Alert.success('テンプレートを追加しました');
-				update('templates');
-			})
-			.catch((e) => {
-				console.log(e, 'post error');
-			});
-	}, []);
+	const createTemplate = useCallback(
+		(formValue) => {
+			create(formValue)
+				.then(() => {
+					Alert.success('テンプレートを追加しました');
+					update('templates');
+				})
+				.catch((e) => {
+					console.log(e, 'post error');
+				});
+		},
+		[create]
+	);
 
 	const editTemplate = useCallback(
 		(formValue) => {
@@ -53,7 +56,7 @@ const TemplateForm = () => {
 					console.log(e, 'patch error');
 				});
 		},
-		[selected]
+		[edit, selected]
 	);
 
 	const onSubmit = useCallback(() => {

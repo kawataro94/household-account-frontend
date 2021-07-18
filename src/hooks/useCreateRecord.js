@@ -22,7 +22,7 @@ function useCreateRecord({ me, categories, places, members }) {
 
 			return httpClient.post(`${serverUrl}/member/records`, body);
 		},
-		[categories, places, members]
+		[me, categories, places, members]
 	);
 	return { create };
 }
