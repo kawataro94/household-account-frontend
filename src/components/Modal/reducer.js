@@ -5,6 +5,7 @@ export const initialState = {
 
 const OPEN_CREATE_MODAL = 'OPEN_CREATE_MODAL';
 const OPEN_EDIT_MODAL = 'OPEN_EDIT_MODAL';
+const OPEN_QUICK_FORM = 'OPEN_QUICK_FORM';
 const CLOSE_MODAL = 'CLOSE_MODAL';
 
 const openCreateModal = () => {
@@ -15,6 +16,10 @@ const openEditModal = (index) => {
 	return { type: OPEN_EDIT_MODAL, selected: index };
 };
 
+const openQuickForm = (index) => {
+	return { type: OPEN_QUICK_FORM, selected: index };
+};
+
 const closeModal = () => {
 	return { type: CLOSE_MODAL };
 };
@@ -22,6 +27,7 @@ const closeModal = () => {
 export const actions = {
 	openCreateModal,
 	openEditModal,
+	openQuickForm,
 	closeModal,
 };
 
@@ -33,6 +39,11 @@ export const reducer = (state, action) => {
 				selected: null,
 			};
 		case OPEN_EDIT_MODAL:
+			return {
+				show: true,
+				selected: action.selected,
+			};
+		case OPEN_QUICK_FORM:
 			return {
 				show: true,
 				selected: action.selected,

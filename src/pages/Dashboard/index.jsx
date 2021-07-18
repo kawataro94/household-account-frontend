@@ -1,38 +1,34 @@
 import React, { Suspense } from 'react';
-import { FlexboxGrid } from 'rsuite';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import ErrorBoundary from '../../hoc/error-boundary';
-import Divider from '../../components/Divider';
-import Loader from '../../components/Loader';
-import GroupPanel from './widget/GroupPanel';
-// import UserPanel from './widget/UserPanel';
-import QuickFormPanel from './widget/QuickFormPanel';
-import RecordTable from './widget/RecordTable';
-import { Provider } from './context';
+import { Loader } from '../../components';
+import { ModalProvider } from '../../components/Modal/context';
+import { FormProvider } from '../../components/Form/context';
+import Component from './component';
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 1000 * 10,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
+		},
+	},
+});
 
 const Dashboard = () => {
 	return (
 		<div className="wrap">
 			<ErrorBoundary>
-				<h2>Dashboard</h2>
-				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
-					<Provider>
-						<FlexboxGrid justify="space-between">
-							<FlexboxGrid.Item className="da-group-info">
-								<GroupPanel />
-							</FlexboxGrid.Item>
-							{/* <FlexboxGrid.Item className='da-member-info'>
-            <UserPanel />
-          </FlexboxGrid.Item> */}
-							<FlexboxGrid.Item className="da-template-form">
-								<QuickFormPanel />
-							</FlexboxGrid.Item>
-						</FlexboxGrid>
-						<div className="da-record-table">
-							<RecordTable />
-						</div>
-					</Provider>
+					<QueryClientProvider client={queryClient}>
+						<ModalProvider>
+							<FormProvider>
+								<Component />
+							</FormProvider>
+						</ModalProvider>
+					</QueryClientProvider>
 				</Suspense>
 			</ErrorBoundary>
 		</div>
