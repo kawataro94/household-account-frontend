@@ -6,6 +6,9 @@ import {
 	useCollectionByMembers,
 	useLendingCollection,
 	useMembers,
+	useRecords,
+	useLendingRecords,
+	useMyProfile,
 } from '../hooks';
 
 const useFetchData = () => {
@@ -16,6 +19,9 @@ const useFetchData = () => {
 	const { fetch: fetchCollectionByMembers } = useCollectionByMembers();
 	const { fetch: fetchLendingCollection } = useLendingCollection();
 	const { fetch: fetchMembers } = useMembers();
+	const { fetch: fetchRecords } = useRecords();
+	const { fetch: fetchLendingRecords } = useLendingRecords();
+	const { fetch: fetchMyProfile } = useMyProfile();
 
 	return {
 		fetchCategories,
@@ -25,6 +31,9 @@ const useFetchData = () => {
 		fetchCollectionByMembers,
 		fetchLendingCollection,
 		fetchMembers,
+		fetchRecords,
+		fetchLendingRecords,
+		fetchMyProfile,
 	};
 };
 

@@ -23,5 +23,8 @@ export { default as useCollectionByCategories } from './useCollectionByCategorie
 export { default as useCollectionByMembers } from './useCollectionByMembers';
 export { default as useLendingCollection } from './useLendingCollection';
 export { default as useMembers } from './useMembers';
+export { default as useRecords } from './useRecords';
+export { default as useLendingRecords } from './useLendingRecords';
+export { default as useMyProfile } from './useMyProfile';
 export { default as useReactQuery } from './useReactQuery';
 export { default as useQueryData } from './useQueryData';

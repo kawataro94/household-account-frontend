@@ -1,27 +1,37 @@
 import React, { Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import ErrorBoundary from '../../hoc/error-boundary';
-import Divider from '../../components/Divider';
-import Loader from '../../components/Loader';
-import RecordTables from './widget/RecordTables';
-import { Provider } from './context';
+import { Loader } from '../../components';
 import { ModalProvider } from '../../components/Modal/context';
 import { FormProvider } from '../../components/Form/context';
+import { ConfirmProvider } from '../../components/ConfirmationModal/context';
+import Component from './component';
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			staleTime: 1000 * 10,
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false,
+		},
+	},
+});
 
 const Records = () => {
 	return (
 		<div className="wrap">
 			<ErrorBoundary>
-				<h2>Records</h2>
-				<Divider height="20" />
 				<Suspense fallback={<Loader />}>
-					<Provider>
-						<ModalProvider>
-							<FormProvider>
-								<RecordTables />
-							</FormProvider>
-						</ModalProvider>
-					</Provider>
+					<QueryClientProvider client={queryClient}>
+						<ConfirmProvider>
+							<ModalProvider>
+								<FormProvider>
+									<Component />
+								</FormProvider>
+							</ModalProvider>
+						</ConfirmProvider>
+					</QueryClientProvider>
 				</Suspense>
 			</ErrorBoundary>
 		</div>

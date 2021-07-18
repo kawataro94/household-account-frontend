@@ -22,7 +22,7 @@ function useCreateLendingRecord({ me, categories, places, members }) {
 
 			return httpClient.post(`${serverUrl}/member/lending_records`, body);
 		},
-		[categories, places, members]
+		[me, categories, places, members]
 	);
 	return { create };
 }
